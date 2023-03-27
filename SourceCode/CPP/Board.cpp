@@ -89,6 +89,9 @@ void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw)
 		Point end = { (boxLength + 1) * (pCur->p.c + 1) + (boxLength - 1) / 2,
 						boxWidth * (pCur->p.r + 1) + (boxWidth / 2) };
 		bool isStart = 1;
+
+		SetColor(0, 11);
+
 		while (!(start.r == end.r && start.c == end.c))
 		{
 			if (start.r == end.r)
@@ -97,7 +100,7 @@ void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw)
 				{
 					GoTo(start.r, start.c);
 					if (isDraw)
-						cout << "|";
+						cout << char(177);
 					else
 						cout << " ";
 				}
@@ -113,7 +116,7 @@ void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw)
 				{
 					GoTo(start.r, start.c);
 					if (isDraw)
-						cout << "-";
+						cout << char(177);
 					else
 						cout << " ";
 				}
@@ -129,12 +132,14 @@ void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw)
 		{
 			GoTo(end.r, end.c);
 			if (isDraw)
-				cout << "+";
+				cout << char(177);
 			else
 				cout << " ";
 		}
 		pPrev = pCur;
 		pCur = pCur->pNext;
+
+		SetColor(0, 7);
 	}
 }
 
@@ -184,8 +189,12 @@ void ShowMoves(GameInfo& game)
 		{
 			y -= boxWidth;
 			rowPoke--;
-			pokemon = char(game.board.pokeList[rowPokePrev][colPokePrev]);
-			HighlightBox(xPrev, yPrev, boxLength, boxWidth, pokemon, 0);
+			if (!(rowPokePrev == game.p1.r && colPokePrev == game.p1.c) &&
+				!(rowPokePrev == game.p2.r && colPokePrev == game.p2.c))
+			{
+				pokemon = char(game.board.pokeList[rowPokePrev][colPokePrev]);
+				HighlightBox(xPrev, yPrev, boxLength, boxWidth, pokemon, 0);
+			}
 			pokemon = char(game.board.pokeList[rowPoke][colPoke]);
 			HighlightBox(x, y, boxLength, boxWidth, pokemon, 1);
 		}
@@ -193,8 +202,12 @@ void ShowMoves(GameInfo& game)
 		{
 			y += boxWidth;
 			rowPoke++;
-			pokemon = char(game.board.pokeList[rowPokePrev][colPokePrev]);
-			HighlightBox(xPrev, yPrev, boxLength, boxWidth, pokemon, 0);
+			if (!(rowPokePrev == game.p1.r && colPokePrev == game.p1.c) &&
+				!(rowPokePrev == game.p2.r && colPokePrev == game.p2.c))
+			{
+				pokemon = char(game.board.pokeList[rowPokePrev][colPokePrev]);
+				HighlightBox(xPrev, yPrev, boxLength, boxWidth, pokemon, 0);
+			}
 			pokemon = char(game.board.pokeList[rowPoke][colPoke]);
 			HighlightBox(x, y, boxLength, boxWidth, pokemon, 1);
 		}
@@ -202,8 +215,12 @@ void ShowMoves(GameInfo& game)
 		{
 			x -= (boxLength + 1);
 			colPoke--;
-			pokemon = char(game.board.pokeList[rowPokePrev][colPokePrev]);
-			HighlightBox(xPrev, yPrev, boxLength, boxWidth, pokemon, 0);
+			if (!(rowPokePrev == game.p1.r && colPokePrev == game.p1.c) &&
+				!(rowPokePrev == game.p2.r && colPokePrev == game.p2.c))
+			{
+				pokemon = char(game.board.pokeList[rowPokePrev][colPokePrev]);
+				HighlightBox(xPrev, yPrev, boxLength, boxWidth, pokemon, 0);
+			}
 			pokemon = char(game.board.pokeList[rowPoke][colPoke]);
 			HighlightBox(x, y, boxLength, boxWidth, pokemon, 1);
 		}
@@ -211,8 +228,12 @@ void ShowMoves(GameInfo& game)
 		{
 			x += (boxLength + 1);
 			colPoke++;
-			pokemon = char(game.board.pokeList[rowPokePrev][colPokePrev]);
-			HighlightBox(xPrev, yPrev, boxLength, boxWidth, pokemon, 0);
+			if (!(rowPokePrev == game.p1.r && colPokePrev == game.p1.c) &&
+				!(rowPokePrev == game.p2.r && colPokePrev == game.p2.c))
+			{
+				pokemon = char(game.board.pokeList[rowPokePrev][colPokePrev]);
+				HighlightBox(xPrev, yPrev, boxLength, boxWidth, pokemon, 0);
+			}
 			pokemon = char(game.board.pokeList[rowPoke][colPoke]);
 			HighlightBox(x, y, boxLength, boxWidth, pokemon, 1);
 		}
@@ -247,21 +268,43 @@ void ChoosePoke(GameInfo& game, int rowPoke, int colPoke)
 		Queue path;
 		if (checkMatching(game, path) == 1)
 		{
+			int xP1 = game.board.xBoardStart + (game.board.boxLength + 1) * game.p1.c;
+			int yP1 = game.board.yBoardStart + game.board.boxWidth * game.p1.r;
+			string pokemon;
+			pokemon = char(game.board.pokeList[game.p1.r][game.p1.c]);
+			HighlightBox(xP1, yP1, game.board.boxLength, game.board.boxWidth, pokemon, 0);
+
+			int xP2 = game.board.xBoardStart + (game.board.boxLength + 1) * game.p2.c;
+			int yP2 = game.board.yBoardStart + game.board.boxWidth * game.p2.r;
+			pokemon = char(game.board.pokeList[game.p2.r][game.p2.c]);
+			HighlightBox(xP2, yP2, game.board.boxLength, game.board.boxWidth, pokemon, 0);
+
 			drawMatchingLine(game, path, 1);
 			Sleep(500);
 			drawMatchingLine(game, path, 0);
 			DeleteMatching(game);
 		}
+		else
+		{
+			int xP1 = game.board.xBoardStart + (game.board.boxLength + 1) * game.p1.c;
+			int yP1 = game.board.yBoardStart + game.board.boxWidth * game.p1.r;
+			string pokemon;
+			pokemon = char(game.board.pokeList[game.p1.r][game.p1.c]);
+			HighlightBox(xP1, yP1, game.board.boxLength, game.board.boxWidth, pokemon, 0);
+		}
 		path.~Queue();
 		game.selectedBlocks = 0;
+		game.p1.r = -1;
+		game.p1.c = -1;
+		game.p2.r = -1;
+		game.p2.c = -1;
 	}
 }
 
 void DeleteMatching(GameInfo &game)
 {
 	int x = game.board.xBoardStart, y = game.board.yBoardStart;
-
-	int boxLength = 11, boxWidth = 5;
+	int boxLength = game.board.boxLength, boxWidth = game.board.boxWidth;
 
 	int xP1 = x + (boxLength + 1) * game.p1.c;
 	int yP1 = y + boxWidth * game.p1.r;
@@ -282,7 +325,9 @@ void DeleteMatching(GameInfo &game)
 	game.board.pokeList[game.p2.r][game.p2.c] = 32;
 	
 	game.p1.r = -1;
+	game.p1.c = -1;
 	game.p2.r = -1;
+	game.p2.c = -1;
 
 	game.remainBlocks -= 2;
 }

@@ -173,7 +173,7 @@ int checkMatching(GameInfo& game, Queue& path)
 	if (game.p1.r == game.p2.r && game.p1.c == game.p2.c)
 		return -2;
 
-    if (game.board.pokeList[game.p1.r][game.p1.c] == -1 || game.board.pokeList[game.p2.r][game.p2.c] == -1)
+    if (game.board.pokeList[game.p1.r][game.p1.c] == 32 || game.board.pokeList[game.p2.r][game.p2.c] == 32)
     {
         return 0;
     }

@@ -39,7 +39,7 @@ void DrawBox(int xStart, int yStart, int length, int width)
 void CreateTextBox(int xStart, int yStart, int length, int width, string text)
 {
 	DrawBox(xStart, yStart, length, width);
-	int xText = xStart + (length - text.length()) / 2;
+	int xText = xStart + static_cast<int>((length - text.length()) / 2);
 	int yText = yStart + (width / 2);
 	GoTo(xText, yText);
 	cout << text;
@@ -58,7 +58,7 @@ void HighlightBox(int xStart, int yStart, int length, int width, string text, in
 				cout << " ";
 			}
 		}
-		int xText = xStart + (length - text.length()) / 2;
+		int xText = xStart + static_cast<int>((length - text.length()) / 2);
 		int yText = yStart + (width / 2);
 		GoTo(xText, yText);
 		cout << text;
@@ -74,7 +74,7 @@ void HighlightBox(int xStart, int yStart, int length, int width, string text, in
 				cout << " ";
 			}
 		}
-		int xText = xStart + (length - text.length()) / 2;
+		int xText = xStart + static_cast<int>((length - text.length()) / 2);
 		int yText = yStart + (width / 2);
 		GoTo(xText, yText);
 		cout << text;
@@ -90,7 +90,7 @@ void HighlightBox(int xStart, int yStart, int length, int width, string text, in
 				cout << " ";
 			}
 		}
-		int xText = xStart + (length - text.length()) / 2;
+		int xText = xStart + static_cast<int>((length - text.length()) / 2);
 		int yText = yStart + (width / 2);
 		GoTo(xText, yText);
 		cout << text;
@@ -103,13 +103,14 @@ void HighlightBox(int xStart, int yStart, int length, int width, string text, in
 //References: https://www.youtube.com/watch?v=oDh046cT_Q0&t=1474s
 int ShowMainMenu(int x, int y)
 {
-	string option[] = { "Start", "Leaderboard", "Rules", "Exit" };
+	string option[4] = { "Start", "Leaderboard", "Rules", "Exit" };
 	CreateTextBox(x, y, 30, 3, option[0]);
 	CreateTextBox(x, y + 3, 30, 3, option[1]);
 	CreateTextBox(x, y + 6, 30, 3, option[2]);
 	CreateTextBox(x, y + 9, 30, 3, option[3]);
 	//boundary
 	const int TOPB = y, BOTTOMB = y + 9;
+
 	char key;
 	int i = 0;
 	int choose = 3;
@@ -125,7 +126,7 @@ int ShowMainMenu(int x, int y)
 			HighlightBox(x, y, 30, 3, option[--i], 1);
 			choose++;
 		}
-		else if (key == DOWN && y < BOTTOMB && i < 3) //DOWN
+		else if (key == DOWN && y < BOTTOMB && i <= 2) //DOWN
 		{
 			y += 3;
 			HighlightBox(x, yPrev, 30, 3, option[i], 0);
@@ -145,8 +146,19 @@ void MainMenu()
 	do
 	{
 		system("cls");
-		cout << gameName;
-		choose = ShowMainMenu(42, 15);
+		for (int i = 1; i < 16; i++)
+		{
+			system("cls");
+			SetColor(BLACK, i);
+			cout << gameName;
+			Sleep(70);
+		}
+		//SetColor(BLACK, WHITE);
+
+		GoTo(44, 14);
+		cout << "made by MINH AN & HO HIEU";
+
+		choose = ShowMainMenu(42, 18);
 		if (choose == 3)
 		{
 			GameInfo game(4);
