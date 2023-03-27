@@ -74,8 +74,10 @@ void randomPokemons(Board &board) {
 }
 
 //Hieu----------------------------------------
-void DrawBoardGame(Board board, int x, int y, int boxLength, int boxWidth)
+void DrawBoardGame(Board board)
 {
+	int boxLength = board.boxLength, boxWidth = board.boxWidth;
+	int x = board.xBoardStart, y = board.yBoardStart;
 	int size = board.size;
 	for (int i = 0; i < size; i++)
 	{
@@ -88,10 +90,11 @@ void DrawBoardGame(Board board, int x, int y, int boxLength, int boxWidth)
 	}
 }
 
-void ShowBoardGame(GameInfo& game, int x, int y)
+void ShowMoves(GameInfo& game)
 {
-	DrawBoardGame(game.board, x, y);
-	int boxLength = 11, boxWidth = 5;
+	int x = game.board.xBoardStart, y = game.board.yBoardStart;
+
+	int boxLength = game.board.boxLength, boxWidth = game.board.boxWidth;
 
 	//boundary
 	const int TOPB = y, BOTTOMB = y + boxWidth * (game.board.size - 1),
@@ -100,11 +103,14 @@ void ShowBoardGame(GameInfo& game, int x, int y)
 	char key;
 	int rowPoke = 0, colPoke = 0;
 	string pokemon;
-	pokemon = char(game.board.pokeList[rowPoke][colPoke]);
-	HighlightBox(x, y, boxLength, boxWidth, pokemon, 1);
+
+	int countEnter = 0;
 
 	while (true)
 	{
+		pokemon = char(game.board.pokeList[rowPoke][colPoke]);
+		HighlightBox(x, y, boxLength, boxWidth, pokemon, 1);
+
 		int xPrev = x, yPrev = y;
 		int rowPokePrev = rowPoke, colPokePrev = colPoke;
 
@@ -147,8 +153,68 @@ void ShowBoardGame(GameInfo& game, int x, int y)
 		}
 		else if (key == ENTER)
 		{
+			ChoosePoke(game, rowPoke, colPoke);
+		}
 
+		if (game.remainBlocks == 0)
+		{
+			break;
 		}
 	}
-	return;
+}
+
+void ChoosePoke(GameInfo& game, int rowPoke, int colPoke)
+{
+	if (game.selectedBlocks == 0)
+	{
+		game.p1.r = rowPoke;
+		game.p1.c = colPoke;
+		game.selectedBlocks++;
+	}
+	else if(game.selectedBlocks == 1)
+	{
+		game.p2.r = rowPoke;
+		game.p2.c = colPoke;
+		game.selectedBlocks++;
+	}
+	if (game.selectedBlocks == 2)
+	{
+		Queue path;
+		if (checkMatching(game, path) == 1)
+		{
+			DeleteMatching(game);
+		}
+		path.~Queue();
+		game.selectedBlocks = 0;
+	}
+}
+
+void DeleteMatching(GameInfo &game)
+{
+	int x = game.board.xBoardStart, y = game.board.yBoardStart;
+
+	int boxLength = 11, boxWidth = 5;
+
+	int xP1 = x + (boxLength + 1) * game.p1.c;
+	int yP1 = y + boxWidth * game.p1.r;
+	int xP2 = x + (boxLength + 1) * game.p2.c;
+	int yP2 = y + boxWidth * game.p2.r;
+
+	for (int j = yP1; j < yP1 + boxWidth; j++)
+	{
+		GoTo(xP1, j);
+		cout << "           "; //boxLength
+	}
+	for (int j = yP2; j < yP2 + boxWidth; j++)
+	{
+		GoTo(xP2, j);
+		cout << "           "; //boxLength
+	}
+	game.board.pokeList[game.p1.r][game.p1.c] = 32;
+	game.board.pokeList[game.p2.r][game.p2.c] = 32;
+	
+	game.p1.r = -1;
+	game.p2.r = -1;
+
+	game.remainBlocks -= 2;
 }

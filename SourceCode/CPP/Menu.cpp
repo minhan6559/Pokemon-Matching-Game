@@ -59,9 +59,9 @@ void CreateTextBox(int xStart, int yStart, int length, int width, string text)
 	cout << text;
 }
 
-void HighlightBox(int xStart, int yStart, int length, int width, string text, bool check)
+void HighlightBox(int xStart, int yStart, int length, int width, string text, int mode)
 {
-	if (check)
+	if (mode == 1)
 	{
 		for (int iY = yStart + 1; iY < yStart + width - 1; iY++)
 		{
@@ -77,7 +77,7 @@ void HighlightBox(int xStart, int yStart, int length, int width, string text, bo
 		GoTo(xText, yText);
 		cout << text;
 	}
-	else
+	else if (mode == 0)
 	{
 		for (int iY = yStart + 1; iY < yStart + width - 1; iY++)
 		{
@@ -93,6 +93,23 @@ void HighlightBox(int xStart, int yStart, int length, int width, string text, bo
 		GoTo(xText, yText);
 		cout << text;
 	}
+	else if (mode == 2)
+	{
+		for (int iY = yStart + 1; iY < yStart + width - 1; iY++)
+		{
+			for (int iX = xStart + 1; iX < xStart + length - 1; iX++)
+			{
+				GoTo(iX, iY);
+				SetColor(LAQUA, WHITE);
+				cout << " ";
+			}
+		}
+		int xText = xStart + (length - text.length()) / 2;
+		int yText = yStart + (width / 2);
+		GoTo(xText, yText);
+		cout << text;
+	}
+
 	SetColor(BLACK, WHITE);
 }
 

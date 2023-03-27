@@ -32,5 +32,5 @@ using namespace std;
 
 void DrawBox(int xStart, int yStart, int width, int length);
 void CreateTextBox(int xStart, int yStart, int length, int width, string text);
-void HighlightBox(int xStart, int yStart, int length, int width, string text, bool check);
+void HighlightBox(int xStart, int yStart, int length, int width, string text, int mode);
 int ShowMainMenu();

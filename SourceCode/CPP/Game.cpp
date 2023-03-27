@@ -81,7 +81,7 @@ Queue findPath(Board board, Point p1, Point p2)
 	{
 		for (int j = 0; j < size; ++j)
 		{
-			e[i + 1][j + 1] = board.pokeList[i][j] != -1;
+			e[i + 1][j + 1] = board.pokeList[i][j] != 32;
 		}
 	}
 	Point s = { p1.r + 1, p1.c + 1 };
@@ -148,6 +148,10 @@ Queue findPath(Board board, Point p1, Point p2)
 
 GameInfo::GameInfo(int _size)
 {
+	board.xBoardStart = 5;
+	board.yBoardStart = 5;
+	board.boxLength = 11;
+	board.boxWidth = 5;
 	board.size = _size;
 	randomPokemons(board);
 	score = 0;

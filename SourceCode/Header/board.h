@@ -6,6 +6,8 @@ using namespace std;
 
 struct Board
 {
+	int xBoardStart, yBoardStart;
+	int boxLength, boxWidth;
 	int size;		//Kich thuoc bang
 	int** pokeList;		//Mang pokemon. -1: Deleted
 };
@@ -15,5 +17,7 @@ void releaseBoard(Board& board);
 void randomPokemons(Board& board);
 
 //Hieu --------------------------------------
-void DrawBoardGame(Board board, int x, int y, int boxLength = 11, int boxWidth = 5);
-void ShowBoardGame(GameInfo& game, int x, int y);
+void DrawBoardGame(Board board);
+void ShowMoves(GameInfo& game);
+void ChoosePoke(GameInfo& game, int rowPoke, int colPoke);
+void DeleteMatching(GameInfo& game);
