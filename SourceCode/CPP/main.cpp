@@ -4,15 +4,15 @@ using namespace std;
 
 int main()
 {
-    //int _size;
-    //cout << "Enter board size: ";
-    //cin >> _size;
-    //system("pause");
-    //system("cls");
+    /*int _size;
+    cout << "Enter board size: ";
+    cin >> _size;
+    system("pause");
+    system("cls");
 
-	//GameInfo game(4);
-    //Queue path;
-    //int size = game.board.size;
+	GameInfo game(_size);
+    Queue path;
+    int size = game.board.size;*/
     //DrawBoardGame(game.board);
 
     //ShowMoves(game);
@@ -83,6 +83,16 @@ int main()
   //          game.board.pokeList[game.p1.r][game.p1.c] = -1;
   //          game.board.pokeList[game.p2.r][game.p2.c] = -1;
   //          game.remainBlocks -= 2;
+
+  //          // Display shortest path between two blocks
+  //          cout << "Path: \n";
+  //          while (path.pHead)
+  //          {
+		//		Point p = path.front();
+		//		cout << "(" << p.r << ", " << p.c << ")\n";
+  //              path.pop_front();
+		//	}
+
   //          cout << "Matching!" << endl;
   //      }
   //      else
@@ -95,7 +105,7 @@ int main()
 
   //  }
 
-    //game.board.~Board();
-    //path.~Queue();
+  //  game.board.~Board();
+  //  path.~Queue();
 	return 0;
 }

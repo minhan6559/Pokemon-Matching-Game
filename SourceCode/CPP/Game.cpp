@@ -148,14 +148,14 @@ Queue findPath(Board board, Point p1, Point p2)
 
 GameInfo::GameInfo(int _size)
 {
-	board.xBoardStart = 5;
+	board.xBoardStart = 12;
 	board.yBoardStart = 5;
 	board.boxLength = 11;
 	board.boxWidth = 5;
 	board.size = _size;
 	randomPokemons(board);
-	score = 0;
-	selectedBlocks = 0;
+	score = 0;               
+	selectedBlocks = 0;	       
 	remainBlocks = _size * _size;
 	p1 = { -1, -1 };
 	p2 = { -1, -1 };

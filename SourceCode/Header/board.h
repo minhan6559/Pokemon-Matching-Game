@@ -11,10 +11,12 @@ struct Board
 	int size;		//Kich thuoc bang
 	int** pokeList;		//Mang pokemon. -1: Deleted
 };
+struct Queue;
 struct GameInfo;
 
 void releaseBoard(Board& board);
 void randomPokemons(Board& board);
+void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw);
 
 //Hieu --------------------------------------
 void DrawBoardGame(Board board);

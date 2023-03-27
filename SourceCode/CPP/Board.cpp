@@ -1,5 +1,6 @@
 #include "Board.h"
 #include "Game.h"
+#include <Windows.h>
 void releaseBoard(Board& board)
 {
 	for (int i = 0; i < board.size; i++)
@@ -71,6 +72,70 @@ void randomPokemons(Board &board) {
 	}
 	delete[] pokemons;
 	pokemons = nullptr;
+}
+
+void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw)
+{
+	int boxLength = game.board.boxLength;
+	int boxWidth = game.board.boxWidth;
+
+	Node* pCur = path.pHead->pNext;
+	Node* pPrev = path.pHead;
+
+	while (pCur)
+	{
+		Point start = { (boxLength + 1) * (pPrev->p.c + 1) + (boxLength - 1) / 2,
+						boxWidth * (pPrev->p.r + 1) + (boxWidth / 2) };
+		Point end = { (boxLength + 1) * (pCur->p.c + 1) + (boxLength - 1) / 2,
+						boxWidth * (pCur->p.r + 1) + (boxWidth / 2) };
+		bool isStart = 1;
+		while (!(start.r == end.r && start.c == end.c))
+		{
+			if (start.r == end.r)
+			{
+				if (isStart == 0)
+				{
+					GoTo(start.r, start.c);
+					if (isDraw)
+						cout << "|";
+					else
+						cout << " ";
+				}
+				if (start.c < end.c)
+					start.c++;
+				else if (start.c > end.c)
+					start.c--;
+				isStart = 0;
+			}
+			else if (start.c == end.c)
+			{
+				if (isStart == 0)
+				{
+					GoTo(start.r, start.c);
+					if (isDraw)
+						cout << "-";
+					else
+						cout << " ";
+				}
+				if (start.r < end.r)
+					start.r++;
+				else if (start.r > end.r)
+					start.r--;
+				isStart = 0;
+			}
+		}
+		if (!(end.r == (boxLength + 1) * (game.p2.c + 1) + (boxLength - 1) / 2
+			&& end.c == boxWidth * (game.p2.r + 1) + (boxWidth / 2)))
+		{
+			GoTo(end.r, end.c);
+			if (isDraw)
+				cout << "+";
+			else
+				cout << " ";
+		}
+		pPrev = pCur;
+		pCur = pCur->pNext;
+	}
 }
 
 //Hieu----------------------------------------
@@ -182,6 +247,9 @@ void ChoosePoke(GameInfo& game, int rowPoke, int colPoke)
 		Queue path;
 		if (checkMatching(game, path) == 1)
 		{
+			drawMatchingLine(game, path, 1);
+			Sleep(500);
+			drawMatchingLine(game, path, 0);
 			DeleteMatching(game);
 		}
 		path.~Queue();
