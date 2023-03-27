@@ -141,7 +141,6 @@ int ShowMainMenu(int x, int y)
 
 void MainMenu()
 {
-
 	int choose;
 	do
 	{
