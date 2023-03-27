@@ -1,20 +1,6 @@
 #include "menu.h"
+#include "Game.h"
 
-
-char gameName[] = R"(
-                                  ,'\
-    _.----.        ____         ,'  _\   ___    ___     ____
-_,-'       `.     |    |  /`.   \,-'    |   \  /   |   |    \  |`.
-\      __    \    '-.  | /   `.  ___    |    \/    |   '-.   \ |  |
- \.    \ \   |  __  |  |/    ,','_  `.  |          | __  |    \|  |
-   \    \/   /,' _`.|      ,' / / / /   |          ,' _`.|     |  |
-    \     ,-'/  /   \    ,'   | \/ / ,`.|         /  /   \  |     |
-     \    \ |   \_/  |   `-.  \    `'  /|  |    ||   \_/  | |\    |
-      \    \ \      /       `-.`.___,-' |  |\  /| \      /  | |   |
-       \    \ `.__,'|  |`-._    `|      |__| \/ |  `.__,'|  | |   |
-        \_.-'       |__|    `-._ |              '-.|     '-.| |   |
-                                `'                            '-._|
-)";
 
 void DrawBox(int xStart, int yStart, int length, int width)
 {
@@ -115,31 +101,31 @@ void HighlightBox(int xStart, int yStart, int length, int width, string text, in
 
 
 //References: https://www.youtube.com/watch?v=oDh046cT_Q0&t=1474s
-int ShowMainMenu()
+int ShowMainMenu(int x, int y)
 {
 	string option[] = { "Start", "Leaderboard", "Rules", "Exit" };
-	CreateTextBox(5, 5, 30, 3, option[0]);
-	CreateTextBox(5, 8, 30, 3, option[1]);
-	CreateTextBox(5, 11, 30, 3, option[2]);
-	CreateTextBox(5, 14, 30, 3, option[3]);
-
+	CreateTextBox(x, y, 30, 3, option[0]);
+	CreateTextBox(x, y + 3, 30, 3, option[1]);
+	CreateTextBox(x, y + 6, 30, 3, option[2]);
+	CreateTextBox(x, y + 9, 30, 3, option[3]);
+	//boundary
+	const int TOPB = y, BOTTOMB = y + 9;
 	char key;
-	int x = 5, y = 5;
 	int i = 0;
-	int choose = 2;
+	int choose = 3;
 	HighlightBox(x, y, 30, 3, option[0], 1);
 	while (true)
 	{
 		int xPrev = x, yPrev = y;
 		key = _getch();
-		if (key == UP && y > 5 && i > 0) //UP
+		if (key == UP && y > TOPB && i > 0) //UP
 		{
 			y -= 3;
 			HighlightBox(x, yPrev, 30, 3, option[i], 0);
 			HighlightBox(x, y, 30, 3, option[--i], 1);
 			choose++;
 		}
-		else if (key == DOWN && y < 14 && i < 3) //DOWN
+		else if (key == DOWN && y < BOTTOMB && i < 3) //DOWN
 		{
 			y += 3;
 			HighlightBox(x, yPrev, 30, 3, option[i], 0);
@@ -153,3 +139,42 @@ int ShowMainMenu()
 	}
 }
 
+void MainMenu()
+{
+
+	int choose;
+	do
+	{
+		system("cls");
+		cout << gameName;
+		choose = ShowMainMenu(42, 15);
+		if (choose == 3)
+		{
+			GameInfo game(4);
+			system("cls");
+			DrawBoardGame(game.board);
+			ShowMoves(game);
+			system("pause");
+			game.board.~Board();
+		}
+		if (choose == 2)
+		{
+			system("cls");
+			cout << "LeaderBoard\n";
+			system("pause");
+		}
+		if (choose == 1)
+		{
+			system("cls");
+			cout << "Rules";
+			system("pause");
+		}
+		if (choose == 0)
+		{
+			system("cls");
+			cout << "Byee";
+			system("pause");
+		}
+	} while (choose);
+
+}

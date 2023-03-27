@@ -1,9 +1,15 @@
 #pragma once
-#pragma once
 #include <iostream>
 #include "console.h"
 #include <string>
 #include <conio.h>
+#include "Board.h"
+
+struct board;
+
+
+
+
 
 using namespace std;
 
@@ -30,7 +36,23 @@ using namespace std;
 #define RIGHT 77
 #define ENTER 13
 
+const char gameName[] = R"(
+                                                          ,'\
+                            _.----.        ____         ,'  _\   ___    ___     ____
+                        _,-'       `.     |    |  /`.   \,-'    |   \  /   |   |    \  |`.
+                        \      __    \    '-.  | /   `.  ___    |    \/    |   '-.   \ |  |
+                         \.    \ \   |  __  |  |/    ,','_  `.  |          | __  |    \|  |
+                           \    \/   /,' _`.|      ,' / / / /   |          ,' _`.|     |  |
+                            \     ,-'/  /   \    ,'   | \/ / ,`.|         /  /   \  |     |
+                             \    \ |   \_/  |   `-.  \    `'  /|  |    ||   \_/  | |\    |
+                              \    \ \      /       `-.`.___,-' |  |\  /| \      /  | |   |
+                               \    \ `.__,'|  |`-._    `|      |__| \/ |  `.__,'|  | |   |
+                                \_.-'       |__|    `-._ |              '-.|     '-.| |   |
+                                                        `'                            '-._|
+)";
+
 void DrawBox(int xStart, int yStart, int width, int length);
 void CreateTextBox(int xStart, int yStart, int length, int width, string text);
 void HighlightBox(int xStart, int yStart, int length, int width, string text, int mode);
-int ShowMainMenu();
+int ShowMainMenu(int x, int y);
+void MainMenu();

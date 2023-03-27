@@ -10,13 +10,13 @@ int main()
     //system("pause");
     //system("cls");
 
-	GameInfo game(4);
+	//GameInfo game(4);
     //Queue path;
     //int size = game.board.size;
-    DrawBoardGame(game.board);
+    //DrawBoardGame(game.board);
 
-    ShowMoves(game);
-
+    //ShowMoves(game);
+    MainMenu();
 
   //  while(true)
   //  {
@@ -95,7 +95,7 @@ int main()
 
   //  }
 
-    game.board.~Board();
+    //game.board.~Board();
     //path.~Queue();
 	return 0;
 }
