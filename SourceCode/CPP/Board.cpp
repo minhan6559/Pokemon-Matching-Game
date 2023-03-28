@@ -101,7 +101,7 @@ void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw)
 				{
 					GoTo(start.r, start.c);
 					if (isDraw)
-						cout << char(179);
+						cout << char(186);
 					else
 						cout << " ";
 				}
@@ -123,7 +123,7 @@ void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw)
 				{
 					GoTo(start.r, start.c);
 					if (isDraw)
-						cout << char(196);
+						cout << char(205);
 					else
 						cout << " ";
 				}
@@ -152,30 +152,30 @@ void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw)
 				if (fromDirection == 1)
 				{
 					if (end.r < nextEnd.r)
-						cout << char(192);
+						cout << char(200);
 					else
-						cout << char(217);
+						cout << char(188);
 				}
 				else if (fromDirection == 2)
 				{
 					if (end.r < nextEnd.r)
-						cout << char(218);
+						cout << char(201);
 					else
-						cout << char(191);
+						cout << char(187);
 				}
 				else if (fromDirection == 3)
 				{
 					if (end.c > nextEnd.c)
-						cout << char(217);
+						cout << char(188);
 					else
-						cout << char(191);
+						cout << char(187);
 				}
 				else
 				{
 					if (end.c > nextEnd.c)
-						cout << char(192);
+						cout << char(200);
 					else 
-						cout << char(218);
+						cout << char(201);
 				}
 			}
 			else
