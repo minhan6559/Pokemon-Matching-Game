@@ -88,8 +88,10 @@ void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw)
 						boxWidth * (pPrev->p.r + 1) + (boxWidth / 2) };
 		Point end = { (boxLength + 1) * (pCur->p.c + 1) + (boxLength - 1) / 2,
 						boxWidth * (pCur->p.r + 1) + (boxWidth / 2) };
-		bool isStart = 1;
+		Point tempStart = start;
 
+		bool isStart = 1;
+		int fromDirection = 0; //1: up, 2: down, 3: left, 4: right
 		SetColor(0, 11);
 
 		while (!(start.r == end.r && start.c == end.c))
@@ -100,14 +102,20 @@ void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw)
 				{
 					GoTo(start.r, start.c);
 					if (isDraw)
-						cout << char(177);
+						cout << char(179);
 					else
 						cout << " ";
 				}
 				if (start.c < end.c)
+				{
 					start.c++;
+					fromDirection = 1;
+				}
 				else if (start.c > end.c)
+				{
 					start.c--;
+					fromDirection = 2;
+				}
 				isStart = 0;
 			}
 			else if (start.c == end.c)
@@ -116,14 +124,20 @@ void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw)
 				{
 					GoTo(start.r, start.c);
 					if (isDraw)
-						cout << char(177);
+						cout << char(196);
 					else
 						cout << " ";
 				}
 				if (start.r < end.r)
+				{
 					start.r++;
+					fromDirection = 3;
+				}
 				else if (start.r > end.r)
+				{
 					start.r--;
+					fromDirection = 4;
+				}
 				isStart = 0;
 			}
 		}
@@ -132,7 +146,39 @@ void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw)
 		{
 			GoTo(end.r, end.c);
 			if (isDraw)
-				cout << char(177);
+			{
+				Point nextEnd = { (boxLength + 1) * (pCur->pNext->p.c + 1) + (boxLength - 1) / 2,
+										boxWidth * (pCur->pNext->p.r + 1) + (boxWidth / 2) };
+				
+				if (fromDirection == 1)
+				{
+					if (end.r < nextEnd.r)
+						cout << char(192);
+					else
+						cout << char(217);
+				}
+				else if (fromDirection == 2)
+				{
+					if (end.r < nextEnd.r)
+						cout << char(218);
+					else
+						cout << char(191);
+				}
+				else if (fromDirection == 3)
+				{
+					if (end.c > nextEnd.c)
+						cout << char(217);
+					else
+						cout << char(191);
+				}
+				else
+				{
+					if (end.c > nextEnd.c)
+						cout << char(192);
+					else 
+						cout << char(218);
+				}
+			}
 			else
 				cout << " ";
 		}
