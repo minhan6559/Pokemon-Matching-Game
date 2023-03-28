@@ -146,16 +146,22 @@ void MainMenu()
 {
 	srand((unsigned int)time(NULL));
 	SetUpConsole();
+	bool isBegin = 1;
 	int choose;
 	do
-	{
+	{	
 		system("cls");
+
 		for (int i = 1; i < 10; i++)
 		{
 			int color = rand() % 14 + 1;
 			system("cls");
 			SetColor(BLACK, color);
 			cout << gameName;
+			if (!isBegin)
+			{
+				break;
+			}
 			Sleep(200);
 		}
 		SetColor(BLACK, WHITE);
@@ -163,6 +169,7 @@ void MainMenu()
 		GoTo(44, 14);
 		cout << "made by MINH AN & HO HIEU";
 
+		isBegin = 0;
 		choose = ShowMainMenu(42, 18);
 		if (choose == 3)
 		{
@@ -178,7 +185,7 @@ void MainMenu()
 		if (choose == 1)
 		{
 			system("cls");
-			cout << "Rules";
+			ShowRules();
 			system("pause");
 		}
 		if (choose == 0)
@@ -192,6 +199,13 @@ void MainMenu()
 
 void ChooseLevel(int x, int y)
 {
+	SetColor(BLACK, rand() % 14 + 1);
+	cout << gameName;
+	SetColor(BLACK, WHITE);
+
+	GoTo(44, 14);
+	cout << "made by MINH AN & HO HIEU";
+
 	string option[] = { "Easy", "Hard", "Exit" };
 	CreateTextBox(x, y, 30, 3, option[0]);
 	CreateTextBox(x, y + 3, 30, 3, option[1]);
@@ -214,7 +228,7 @@ void ChooseLevel(int x, int y)
 			HighlightBox(x, y, 30, 3, option[--i], 1);
 			choose++;
 		}
-		else if (key == DOWN && y < BOTTOMB && i <= 2) //DOWN
+		else if (key == DOWN && y < BOTTOMB && i <= 1) //DOWN
 		{
 			y += 3;
 			HighlightBox(x, yPrev, 30, 3, option[i], 0);
@@ -249,4 +263,26 @@ void ChooseLevel(int x, int y)
 			}
 		}
 	}
+}
+
+void ShowRules()
+{
+	//DrawBox();
+	cout << R"(
+                                                                          ____  __  ____    ___________
+                                                                         / __ \/ / / / /   / ____/ ___/
+                                                                        / /_/ / / / / /   / __/  \__ \ 
+                                                                       / _, _/ /_/ / /___/ /___ ___/ / 
+                                                                      /_/ |_|\____/_____/_____//____/  
+                                 
+)";
+	GoTo(15, 10);
+	cout << "The Matching Game(commonly known as Pikachu Puzzle Game) includes a board of \
+multiple cells, each of whichpresents a figure.\n";
+	GoTo(15, 11);
+	cout << "The player finds and matches a pair of cells that contain the same \
+figure and connect each other in some particular pattern.\n";
+	GoTo(15, 12);
+	cout << "A legal match will make the two cells disappear. The game ends when all matching\
+pairs are found.\n";
 }

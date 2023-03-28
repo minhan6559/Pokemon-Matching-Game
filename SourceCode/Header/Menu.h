@@ -59,3 +59,4 @@ void HighlightBox(int xStart, int yStart, int length, int width, string text, in
 int ShowMainMenu(int x, int y);
 void MainMenu();
 void ChooseLevel(int x, int y);
+void ShowRules();

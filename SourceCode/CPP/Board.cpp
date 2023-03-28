@@ -333,7 +333,7 @@ void ShowMoves(GameInfo& game)
 		int rowPokePrev = rowPoke, colPokePrev = colPoke;
 
 		key = _getch();
-		if (key == UP && y > TOPB)
+		if ((key == UP || key == 'w') && y > TOPB)
 		{
 			y -= boxWidth;
 			rowPoke--;
@@ -346,7 +346,7 @@ void ShowMoves(GameInfo& game)
 			pokemon = char(game.board.pokeList[rowPoke][colPoke]);
 			HighlightBox(x, y, boxLength, boxWidth, pokemon, 1);
 		}
-		else if (key == DOWN && y < BOTTOMB)
+		else if ((key == DOWN || key == 's') && y < BOTTOMB)
 		{
 			y += boxWidth;
 			rowPoke++;
@@ -359,7 +359,7 @@ void ShowMoves(GameInfo& game)
 			pokemon = char(game.board.pokeList[rowPoke][colPoke]);
 			HighlightBox(x, y, boxLength, boxWidth, pokemon, 1);
 		}
-		else if (key == LEFT && x > LEFTB)
+		else if ((key == LEFT || key == 'a') && x > LEFTB)
 		{
 			x -= (boxLength + 1);
 			colPoke--;
@@ -372,7 +372,7 @@ void ShowMoves(GameInfo& game)
 			pokemon = char(game.board.pokeList[rowPoke][colPoke]);
 			HighlightBox(x, y, boxLength, boxWidth, pokemon, 1);
 		}
-		else if (key == RIGHT && x < RIGHTB)
+		else if ((key == RIGHT || key == 'd') && x < RIGHTB)
 		{
 			x += (boxLength + 1);
 			colPoke++;
