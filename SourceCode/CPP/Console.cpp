@@ -81,6 +81,30 @@ void DisableSelection()
     SetConsoleMode(hStdin, ~ENABLE_QUICK_EDIT_MODE);
 }
 
+void SelectingSound()
+{
+    Beep(830, 40);
+    Beep(1109, 40);
+}
+
+void ChoosedSound()
+{
+    Beep(1760, 40);
+    Beep(1318, 40);
+}
+
+void ErrorSound()
+{
+    Beep(250, 100);
+    Beep(200, 100);
+}
+
+void CorrectSound()
+{
+    Beep(1046, 150);
+    Beep(2093, 150);
+}
+
 
 void SetUpConsole()
 {

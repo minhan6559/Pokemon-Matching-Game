@@ -123,6 +123,7 @@ int ShowMainMenu(int x, int y)
 		key = _getch();
 		if (key == UP && y > TOPB && i > 0) //UP
 		{
+			SelectingSound();
 			y -= 3;
 			HighlightBox(x, yPrev, 30, 3, option[i], 0);
 			HighlightBox(x, y, 30, 3, option[--i], 1);
@@ -130,6 +131,7 @@ int ShowMainMenu(int x, int y)
 		}
 		else if (key == DOWN && y < BOTTOMB && i <= 2) //DOWN
 		{
+			SelectingSound();
 			y += 3;
 			HighlightBox(x, yPrev, 30, 3, option[i], 0);
 			HighlightBox(x, y, 30, 3, option[++i], 1);
@@ -137,6 +139,7 @@ int ShowMainMenu(int x, int y)
 		}
 		else if (key == ENTER)
 		{
+			ChoosedSound();
 			return choose;
 		}
 	}
@@ -152,18 +155,18 @@ void MainMenu()
 	{	
 		system("cls");
 
-		//for (int i = 1; i < 10; i++)
-		//{
-		//	int color = rand() % 14 + 1;
-		//	system("cls");
-		//	SetColor(BLACK, color);
-		//	cout << gameName;
-		//	if (!isBegin)
-		//	{
-		//		break;
-		//	}
-		//	Sleep(200);
-		//}
+		for (int i = 1; i < 10; i++)
+		{
+			int color = rand() % 14 + 1;
+			system("cls");
+			SetColor(BLACK, color);
+			cout << gameName;
+			if (!isBegin)
+			{
+				break;
+			}
+			Sleep(200);
+		}
 		SetColor(BLACK, WHITE);
 
 		GoTo(44, 14);
@@ -223,6 +226,7 @@ void ChooseLevel(int x, int y)
 		key = _getch();
 		if (key == UP && y > TOPB && i > 0) //UP
 		{
+			SelectingSound();
 			y -= 3;
 			HighlightBox(x, yPrev, 30, 3, option[i], 0);
 			HighlightBox(x, y, 30, 3, option[--i], 1);
@@ -230,6 +234,7 @@ void ChooseLevel(int x, int y)
 		}
 		else if (key == DOWN && y < BOTTOMB && i <= 1) //DOWN
 		{
+			SelectingSound();
 			y += 3;
 			HighlightBox(x, yPrev, 30, 3, option[i], 0);
 			HighlightBox(x, y, 30, 3, option[++i], 1);
@@ -237,6 +242,7 @@ void ChooseLevel(int x, int y)
 		}
 		else if (key == ENTER)
 		{
+			ChoosedSound();
 			if (choose == 2)
 			{
 				GameInfo game(4);
@@ -259,6 +265,7 @@ void ChooseLevel(int x, int y)
 			}
 			if (choose == 0)
 			{
+				ChoosedSound();
 				return;
 			}
 		}

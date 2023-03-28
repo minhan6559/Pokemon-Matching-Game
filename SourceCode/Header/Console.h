@@ -11,3 +11,8 @@ void GoTo(SHORT posX, SHORT posY);
 void SetUpConsole();
 void ShowCur(bool CursorVisibility);
 void DisableSelection();
+
+void SelectingSound();
+void ChoosedSound();
+void ErrorSound();
+void CorrectSound();

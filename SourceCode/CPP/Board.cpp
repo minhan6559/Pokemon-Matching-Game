@@ -335,6 +335,7 @@ void ShowMoves(GameInfo& game)
 		key = _getch();
 		if ((key == UP || key == 'w') && y > TOPB)
 		{
+			SelectingSound();
 			y -= boxWidth;
 			rowPoke--;
 			if (!(rowPokePrev == game.p1.r && colPokePrev == game.p1.c) &&
@@ -348,6 +349,7 @@ void ShowMoves(GameInfo& game)
 		}
 		else if ((key == DOWN || key == 's') && y < BOTTOMB)
 		{
+			SelectingSound();
 			y += boxWidth;
 			rowPoke++;
 			if (!(rowPokePrev == game.p1.r && colPokePrev == game.p1.c) &&
@@ -361,6 +363,7 @@ void ShowMoves(GameInfo& game)
 		}
 		else if ((key == LEFT || key == 'a') && x > LEFTB)
 		{
+			SelectingSound();
 			x -= (boxLength + 1);
 			colPoke--;
 			if (!(rowPokePrev == game.p1.r && colPokePrev == game.p1.c) &&
@@ -374,6 +377,7 @@ void ShowMoves(GameInfo& game)
 		}
 		else if ((key == RIGHT || key == 'd') && x < RIGHTB)
 		{
+			SelectingSound();
 			x += (boxLength + 1);
 			colPoke++;
 			if (!(rowPokePrev == game.p1.r && colPokePrev == game.p1.c) &&
@@ -391,14 +395,15 @@ void ShowMoves(GameInfo& game)
 		}
 		else if (key == H_Key)
 		{
+			SelectingSound();
 			showSuggestMove(game);
 		}
 		else if (key == P_key)
 		{
+			SelectingSound();
 			shufflePokeList(game);
 			DrawBoardGame(game.board, 0);
 		}
-
 		if (game.remainBlocks == 0)
 		{
 			break;
@@ -409,9 +414,13 @@ void ShowMoves(GameInfo& game)
 void ChoosePoke(GameInfo& game, int rowPoke, int colPoke)
 {
 	if (game.board.pokeList[rowPoke][colPoke] == ' ')
+	{
+		ErrorSound();
 		return;
+	}
 	if (game.selectedBlocks == 0)
 	{
+		ChoosedSound();
 		game.p1.r = rowPoke;
 		game.p1.c = colPoke;
 		game.selectedBlocks++;
@@ -437,14 +446,15 @@ void ChoosePoke(GameInfo& game, int rowPoke, int colPoke)
 			int yP2 = game.board.yBoardStart + game.board.boxWidth * game.p2.r;
 			pokemon = char(game.board.pokeList[game.p2.r][game.p2.c]);
 			HighlightBox(xP2, yP2, game.board.boxLength, game.board.boxWidth, pokemon, 0);
-
 			drawMatchingLine(game, path, 1);
+			CorrectSound();
 			Sleep(500);
 			drawMatchingLine(game, path, 0);
 			DeleteMatching(game);
 		}
 		else
 		{
+			ErrorSound();
 			int xP1 = game.board.xBoardStart + (game.board.boxLength + 1) * game.p1.c;
 			int yP1 = game.board.yBoardStart + game.board.boxWidth * game.p1.r;
 			string pokemon;
