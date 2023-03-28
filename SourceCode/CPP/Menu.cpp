@@ -161,12 +161,8 @@ void MainMenu()
 		choose = ShowMainMenu(42, 18);
 		if (choose == 3)
 		{
-			GameInfo game(4);
 			system("cls");
-			DrawBoardGame(game.board);
-			ShowMoves(game);
-			system("pause");
-			game.board.~Board();
+			ChooseLevel(42, 18);
 		}
 		if (choose == 2)
 		{
@@ -187,5 +183,65 @@ void MainMenu()
 			system("pause");
 		}
 	} while (choose);
+}
 
+void ChooseLevel(int x, int y)
+{
+	string option[] = { "Easy", "Hard", "Exit" };
+	CreateTextBox(x, y, 30, 3, option[0]);
+	CreateTextBox(x, y + 3, 30, 3, option[1]);
+	CreateTextBox(x, y + 6, 30, 3, option[2]);
+	//boundary
+	const int TOPB = y, BOTTOMB = y + 6;
+
+	char key;
+	int i = 0;
+	int choose = 2;
+	HighlightBox(x, y, 30, 3, option[0], 1);
+	while (true)
+	{
+		int xPrev = x, yPrev = y;
+		key = _getch();
+		if (key == UP && y > TOPB && i > 0) //UP
+		{
+			y -= 3;
+			HighlightBox(x, yPrev, 30, 3, option[i], 0);
+			HighlightBox(x, y, 30, 3, option[--i], 1);
+			choose++;
+		}
+		else if (key == DOWN && y < BOTTOMB && i <= 2) //DOWN
+		{
+			y += 3;
+			HighlightBox(x, yPrev, 30, 3, option[i], 0);
+			HighlightBox(x, y, 30, 3, option[++i], 1);
+			choose--;
+		}
+		else if (key == ENTER)
+		{
+			if (choose == 2)
+			{
+				GameInfo game(4);
+				system("cls");
+				DrawBoardGame(game.board);
+				ShowMoves(game);
+				system("pause");
+				game.board.~Board();
+				return;
+			}
+			if (choose == 1)
+			{
+				GameInfo game(6);
+				system("cls");
+				DrawBoardGame(game.board);
+				ShowMoves(game);
+				system("pause");
+				game.board.~Board();
+				return;
+			}
+			if (choose == 0)
+			{
+				return;
+			}
+		}
+	}
 }

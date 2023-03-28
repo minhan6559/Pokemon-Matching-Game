@@ -196,13 +196,34 @@ void DrawBoardGame(Board board)
 	int size = board.size;
 	for (int i = 0; i < size; i++)
 	{
-		for (int j = 0; j < size; j++)
+		
+		if (i % 2 == 0)
 		{
-			string pokemon;
-			pokemon = char(board.pokeList[i][j]);
-			CreateTextBox(x + (boxLength + 1) * j, y + boxWidth * i, 11, 5, pokemon);
+			for (int j = 0; j < size; j++)
+			{
+				string pokemon;
+				pokemon = char(board.pokeList[i][j]);
+				int pokeColor = char(board.pokeList[i][j]) % 15 + 1;
+				SetColor(BLACK, pokeColor);
+				CreateTextBox(x + (boxLength + 1) * j, y + boxWidth * i, 11, 5, pokemon);
+				Sleep(200);
+			}
+		}
+		else
+		{
+			
+			for (int j = size - 1; j >= 0; j--)
+			{
+				string pokemon;
+				pokemon = char(board.pokeList[i][j]);
+				int pokeColor = char(board.pokeList[i][j]) % 15 + 1;
+				SetColor(BLACK, pokeColor);
+				CreateTextBox(x + (boxLength + 1) * j, y + boxWidth * i, 11, 5, pokemon);
+				Sleep(200);
+			}
 		}
 	}
+	SetColor(BLACK, WHITE);
 }
 
 void ShowMoves(GameInfo& game)
