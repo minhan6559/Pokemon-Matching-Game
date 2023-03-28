@@ -88,7 +88,6 @@ void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw)
 						boxWidth * (pPrev->p.r + 1) + (boxWidth / 2) };
 		Point end = { (boxLength + 1) * (pCur->p.c + 1) + (boxLength - 1) / 2,
 						boxWidth * (pCur->p.r + 1) + (boxWidth / 2) };
-		Point tempStart = start;
 
 		bool isStart = 1;
 		int fromDirection = 0; //1: up, 2: down, 3: left, 4: right
