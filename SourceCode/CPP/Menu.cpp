@@ -144,18 +144,20 @@ int ShowMainMenu(int x, int y)
 
 void MainMenu()
 {
+	srand((unsigned int)time(NULL));
 	int choose;
 	do
 	{
 		system("cls");
-		for (int i = 1; i < 16; i++)
+		for (int i = 1; i < 10; i++)
 		{
+			int color = rand() % 14 + 1;
 			system("cls");
-			SetColor(BLACK, i);
+			SetColor(BLACK, color);
 			cout << gameName;
-			Sleep(70);
+			Sleep(200);
 		}
-		//SetColor(BLACK, WHITE);
+		SetColor(BLACK, WHITE);
 
 		GoTo(44, 14);
 		cout << "made by MINH AN & HO HIEU";
