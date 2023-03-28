@@ -1,6 +1,5 @@
 #include "console.h"
 
-
 //Ref: Luis
 void setAndCenterWindow()
 {
@@ -81,6 +80,7 @@ void DisableSelection()
 
     SetConsoleMode(hStdin, ~ENABLE_QUICK_EDIT_MODE);
 }
+
 
 void SetUpConsole()
 {

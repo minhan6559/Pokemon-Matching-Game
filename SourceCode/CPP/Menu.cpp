@@ -152,18 +152,18 @@ void MainMenu()
 	{	
 		system("cls");
 
-		for (int i = 1; i < 10; i++)
-		{
-			int color = rand() % 14 + 1;
-			system("cls");
-			SetColor(BLACK, color);
-			cout << gameName;
-			if (!isBegin)
-			{
-				break;
-			}
-			Sleep(200);
-		}
+		//for (int i = 1; i < 10; i++)
+		//{
+		//	int color = rand() % 14 + 1;
+		//	system("cls");
+		//	SetColor(BLACK, color);
+		//	cout << gameName;
+		//	if (!isBegin)
+		//	{
+		//		break;
+		//	}
+		//	Sleep(200);
+		//}
 		SetColor(BLACK, WHITE);
 
 		GoTo(44, 14);
@@ -186,7 +186,7 @@ void MainMenu()
 		{
 			system("cls");
 			ShowRules();
-			system("pause");
+			_getch();
 		}
 		if (choose == 0)
 		{
@@ -267,7 +267,7 @@ void ChooseLevel(int x, int y)
 
 void ShowRules()
 {
-	//DrawBox();
+	
 	cout << R"(
                                                                           ____  __  ____    ___________
                                                                          / __ \/ / / / /   / ____/ ___/
@@ -276,13 +276,60 @@ void ShowRules()
                                                                       /_/ |_|\____/_____/_____//____/  
                                  
 )";
-	GoTo(15, 10);
-	cout << "The Matching Game(commonly known as Pikachu Puzzle Game) includes a board of \
+
+	DrawBox(24, 10, 130, 8);
+	DrawBox(24, 17, 130, 8);
+	DrawBox(24, 24, 130, 8);
+	GoTo(24, 17);
+	cout << char(195);
+	GoTo(24, 24);
+	cout << char(195);
+	GoTo(153, 17);
+	cout << char(180);
+	GoTo(153, 24);
+	cout << char(180);
+
+	GoTo(86, 10);
+	SetColor(WHITE, BLACK);
+	cout << "OVERALL";
+	SetColor(BLACK ,WHITE);
+
+	GoTo(27, 12);
+	cout << char(175) <<  " The Matching Game(commonly known as Pikachu Puzzle Game) includes a board of \
 multiple cells, each of whichpresents a figure.\n";
-	GoTo(15, 11);
-	cout << "The player finds and matches a pair of cells that contain the same \
+	GoTo(27, 13);
+	cout << char(175) << " The player finds and matches a pair of cells that contain the same \
 figure and connect each other in some particular pattern.\n";
-	GoTo(15, 12);
-	cout << "A legal match will make the two cells disappear. The game ends when all matching\
+	GoTo(27, 14);
+	cout << char(175) << " A legal match will make the two cells disappear. The game ends when all matching\
 pairs are found.\n";
+
+	GoTo(86, 17);
+	SetColor(WHITE, BLACK);
+	cout << "MOVING";
+	SetColor(BLACK, WHITE);
+
+	GoTo(30, 19);
+	cout << char(175) << " Press W A S D or UP DOWN LEFT RIGHT arows to move.\n";
+	GoTo(30, 21);
+	cout << char(175) << " Press Enter to select.\n";
+	GoTo(100, 19);
+	cout << char(175) << " Press H to suggest moving.\n";
+	GoTo(100, 21);
+	cout << char(175) << " Press P to suffle.\n";
+
+
+	GoTo(86, 24);
+	SetColor(WHITE, BLACK);
+	cout << "SCORING";
+	SetColor(BLACK, WHITE);
+
+	GoTo(30, 26);
+	cout << char(175) << " I matching: 1 point.\n";
+	GoTo(30, 28);
+	cout << char(175) << " L matching: 2 point.\n";
+	GoTo(100, 26);
+	cout << char(175) << " Z or U matching: 3 point.\n";
+	GoTo(100, 28);
+	cout << char(175) << " Suggest move or Suffle: -2 point.\n";
 }

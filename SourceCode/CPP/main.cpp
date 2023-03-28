@@ -5,6 +5,8 @@ using namespace std;
 
 int main()
 {
+	SetUpConsole();
     MainMenu();
+
 	return 0;
 }
