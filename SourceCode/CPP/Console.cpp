@@ -1,28 +1,19 @@
 #include "console.h"
 
 
-void SetWindowSize(SHORT width, SHORT height)
+//Ref: Luis
+void setAndCenterWindow()
 {
-    HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
-
-    SMALL_RECT WindowSize;
-    WindowSize.Top = 0;
-    WindowSize.Left = 0;
-    WindowSize.Right = width;
-    WindowSize.Bottom = height;
-
-    SetConsoleWindowInfo(hStdout, 1, &WindowSize);
+    HWND consoleWindow = GetConsoleWindow();
+    RECT rectClient, rectWindow;
+    GetClientRect(consoleWindow, &rectClient), GetWindowRect(consoleWindow, &rectWindow);
+    int width = 1500;
+    int height = 768;
+    int posX = (GetSystemMetrics(SM_CXSCREEN) - width) / 2,
+        posY = (GetSystemMetrics(SM_CYSCREEN) - height) / 2;
+    MoveWindow(consoleWindow, posX, posY, width, height, TRUE);
 }
 
-void SetScreenBufferSize(SHORT width, SHORT height)
-{
-    HANDLE hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
-    COORD NewSize;
-    NewSize.X = width;
-    NewSize.Y = height;
-
-    SetConsoleScreenBufferSize(hStdout, NewSize);
-}
 
 void DisableResizeWindow()
 {
@@ -73,11 +64,30 @@ void GoTo(SHORT posX, SHORT posY)
     SetConsoleCursorPosition(hStdout, Position);
 }
 
+void ShowCur(bool CursorVisibility)
+{
+    HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_CURSOR_INFO ConCurInf;
+
+    ConCurInf.dwSize = 10;
+    ConCurInf.bVisible = CursorVisibility;
+
+    SetConsoleCursorInfo(handle, &ConCurInf);
+}
+
+void DisableSelection()
+{
+    HANDLE hStdin = GetStdHandle(STD_INPUT_HANDLE);
+
+    SetConsoleMode(hStdin, ~ENABLE_QUICK_EDIT_MODE);
+}
+
 void SetUpConsole()
 {
     SetConsoleTitle(L"Pukachi");
-    SetWindowSize(200, 100);
-    SetScreenBufferSize(200, 100);
+    setAndCenterWindow();
     DisableResizeWindow();
     DisableCtrButton(1, 1, 1);
+    ShowCur(0);
+    //DisableSelection();
 }
