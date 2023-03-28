@@ -1,6 +1,11 @@
+#include "Menu.h"
 #include "Board.h"
 #include "Game.h"
+#include <iostream>
 #include <Windows.h>
+#include <ctime>
+#include <cstdlib>
+
 void releaseBoard(Board& board)
 {
 	for (int i = 0; i < board.size; i++)
@@ -10,7 +15,7 @@ void releaseBoard(Board& board)
 }
 
 //Ref: tu ham BoardView::buildBoardData() cua louis
-void randomPokemons(Board &board) {
+void randomPokemons(Board& board) {
 	srand((unsigned int)time(NULL));
 
 	int size = board.size;
@@ -65,7 +70,7 @@ void randomPokemons(Board &board) {
 	pos = nullptr;
 	delete[] checkDuplicate;
 	checkDuplicate = nullptr;
-	
+
 	for (int i = 0; i < size; i++)
 	{
 		delete[] pokemons[i];
@@ -148,7 +153,7 @@ void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw)
 			{
 				Point nextEnd = { (boxLength + 1) * (pCur->pNext->p.c + 1) + (boxLength - 1) / 2,
 										boxWidth * (pCur->pNext->p.r + 1) + (boxWidth / 2) };
-				
+
 				if (fromDirection == 1)
 				{
 					if (end.r < nextEnd.r)
@@ -174,7 +179,7 @@ void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw)
 				{
 					if (end.c > nextEnd.c)
 						cout << char(200);
-					else 
+					else
 						cout << char(201);
 				}
 			}
@@ -188,38 +193,115 @@ void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw)
 	}
 }
 
+void showSuggestMove(GameInfo& game)
+{
+	Point suggestPoint1;
+	Point suggestPoint2;
+
+	int boxLength = game.board.boxLength;
+	int boxWidth = game.board.boxWidth;
+
+	if (moveSuggestion(game, suggestPoint1, suggestPoint2))
+	{
+		for (int i = 1; i <= 4; i++)
+		{
+			string pokemon;
+			pokemon = char(game.board.pokeList[suggestPoint1.r][suggestPoint1.c]);
+			int x = (game.board.boxLength + 1) * (suggestPoint1.c + 1);
+			int y = game.board.boxWidth * (suggestPoint1.r + 1);
+			HighlightBox(x, y, boxLength, boxWidth, pokemon, i % 2);
+
+			pokemon = char(game.board.pokeList[suggestPoint2.r][suggestPoint2.c]);
+			x = (game.board.boxLength + 1) * (suggestPoint2.c + 1);
+			y = game.board.boxWidth * (suggestPoint2.r + 1);
+			HighlightBox(x, y, boxLength, boxWidth, pokemon, i % 2);
+			Sleep(200);
+		}
+	}
+}
+
+void shufflePokeList(GameInfo& game)
+{
+	srand((unsigned int)time(NULL));
+	// Create a list of indices of non-deleted Pokemon
+	int numNonDeleted = 0;
+	int* nonDeletedIndices = new int[game.board.size * game.board.size];
+	for (int i = 0; i < game.board.size; i++) {
+		for (int j = 0; j < game.board.size; j++) {
+			if (game.board.pokeList[i][j] != 32) {
+				nonDeletedIndices[numNonDeleted] = i * game.board.size + j;
+				numNonDeleted++;
+			}
+		}
+	}
+
+	// Shuffle the list of non-deleted indices
+	for (int i = numNonDeleted - 1; i > 0; i--) {
+		int j = rand() % (i + 1);
+		int temp = nonDeletedIndices[i];
+		nonDeletedIndices[i] = nonDeletedIndices[j];
+		nonDeletedIndices[j] = temp;
+	}
+
+	// Update the pokeList array with the shuffled indices
+	int index = 0;
+	for (int i = 0; i < game.board.size; i++) {
+		for (int j = 0; j < game.board.size; j++) {
+			if (game.board.pokeList[i][j] != 32) {
+				int newIndex = nonDeletedIndices[index];
+				int newI = newIndex / game.board.size;
+				int newJ = newIndex % game.board.size;
+				int temp = game.board.pokeList[i][j];
+				game.board.pokeList[i][j] = game.board.pokeList[newI][newJ];
+				game.board.pokeList[newI][newJ] = temp;
+				index++;
+			}
+		}
+	}
+
+	delete[] nonDeletedIndices;
+}
+
+
+
 //Hieu----------------------------------------
-void DrawBoardGame(Board board)
+void DrawBoardGame(Board board, bool isSlow)
 {
 	int boxLength = board.boxLength, boxWidth = board.boxWidth;
 	int x = board.xBoardStart, y = board.yBoardStart;
 	int size = board.size;
 	for (int i = 0; i < size; i++)
 	{
-		
+
 		if (i % 2 == 0)
 		{
 			for (int j = 0; j < size; j++)
 			{
+				if (board.pokeList[i][j] == 32)
+					continue;
 				string pokemon;
 				pokemon = char(board.pokeList[i][j]);
 				int pokeColor = char(board.pokeList[i][j]) % 15 + 1;
 				SetColor(BLACK, pokeColor);
 				CreateTextBox(x + (boxLength + 1) * j, y + boxWidth * i, 11, 5, pokemon);
-				Sleep(200);
+				if (isSlow)
+					Sleep(50);
 			}
 		}
 		else
 		{
-			
+
 			for (int j = size - 1; j >= 0; j--)
 			{
+				if (board.pokeList[i][j] == 32)
+					continue;
 				string pokemon;
 				pokemon = char(board.pokeList[i][j]);
 				int pokeColor = char(board.pokeList[i][j]) % 15 + 1;
 				SetColor(BLACK, pokeColor);
 				CreateTextBox(x + (boxLength + 1) * j, y + boxWidth * i, 11, 5, pokemon);
-				Sleep(200);
+				if (isSlow)
+					Sleep(50);
 			}
 		}
 	}
@@ -307,6 +389,15 @@ void ShowMoves(GameInfo& game)
 		{
 			ChoosePoke(game, rowPoke, colPoke);
 		}
+		else if (key == H_Key)
+		{
+			showSuggestMove(game);
+		}
+		else if (key == P_key)
+		{
+			shufflePokeList(game);
+			DrawBoardGame(game.board, 0);
+		}
 
 		if (game.remainBlocks == 0)
 		{
@@ -317,13 +408,15 @@ void ShowMoves(GameInfo& game)
 
 void ChoosePoke(GameInfo& game, int rowPoke, int colPoke)
 {
+	if (game.board.pokeList[rowPoke][colPoke] == ' ')
+		return;
 	if (game.selectedBlocks == 0)
 	{
 		game.p1.r = rowPoke;
 		game.p1.c = colPoke;
 		game.selectedBlocks++;
 	}
-	else if(game.selectedBlocks == 1)
+	else if (game.selectedBlocks == 1)
 	{
 		game.p2.r = rowPoke;
 		game.p2.c = colPoke;
@@ -367,7 +460,7 @@ void ChoosePoke(GameInfo& game, int rowPoke, int colPoke)
 	}
 }
 
-void DeleteMatching(GameInfo &game)
+void DeleteMatching(GameInfo& game)
 {
 	int x = game.board.xBoardStart, y = game.board.yBoardStart;
 	int boxLength = game.board.boxLength, boxWidth = game.board.boxWidth;
@@ -389,7 +482,7 @@ void DeleteMatching(GameInfo &game)
 	}
 	game.board.pokeList[game.p1.r][game.p1.c] = 32;
 	game.board.pokeList[game.p2.r][game.p2.c] = 32;
-	
+
 	game.p1.r = -1;
 	game.p1.c = -1;
 	game.p2.r = -1;

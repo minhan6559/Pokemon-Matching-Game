@@ -41,6 +41,7 @@ void CreateTextBox(int xStart, int yStart, int length, int width, string text)
 	DrawBox(xStart, yStart, length, width);
 	int xText = xStart + static_cast<int>((length - text.length()) / 2);
 	int yText = yStart + (width / 2);
+	SetColor(BLACK, WHITE);
 	GoTo(xText, yText);
 	cout << text;
 }
@@ -54,7 +55,8 @@ void HighlightBox(int xStart, int yStart, int length, int width, string text, in
 			for (int iX = xStart + 1; iX < xStart + length - 1; iX++)
 			{
 				GoTo(iX, iY);
-				SetColor(WHITE, BLACK);
+				//SetColor(WHITE, BLACK);
+				SetColor(LAQUA, BLACK);
 				cout << " ";
 			}
 		}
@@ -222,7 +224,7 @@ void ChooseLevel(int x, int y)
 			{
 				GameInfo game(4);
 				system("cls");
-				DrawBoardGame(game.board);
+				DrawBoardGame(game.board, 1);
 				ShowMoves(game);
 				system("pause");
 				game.board.~Board();
@@ -232,7 +234,7 @@ void ChooseLevel(int x, int y)
 			{
 				GameInfo game(6);
 				system("cls");
-				DrawBoardGame(game.board);
+				DrawBoardGame(game.board, 1);
 				ShowMoves(game);
 				system("pause");
 				game.board.~Board();

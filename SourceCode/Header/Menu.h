@@ -35,6 +35,8 @@ using namespace std;
 #define LEFT 75
 #define RIGHT 77
 #define ENTER 13
+#define H_Key 104
+#define P_key 112
 
 const char gameName[] = R"(
                                                           ,'\
