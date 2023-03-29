@@ -165,7 +165,7 @@ void MainMenu()
 			{
 				break;
 			}
-			Sleep(200);
+			Sleep(100);
 		}
 		SetColor(BLACK, WHITE);
 

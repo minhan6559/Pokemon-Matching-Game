@@ -89,6 +89,7 @@ void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw)
 
 	while (pCur)
 	{
+		//Start and end are coordinate. R: x, C: y
 		Point start = { (boxLength + 1) * (pPrev->p.c + 1) + (boxLength - 1) / 2,
 						boxWidth * (pPrev->p.r + 1) + (boxWidth / 2) };
 		Point end = { (boxLength + 1) * (pCur->p.c + 1) + (boxLength - 1) / 2,
