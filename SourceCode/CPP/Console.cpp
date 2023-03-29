@@ -1,4 +1,6 @@
 #include "console.h"
+#include <mmsystem.h>
+#pragma comment (lib, "winmm.lib")
 
 //Ref: Luis
 void setAndCenterWindow()
@@ -86,28 +88,29 @@ void DisableSelection()
     SetConsoleMode(hStdin, ~ENABLE_QUICK_EDIT_MODE);
 }
 
+void BackgroundSong()
+{
+    mciSendString(L"play \"sound\\Background.mp3\" repeat", NULL, 0, 0);
+}
+
 void SelectingSound()
 {
-    /*Beep(830, 40);
-    Beep(1109, 40);*/
+    PlaySound(TEXT("sound\\Selecting.wav"), NULL, SND_FILENAME | SND_ASYNC);
 }
 
 void ChoosedSound()
 {
-    /*Beep(1760, 40);
-    Beep(1318, 40);*/
+    mciSendString(L"play \"sound\\Choosed.mp3\"", NULL, 0, 0);
 }
 
 void ErrorSound()
 {
-    /*Beep(250, 100);
-    Beep(200, 100);*/
+    mciSendString(L"play \"sound\\Error.mp3\"", NULL, 0, 0);
 }
 
 void CorrectSound()
 {
-    /*Beep(1046, 150);
-    Beep(2093, 150);*/
+    mciSendString(L"play \"sound\\Correct.mp3\"", NULL, 0, 0);
 }
 
 

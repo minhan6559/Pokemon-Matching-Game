@@ -12,6 +12,7 @@ void SetUpConsole();
 void ShowCur(bool CursorVisibility);
 void DisableSelection();
 
+void BackgroundSong();
 void SelectingSound();
 void ChoosedSound();
 void ErrorSound();

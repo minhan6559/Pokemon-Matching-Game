@@ -1,4 +1,4 @@
-#include "menu.h"
+#include "Menu.h"
 #include "Game.h"
 
 
@@ -147,6 +147,7 @@ int ShowMainMenu(int x, int y)
 
 void MainMenu()
 {
+	BackgroundSong();
 	srand((unsigned int)time(NULL));
 	SetUpConsole();
 	bool isBegin = 1;
