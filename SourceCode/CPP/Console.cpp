@@ -3,14 +3,17 @@
 //Ref: Luis
 void setAndCenterWindow()
 {
-    HWND consoleWindow = GetConsoleWindow();
+    system("mode 650");
+    HWND hwnd = GetConsoleWindow();
+    SetWindowPos(hwnd, 0, 0, 0, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_NOACTIVATE);
+    /*HWND consoleWindow = GetConsoleWindow();
     RECT rectClient, rectWindow;
     GetClientRect(consoleWindow, &rectClient), GetWindowRect(consoleWindow, &rectWindow);
     int width = 1500;
     int height = 768;
     int posX = (GetSystemMetrics(SM_CXSCREEN) - width) / 2,
         posY = (GetSystemMetrics(SM_CYSCREEN) - height) / 2;
-    MoveWindow(consoleWindow, posX, posY, width, height, TRUE);
+    MoveWindow(consoleWindow, posX, posY, width, height, TRUE);*/
 }
 
 
@@ -83,26 +86,26 @@ void DisableSelection()
 
 void SelectingSound()
 {
-    Beep(830, 40);
-    Beep(1109, 40);
+    /*Beep(830, 40);
+    Beep(1109, 40);*/
 }
 
 void ChoosedSound()
 {
-    Beep(1760, 40);
-    Beep(1318, 40);
+   /* Beep(1760, 40);
+    Beep(1318, 40);*/
 }
 
 void ErrorSound()
 {
-    Beep(250, 100);
-    Beep(200, 100);
+    /*Beep(250, 100);
+    Beep(200, 100);*/
 }
 
 void CorrectSound()
 {
-    Beep(1046, 150);
-    Beep(2093, 150);
+    /*Beep(1046, 150);
+    Beep(2093, 150);*/
 }
 
 

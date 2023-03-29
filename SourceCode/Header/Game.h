@@ -9,11 +9,6 @@ struct Point
     int r; //Row
     int c; //Col
 };
-struct Trace
-{
-    Point parent;
-    bool visited;
-};
 struct Node
 {
     Point p;
