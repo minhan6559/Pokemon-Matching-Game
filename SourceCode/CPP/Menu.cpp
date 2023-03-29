@@ -121,7 +121,7 @@ int ShowMainMenu(int x, int y)
 	{
 		int xPrev = x, yPrev = y;
 		key = _getch();
-		if (key == UP && y > TOPB && i > 0) //UP
+		if ((key == UP || key == 'w') && y > TOPB && i > 0) //UP
 		{
 			SelectingSound();
 			y -= 3;
@@ -129,7 +129,7 @@ int ShowMainMenu(int x, int y)
 			HighlightBox(x, y, 30, 3, option[--i], 1);
 			choose++;
 		}
-		else if (key == DOWN && y < BOTTOMB && i <= 2) //DOWN
+		else if ((key == DOWN || key == 's') && y < BOTTOMB && i <= 2) //DOWN
 		{
 			SelectingSound();
 			y += 3;
@@ -170,7 +170,14 @@ void MainMenu()
 		SetColor(BLACK, WHITE);
 
 		GoTo(44, 14);
-		cout << "made by MINH AN & HO HIEU";
+		cout << "made by ";
+		SetColor(BLACK, LAQUA);
+		cout << "MINH AN ";
+		SetColor(BLACK, WHITE);
+		cout << "& ";
+		SetColor(BLACK, LGREEN);
+		cout << "HO HIEU";
+		SetColor(BLACK, WHITE);
 
 		isBegin = 0;
 		choose = ShowMainMenu(42, 18);
@@ -182,7 +189,7 @@ void MainMenu()
 		if (choose == 2)
 		{
 			system("cls");
-			cout << "LeaderBoard\n";
+			cout << "Not Updated\n";
 			system("pause");
 		}
 		if (choose == 1)
@@ -194,7 +201,7 @@ void MainMenu()
 		if (choose == 0)
 		{
 			system("cls");
-			cout << "Byee";
+			cout << "Byee\n";
 			system("pause");
 		}
 	} while (choose);
@@ -207,7 +214,14 @@ void ChooseLevel(int x, int y)
 	SetColor(BLACK, WHITE);
 
 	GoTo(44, 14);
-	cout << "made by MINH AN & HO HIEU";
+	cout << "made by ";
+	SetColor(BLACK, LAQUA);
+	cout << "MINH AN ";
+	SetColor(BLACK, WHITE);
+	cout << "& ";
+	SetColor(BLACK, LGREEN);
+	cout << "HO HIEU";
+	SetColor(BLACK, WHITE);
 
 	string option[] = { "Easy", "Hard", "Exit" };
 	CreateTextBox(x, y, 30, 3, option[0]);
@@ -224,7 +238,7 @@ void ChooseLevel(int x, int y)
 	{
 		int xPrev = x, yPrev = y;
 		key = _getch();
-		if (key == UP && y > TOPB && i > 0) //UP
+		if ((key == UP || key == 'w') && y > TOPB && i > 0) //UP
 		{
 			SelectingSound();
 			y -= 3;
@@ -232,7 +246,7 @@ void ChooseLevel(int x, int y)
 			HighlightBox(x, y, 30, 3, option[--i], 1);
 			choose++;
 		}
-		else if (key == DOWN && y < BOTTOMB && i <= 1) //DOWN
+		else if ((key == DOWN || key == 's') && y < BOTTOMB && i <= 1) //DOWN
 		{
 			SelectingSound();
 			y += 3;
@@ -274,13 +288,13 @@ void ChooseLevel(int x, int y)
 
 void ShowRules()
 {
-	
+	SetColor(BLACK, LAQUA);
 	cout << R"(
-                                                                          ____  __  ____    ___________
-                                                                         / __ \/ / / / /   / ____/ ___/
-                                                                        / /_/ / / / / /   / __/  \__ \ 
-                                                                       / _, _/ /_/ / /___/ /___ ___/ / 
-                                                                      /_/ |_|\____/_____/_____//____/  
+                                                                            ____  __  ____    ___________
+                                                                           / __ \/ / / / /   / ____/ ___/
+                                                                          / /_/ / / / / /   / __/  \__ \ 
+                                                                         / _, _/ /_/ / /___/ /___ ___/ / 
+                                                                        /_/ |_|\____/_____/_____//____/  
                                  
 )";
 
@@ -296,9 +310,9 @@ void ShowRules()
 	GoTo(153, 24);
 	cout << char(180);
 
-	GoTo(86, 10);
-	SetColor(WHITE, BLACK);
-	cout << "OVERALL";
+	GoTo(85, 10);
+	SetColor(LGREEN, BLACK);
+	cout << " OVERALL ";
 	SetColor(BLACK ,WHITE);
 
 	GoTo(27, 12);
@@ -311,9 +325,9 @@ figure and connect each other in some particular pattern.\n";
 	cout << char(175) << " A legal match will make the two cells disappear. The game ends when all matching\
 pairs are found.\n";
 
-	GoTo(86, 17);
-	SetColor(WHITE, BLACK);
-	cout << "MOVING";
+	GoTo(85, 17);
+	SetColor(LYELLOW, BLACK);
+	cout << " MOVING ";
 	SetColor(BLACK, WHITE);
 
 	GoTo(30, 19);
@@ -326,9 +340,9 @@ pairs are found.\n";
 	cout << char(175) << " Press P to shuffle.\n";
 
 
-	GoTo(86, 24);
-	SetColor(WHITE, BLACK);
-	cout << "SCORING";
+	GoTo(85, 24);
+	SetColor(LAQUA, BLACK);
+	cout << " SCORING ";
 	SetColor(BLACK, WHITE);
 
 	GoTo(30, 26);
