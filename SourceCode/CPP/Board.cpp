@@ -398,17 +398,23 @@ void ShowMoves(GameInfo& game)
 		{
 			SelectingSound();
 			showSuggestMove(game);
+			game.score -= 2;
 		}
 		else if (key == P_key)
 		{
 			SelectingSound();
 			shufflePokeList(game);
 			DrawBoardGame(game.board, 0);
+			game.score -= 2;
 		}
 		if (game.remainBlocks == 0)
 		{
 			break;
 		}
+		GoTo(0, 0);
+		cout << "                                          ";
+		GoTo(0, 0);
+		cout << "Score: " << game.score;
 	}
 }
 
@@ -435,7 +441,9 @@ void ChoosePoke(GameInfo& game, int rowPoke, int colPoke)
 	if (game.selectedBlocks == 2)
 	{
 		Queue path;
-		if (checkMatching(game, path) == 1)
+
+		int checkMove = checkMatching(game, path);
+		if (checkMove == 1)
 		{
 			int xP1 = game.board.xBoardStart + (game.board.boxLength + 1) * game.p1.c;
 			int yP1 = game.board.yBoardStart + game.board.boxWidth * game.p1.r;
@@ -452,6 +460,15 @@ void ChoosePoke(GameInfo& game, int rowPoke, int colPoke)
 			Sleep(500);
 			drawMatchingLine(game, path, 0);
 			DeleteMatching(game);
+
+			int sizePath = path.size();
+
+			if (sizePath == 2)
+				game.score++;
+			else if (sizePath == 3)
+				game.score += 2;
+			else if (sizePath == 4)
+				game.score += 3;
 		}
 		else
 		{
@@ -461,6 +478,11 @@ void ChoosePoke(GameInfo& game, int rowPoke, int colPoke)
 			string pokemon;
 			pokemon = char(game.board.pokeList[game.p1.r][game.p1.c]);
 			HighlightBox(xP1, yP1, game.board.boxLength, game.board.boxWidth, pokemon, 0);
+			
+			if (checkMove == 0)
+			{
+				game.score--;
+			}
 		}
 		path.~Queue();
 		game.selectedBlocks = 0;

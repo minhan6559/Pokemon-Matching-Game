@@ -162,39 +162,35 @@ GameInfo::GameInfo(int _size)
 }
 
 //Check if the two selected blocks are matching and return the path from p1 to p2
-//-2: The same, -1: not selected, 0: not matching, 1: matching
+//-1: The same, 0: not matching, 1: matching
 int checkMatching(GameInfo& game, Queue& path)
 {
-	//1 trong 2 block chua duoc chon
-	if (game.p1.r == -1 || game.p2.r == -1)
-		return -1;
-
-	//2 block duoc chon la 1 block
+	//2 blocks are the same
 	if (game.p1.r == game.p2.r && game.p1.c == game.p2.c)
-		return -2;
+		return -1;
 
     if (game.board.pokeList[game.p1.r][game.p1.c] == 32 || game.board.pokeList[game.p2.r][game.p2.c] == 32)
     {
         return 0;
     }
 
-    //2 block duoc chon co Poke giong nhau
+    //2 blocks has the same pokemon
     if (game.board.pokeList[game.p1.r][game.p1.c] == game.board.pokeList[game.p2.r][game.p2.c])
     {
         path = findPath(game.board, game.p1, game.p2);
         int pathSize = path.size();
-        //Co duong di thoa man
+        //Acceptable path
         if (pathSize >= 2 && pathSize <= 4)
         {
             return 1;
         }
-        //Khong co duong di thoa man
+        //Unacceptable path
         else
         {
             return 0;
         }
     }
-    //2 block duoc chon co Poke khac nhau
+    //2 blocks has different pokemon
     else
     {
         return 0;

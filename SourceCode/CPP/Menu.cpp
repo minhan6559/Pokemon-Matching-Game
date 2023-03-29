@@ -323,7 +323,7 @@ pairs are found.\n";
 	GoTo(100, 19);
 	cout << char(175) << " Press H to suggest moving.\n";
 	GoTo(100, 21);
-	cout << char(175) << " Press P to suffle.\n";
+	cout << char(175) << " Press P to shuffle.\n";
 
 
 	GoTo(86, 24);
@@ -338,5 +338,5 @@ pairs are found.\n";
 	GoTo(100, 26);
 	cout << char(175) << " Z or U matching: 3 point.\n";
 	GoTo(100, 28);
-	cout << char(175) << " Suggest move or Suffle: -2 point.\n";
+	cout << char(175) << " Suggest move or Shuffle: -2 point.\n";
 }
