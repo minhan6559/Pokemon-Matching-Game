@@ -26,6 +26,7 @@ void drawBackground(GameInfo& game, Point pokeIndex);
 void highlightBoxForBoard(GameInfo& game, Point pokeIndex, int mode);
 
 //Hieu --------------------------------------
+void DrawBorder(Board board);
 void DrawBoardGame(Board board, bool isSlow);
 void ShowMoves(GameInfo& game);
 void ChoosePoke(GameInfo& game, int rowPoke, int colPoke);
