@@ -527,92 +527,60 @@ void DrawBoardGame(Board board, bool isSlow)
 
 void ShowMoves(GameInfo& game)
 {
-	int x = game.board.xBoardStart, y = game.board.yBoardStart;
-
-	int boxLength = game.board.boxLength, boxWidth = game.board.boxWidth;
-
-	//boundary
-	const int TOPB = y, BOTTOMB = y + boxWidth * (game.board.size - 1),
-		LEFTB = x, RIGHTB = x + (boxLength + 1) * (game.board.size - 1);
-
 	char key;
 	Point pokeCur = { 0, 0 };
-	//string pokemon;
 
 	int countEnter = 0;
 
 	while (true)
 	{
-		/*pokemon = char(game.board.pokeList[rowPoke][colPoke]);
-		HighlightBox(x, y, boxLength, boxWidth, pokemon, 1);*/
 		highlightBoxForBoard(game, pokeCur, 1);
 
-		int xPrev = x, yPrev = y;
 		Point pokePrev = pokeCur;
 
 		key = _getch();
-		if ((key == UP || key == 'w') && y > TOPB)
+		if ((key == UP || key == 'w') && pokeCur.r > 0)
 		{
 			SelectingSound();
-			y -= boxWidth;
 			pokeCur.r--;
 			if (!(pokePrev.r == game.p1.r && pokePrev.c == game.p1.c) &&
 				!(pokePrev.r == game.p2.r && pokePrev.c == game.p2.c))
 			{
-				//pokemon = char(game.board.pokeList[rowPokePrev][colPokePrev]);
-				//HighlightBox(xPrev, yPrev, boxLength, boxWidth, pokemon, 0);
 				highlightBoxForBoard(game, pokePrev, 0);
 			}
-			//pokemon = char(game.board.pokeList[rowPoke][colPoke]);
-			//HighlightBox(x, y, boxLength, boxWidth, pokemon, 1);
 			highlightBoxForBoard(game, pokeCur, 1);
 		}
-		else if ((key == DOWN || key == 's') && y < BOTTOMB)
+		else if ((key == DOWN || key == 's') && pokeCur.r < game.board.size - 1)
 		{
 			SelectingSound();
-			y += boxWidth;
 			pokeCur.r++;
 			if (!(pokePrev.r == game.p1.r && pokePrev.c == game.p1.c) &&
 				!(pokePrev.r == game.p2.r && pokePrev.c == game.p2.c))
 			{
-				//pokemon = char(game.board.pokeList[rowPokePrev][colPokePrev]);
-				//HighlightBox(xPrev, yPrev, boxLength, boxWidth, pokemon, 0);
 				highlightBoxForBoard(game, pokePrev, 0);
 			}
-			//pokemon = char(game.board.pokeList[rowPoke][colPoke]);
-			//HighlightBox(x, y, boxLength, boxWidth, pokemon, 1);
 			highlightBoxForBoard(game, pokeCur, 1);
 		}
-		else if ((key == LEFT || key == 'a') && x > LEFTB)
+		else if ((key == LEFT || key == 'a') && pokeCur.c > 0)
 		{
 			SelectingSound();
-			x -= (boxLength + 1);
 			pokeCur.c--;
 			if (!(pokePrev.r == game.p1.r && pokePrev.c == game.p1.c) &&
 				!(pokePrev.r == game.p2.r && pokePrev.c == game.p2.c))
 			{
-				//pokemon = char(game.board.pokeList[rowPokePrev][colPokePrev]);
-				//HighlightBox(xPrev, yPrev, boxLength, boxWidth, pokemon, 0);
 				highlightBoxForBoard(game, pokePrev, 0);
 			}
-			//pokemon = char(game.board.pokeList[rowPoke][colPoke]);
-			//HighlightBox(x, y, boxLength, boxWidth, pokemon, 1);
 			highlightBoxForBoard(game, pokeCur, 1);
 		}
-		else if ((key == RIGHT || key == 'd') && x < RIGHTB)
+		else if ((key == RIGHT || key == 'd') && pokeCur.c < game.board.size - 1)
 		{
 			SelectingSound();
-			x += (boxLength + 1);
 			pokeCur.c++;
 			if (!(pokePrev.r == game.p1.r && pokePrev.c == game.p1.c) &&
 				!(pokePrev.r == game.p2.r && pokePrev.c == game.p2.c))
 			{
-				//pokemon = char(game.board.pokeList[rowPokePrev][colPokePrev]);
-				//HighlightBox(xPrev, yPrev, boxLength, boxWidth, pokemon, 0);
 				highlightBoxForBoard(game, pokePrev, 0);
 			}
-			//pokemon = char(game.board.pokeList[rowPoke][colPoke]);
-			//HighlightBox(x, y, boxLength, boxWidth, pokemon, 1);
 			highlightBoxForBoard(game, pokeCur, 1);
 		}
 		else if (key == ENTER)
