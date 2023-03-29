@@ -49,5 +49,8 @@
     <Text Include="Background\Hard.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="Background\Easy.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

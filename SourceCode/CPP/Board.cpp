@@ -116,7 +116,7 @@ void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw)
 						cout << char(186);
 					else
 					{
-						if (start.c == topBoudary || start.c == bottomBoudary)
+						if (start.y == topBoudary || start.y == bottomBoudary)
 						{
 							SetColor(BLACK, WHITE);
 							cout << char(196);
@@ -149,7 +149,7 @@ void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw)
 						cout << char(205);
 					else
 					{
-						if (start.r == leftBoudary || start.r == rightBoudary)
+						if (start.x == leftBoudary || start.x == rightBoudary)
 						{
 							SetColor(BLACK, WHITE);
 							cout << char (179);

@@ -32,6 +32,7 @@
     <ClCompile Include="SourceCode\CPP\Menu.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Background\Easy.txt" />
     <Text Include="Background\Hard.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

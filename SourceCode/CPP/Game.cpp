@@ -161,9 +161,9 @@ GameInfo::GameInfo(int _size)
 	p2 = { -1, -1 };
 
 	if(_size == 6)
-		createBackground("Background\\hard.txt", background, board);
+		createBackground("Background\\Hard.txt", background, board);
 	else if (_size == 4)
-		createBackground("easy.txt", background, board);
+		createBackground("Background\\Easy.txt", background, board);
 }
 
 //Check if the two selected blocks are matching and return the path from p1 to p2
