@@ -84,6 +84,12 @@ void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw)
 	int boxLength = game.board.boxLength;
 	int boxWidth = game.board.boxWidth;
 
+	int topBoudary = game.board.yBoardStart - 1;
+	int bottomBoudary = game.board.yBoardStart + game.board.boxWidth * game.board.size;
+	int leftBoudary = game.board.xBoardStart - 2;
+	int rightBoudary = game.board.xBoardStart + (game.board.boxLength + 1) * game.board.size;
+
+
 	Node* pCur = path.pHead->pNext;
 	Node* pPrev = path.pHead;
 
@@ -109,7 +115,18 @@ void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw)
 					if (isDraw)
 						cout << char(186);
 					else
-						cout << " ";
+					{
+						if (start.c == topBoudary || start.c == bottomBoudary)
+						{
+							SetColor(BLACK, WHITE);
+							cout << char(196);
+							SetColor(BLACK, 11);
+						}
+						else
+						{
+							cout << " ";
+						}
+					}
 				}
 				if (start.c < end.c)
 				{
@@ -131,7 +148,18 @@ void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw)
 					if (isDraw)
 						cout << char(205);
 					else
-						cout << " ";
+					{
+						if (start.r == leftBoudary || start.r == rightBoudary)
+						{
+							SetColor(BLACK, WHITE);
+							cout << char (179);
+							SetColor(0, 11);
+						}
+						else
+						{
+							cout << " ";
+						}
+					}
 				}
 				if (start.r < end.r)
 				{
@@ -355,8 +383,19 @@ void shufflePokeList(GameInfo& game)
 
 
 //Hieu----------------------------------------
+void DrawBorder(Board board)
+{
+	int boxLength = board.boxLength, boxWidth = board.boxWidth;
+	int x = board.xBoardStart, y = board.yBoardStart;
+	int size = board.size;
+	int borderLength = (board.boxLength + 1) * board.size + 3;
+	int borderWidth = (board.boxWidth) * board.size + 2;
+	DrawBox(x - 2, y - 1, borderLength, borderWidth);
+}
+
 void DrawBoardGame(Board board, bool isSlow)
 {
+	DrawBorder(board);
 	int boxLength = board.boxLength, boxWidth = board.boxWidth;
 	int x = board.xBoardStart, y = board.yBoardStart;
 	int size = board.size;

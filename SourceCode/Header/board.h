@@ -18,6 +18,7 @@ void showSuggestMove(GameInfo& game);
 void shufflePokeList(GameInfo& game);
 
 //Hieu --------------------------------------
+void DrawBorder(Board board);
 void DrawBoardGame(Board board, bool isSlow);
 void ShowMoves(GameInfo& game);
 void ChoosePoke(GameInfo& game, int rowPoke, int colPoke);
