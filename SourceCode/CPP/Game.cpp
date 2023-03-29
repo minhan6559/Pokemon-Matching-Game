@@ -159,6 +159,11 @@ GameInfo::GameInfo(int _size)
 	remainBlocks = _size * _size;
 	p1 = { -1, -1 };
 	p2 = { -1, -1 };
+
+	if(_size == 6)
+		createBackground("Background\\hard.txt", background, board);
+	else if (_size == 4)
+		createBackground("easy.txt", background, board);
 }
 
 //Check if the two selected blocks are matching and return the path from p1 to p2
@@ -229,4 +234,19 @@ bool moveSuggestion(GameInfo game, Point& p1, Point& p2)
 		}
 	}
     return 0;
+}
+
+void createBackground(string fileName, string*& background, const Board& board)
+{
+	ifstream fin(fileName);
+	background = new string [board.size * board.boxWidth];
+	
+	int i = 0;
+	while (!fin.eof())
+	{
+		getline(fin, background[i]);
+		i++;
+	}
+
+	fin.close();
 }

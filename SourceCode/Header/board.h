@@ -8,6 +8,12 @@ struct Board
 	int size;		//Kich thuoc bang
 	int** pokeList;		//Mang pokemon. 32 or " ": Deleted
 };
+struct Coor
+{
+	int x;
+	int y;
+};
+struct Point;
 struct Queue;
 struct GameInfo;
 
@@ -16,6 +22,8 @@ void randomPokemons(Board& board);
 void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw);
 void showSuggestMove(GameInfo& game);
 void shufflePokeList(GameInfo& game);
+void drawBackground(GameInfo& game, Point pokeIndex);
+void highlightBoxForBoard(GameInfo& game, Point pokeIndex, int mode);
 
 //Hieu --------------------------------------
 void DrawBoardGame(Board board, bool isSlow);

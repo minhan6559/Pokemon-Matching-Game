@@ -113,13 +113,24 @@ void CorrectSound()
     mciSendString(L"play \"sound\\Correct.mp3\"", NULL, 0, 0);
 }
 
+void setFontInfo()
+{
+    CONSOLE_FONT_INFOEX info;
+    info.cbSize = sizeof(info);
+    GetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &info);
+    info.dwFontSize.X = 6;
+    info.dwFontSize.Y = 18;
+    wcscpy_s(info.FaceName, L"Consolas");
+    SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &info);
+}
 
 void SetUpConsole()
 {
     SetConsoleTitle(L"Pukachi");
+    setFontInfo();
     setAndCenterWindow();
     DisableResizeWindow();
     DisableCtrButton(1, 1, 1);
-    ShowCur(0);
+    //ShowCur(0);
     DisableSelection();
 }

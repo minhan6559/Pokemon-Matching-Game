@@ -90,95 +90,95 @@ void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw)
 	while (pCur)
 	{
 		//Start and end are coordinate. R: x, C: y
-		Point start = { (boxLength + 1) * (pPrev->p.c + 1) + (boxLength - 1) / 2,
+		Coor start = { (boxLength + 1) * (pPrev->p.c + 1) + (boxLength - 1) / 2,
 						boxWidth * (pPrev->p.r + 1) + (boxWidth / 2) };
-		Point end = { (boxLength + 1) * (pCur->p.c + 1) + (boxLength - 1) / 2,
+		Coor end = { (boxLength + 1) * (pCur->p.c + 1) + (boxLength - 1) / 2,
 						boxWidth * (pCur->p.r + 1) + (boxWidth / 2) };
 
 		bool isStart = 1;
 		int fromDirection = 0; //1: up, 2: down, 3: left, 4: right
 		SetColor(0, 11);
 
-		while (!(start.r == end.r && start.c == end.c))
+		while (!(start.x == end.x && start.y == end.y))
 		{
-			if (start.r == end.r)
+			if (start.x == end.x)
 			{
 				if (isStart == 0)
 				{
-					GoTo(start.r, start.c);
+					GoTo(start.x, start.y);
 					if (isDraw)
 						cout << char(186);
 					else
 						cout << " ";
 				}
-				if (start.c < end.c)
+				if (start.y < end.y)
 				{
-					start.c++;
+					start.y++;
 					fromDirection = 1;
 				}
-				else if (start.c > end.c)
+				else if (start.y > end.y)
 				{
-					start.c--;
+					start.y--;
 					fromDirection = 2;
 				}
 				isStart = 0;
 			}
-			else if (start.c == end.c)
+			else if (start.y == end.y)
 			{
 				if (isStart == 0)
 				{
-					GoTo(start.r, start.c);
+					GoTo(start.x, start.y);
 					if (isDraw)
 						cout << char(205);
 					else
 						cout << " ";
 				}
-				if (start.r < end.r)
+				if (start.x < end.x)
 				{
-					start.r++;
+					start.x++;
 					fromDirection = 3;
 				}
-				else if (start.r > end.r)
+				else if (start.x > end.x)
 				{
-					start.r--;
+					start.x--;
 					fromDirection = 4;
 				}
 				isStart = 0;
 			}
 		}
-		if (!(end.r == (boxLength + 1) * (game.p2.c + 1) + (boxLength - 1) / 2
-			&& end.c == boxWidth * (game.p2.r + 1) + (boxWidth / 2)))
+		if (!(end.x == (boxLength + 1) * (game.p2.c + 1) + (boxLength - 1) / 2
+			&& end.y == boxWidth * (game.p2.r + 1) + (boxWidth / 2)))
 		{
-			GoTo(end.r, end.c);
+			GoTo(end.x, end.y);
 			if (isDraw)
 			{
-				Point nextEnd = { (boxLength + 1) * (pCur->pNext->p.c + 1) + (boxLength - 1) / 2,
+				Coor nextEnd = { (boxLength + 1) * (pCur->pNext->p.c + 1) + (boxLength - 1) / 2,
 										boxWidth * (pCur->pNext->p.r + 1) + (boxWidth / 2) };
 
 				if (fromDirection == 1)
 				{
-					if (end.r < nextEnd.r)
+					if (end.x < nextEnd.x)
 						cout << char(200);
 					else
 						cout << char(188);
 				}
 				else if (fromDirection == 2)
 				{
-					if (end.r < nextEnd.r)
+					if (end.x < nextEnd.x)
 						cout << char(201);
 					else
 						cout << char(187);
 				}
 				else if (fromDirection == 3)
 				{
-					if (end.c > nextEnd.c)
+					if (end.y > nextEnd.y)
 						cout << char(188);
 					else
 						cout << char(187);
 				}
 				else
 				{
-					if (end.c > nextEnd.c)
+					if (end.y > nextEnd.y)
 						cout << char(200);
 					else
 						cout << char(201);
@@ -352,7 +352,95 @@ void shufflePokeList(GameInfo& game)
 	delete[] nonDeletedIndices;
 }
 
+void drawBackground(GameInfo& game, Point pokeIndex)
+{
+	int boxLength = game.board.boxLength, boxWidth = game.board.boxWidth;
 
+	//Coordinate of the start point to draw on screen
+	Coor startDraw = { (boxLength + 1) * (pokeIndex.c + 1),
+						boxWidth * (pokeIndex.r + 1) };
+
+	//Index of background
+	Point startBackground = { boxWidth * pokeIndex.r,
+								(boxLength + 1) * pokeIndex.c };
+
+	GoTo(startDraw.x, startDraw.y);
+
+	for (int i = 0; i < boxWidth; i++)
+	{
+		GoTo(startDraw.x, startDraw.y + i);
+		for (int j = 0; j < boxLength; j++)
+		{
+			cout << game.background[startBackground.r + i][startBackground.c + j];
+		}
+	}
+}
+
+void highlightBoxForBoard(GameInfo& game, Point pokeIndex, int mode)
+{
+	int width = game.board.boxWidth, length = game.board.boxLength;
+
+	Coor start = { (length + 1) * (pokeIndex.c + 1),
+						width * (pokeIndex.r + 1) };
+
+	if (mode == 1)
+	{
+		for (int iY = start.y + 1; iY < start.y + width - 1; iY++)
+		{
+			for (int iX = start.x + 1; iX < start.x + length - 1; iX++)
+			{
+				GoTo(iX, iY);
+				SetColor(LAQUA, BLACK);
+				cout << " ";
+			}
+		}
+	}
+	else if (mode == 0)
+	{
+		for (int iY = start.y + 1; iY < start.y + width - 1; iY++)
+		{
+			for (int iX = start.x + 1; iX < start.x + length - 1; iX++)
+			{
+				GoTo(iX, iY);
+				SetColor(BLACK, WHITE);
+				cout << " ";
+			}
+		}
+	}
+
+	if(game.board.pokeList[pokeIndex.r][pokeIndex.c] != 32)
+	{
+		string text;
+		text = char(game.board.pokeList[pokeIndex.r][pokeIndex.c]);
+		int xText = start.x + static_cast<int>((length - text.length()) / 2);
+		int yText = start.y + (width / 2);
+		GoTo(xText, yText);
+		cout << text;
+	}
+	else
+	{
+		drawBackground(game, pokeIndex);
+	}
+
+	/*else if (mode == 2)
+	{
+		for (int iY = start.y + 1; iY < start.y + width - 1; iY++)
+		{
+			for (int iX = start.x + 1; iX < start.x + length - 1; iX++)
+			{
+				GoTo(iX, iY);
+				SetColor(LAQUA, WHITE);
+				cout << " ";
+			}
+		}
+		int xText = start.x + static_cast<int>((length - text.length()) / 2);
+		int yText = start.y + (width / 2);
+		GoTo(xText, yText);
+		cout << text;
+	}*/
+
+	SetColor(BLACK, WHITE);
+}
 
 //Hieu----------------------------------------
 void DrawBoardGame(Board board, bool isSlow)
@@ -409,79 +497,88 @@ void ShowMoves(GameInfo& game)
 		LEFTB = x, RIGHTB = x + (boxLength + 1) * (game.board.size - 1);
 
 	char key;
-	int rowPoke = 0, colPoke = 0;
-	string pokemon;
+	Point pokeCur = { 0, 0 };
+	//string pokemon;
 
 	int countEnter = 0;
 
 	while (true)
 	{
-		pokemon = char(game.board.pokeList[rowPoke][colPoke]);
-		HighlightBox(x, y, boxLength, boxWidth, pokemon, 1);
+		/*pokemon = char(game.board.pokeList[rowPoke][colPoke]);
+		HighlightBox(x, y, boxLength, boxWidth, pokemon, 1);*/
+		highlightBoxForBoard(game, pokeCur, 1);
 
 		int xPrev = x, yPrev = y;
-		int rowPokePrev = rowPoke, colPokePrev = colPoke;
+		Point pokePrev = pokeCur;
 
 		key = _getch();
 		if ((key == UP || key == 'w') && y > TOPB)
 		{
 			SelectingSound();
 			y -= boxWidth;
-			rowPoke--;
-			if (!(rowPokePrev == game.p1.r && colPokePrev == game.p1.c) &&
-				!(rowPokePrev == game.p2.r && colPokePrev == game.p2.c))
+			pokeCur.r--;
+			if (!(pokePrev.r == game.p1.r && pokePrev.c == game.p1.c) &&
+				!(pokePrev.r == game.p2.r && pokePrev.c == game.p2.c))
 			{
-				pokemon = char(game.board.pokeList[rowPokePrev][colPokePrev]);
-				HighlightBox(xPrev, yPrev, boxLength, boxWidth, pokemon, 0);
+				//pokemon = char(game.board.pokeList[rowPokePrev][colPokePrev]);
+				//HighlightBox(xPrev, yPrev, boxLength, boxWidth, pokemon, 0);
+				highlightBoxForBoard(game, pokePrev, 0);
 			}
-			pokemon = char(game.board.pokeList[rowPoke][colPoke]);
-			HighlightBox(x, y, boxLength, boxWidth, pokemon, 1);
+			//pokemon = char(game.board.pokeList[rowPoke][colPoke]);
+			//HighlightBox(x, y, boxLength, boxWidth, pokemon, 1);
+			highlightBoxForBoard(game, pokeCur, 1);
 		}
 		else if ((key == DOWN || key == 's') && y < BOTTOMB)
 		{
 			SelectingSound();
 			y += boxWidth;
-			rowPoke++;
-			if (!(rowPokePrev == game.p1.r && colPokePrev == game.p1.c) &&
-				!(rowPokePrev == game.p2.r && colPokePrev == game.p2.c))
+			pokeCur.r++;
+			if (!(pokePrev.r == game.p1.r && pokePrev.c == game.p1.c) &&
+				!(pokePrev.r == game.p2.r && pokePrev.c == game.p2.c))
 			{
-				pokemon = char(game.board.pokeList[rowPokePrev][colPokePrev]);
-				HighlightBox(xPrev, yPrev, boxLength, boxWidth, pokemon, 0);
+				//pokemon = char(game.board.pokeList[rowPokePrev][colPokePrev]);
+				//HighlightBox(xPrev, yPrev, boxLength, boxWidth, pokemon, 0);
+				highlightBoxForBoard(game, pokePrev, 0);
 			}
-			pokemon = char(game.board.pokeList[rowPoke][colPoke]);
-			HighlightBox(x, y, boxLength, boxWidth, pokemon, 1);
+			//pokemon = char(game.board.pokeList[rowPoke][colPoke]);
+			//HighlightBox(x, y, boxLength, boxWidth, pokemon, 1);
+			highlightBoxForBoard(game, pokeCur, 1);
 		}
 		else if ((key == LEFT || key == 'a') && x > LEFTB)
 		{
 			SelectingSound();
 			x -= (boxLength + 1);
-			colPoke--;
-			if (!(rowPokePrev == game.p1.r && colPokePrev == game.p1.c) &&
-				!(rowPokePrev == game.p2.r && colPokePrev == game.p2.c))
+			pokeCur.c--;
+			if (!(pokePrev.r == game.p1.r && pokePrev.c == game.p1.c) &&
+				!(pokePrev.r == game.p2.r && pokePrev.c == game.p2.c))
 			{
-				pokemon = char(game.board.pokeList[rowPokePrev][colPokePrev]);
-				HighlightBox(xPrev, yPrev, boxLength, boxWidth, pokemon, 0);
+				//pokemon = char(game.board.pokeList[rowPokePrev][colPokePrev]);
+				//HighlightBox(xPrev, yPrev, boxLength, boxWidth, pokemon, 0);
+				highlightBoxForBoard(game, pokePrev, 0);
 			}
-			pokemon = char(game.board.pokeList[rowPoke][colPoke]);
-			HighlightBox(x, y, boxLength, boxWidth, pokemon, 1);
+			//pokemon = char(game.board.pokeList[rowPoke][colPoke]);
+			//HighlightBox(x, y, boxLength, boxWidth, pokemon, 1);
+			highlightBoxForBoard(game, pokeCur, 1);
 		}
 		else if ((key == RIGHT || key == 'd') && x < RIGHTB)
 		{
 			SelectingSound();
 			x += (boxLength + 1);
-			colPoke++;
-			if (!(rowPokePrev == game.p1.r && colPokePrev == game.p1.c) &&
-				!(rowPokePrev == game.p2.r && colPokePrev == game.p2.c))
+			pokeCur.c++;
+			if (!(pokePrev.r == game.p1.r && pokePrev.c == game.p1.c) &&
+				!(pokePrev.r == game.p2.r && pokePrev.c == game.p2.c))
 			{
-				pokemon = char(game.board.pokeList[rowPokePrev][colPokePrev]);
-				HighlightBox(xPrev, yPrev, boxLength, boxWidth, pokemon, 0);
+				//pokemon = char(game.board.pokeList[rowPokePrev][colPokePrev]);
+				//HighlightBox(xPrev, yPrev, boxLength, boxWidth, pokemon, 0);
+				highlightBoxForBoard(game, pokePrev, 0);
 			}
-			pokemon = char(game.board.pokeList[rowPoke][colPoke]);
-			HighlightBox(x, y, boxLength, boxWidth, pokemon, 1);
+			//pokemon = char(game.board.pokeList[rowPoke][colPoke]);
+			//HighlightBox(x, y, boxLength, boxWidth, pokemon, 1);
+			highlightBoxForBoard(game, pokeCur, 1);
 		}
 		else if (key == ENTER)
 		{
-			ChoosePoke(game, rowPoke, colPoke);
+			ChoosePoke(game, pokeCur.r, pokeCur.c);
 		}
 		else if (key == H_Key)
 		{
@@ -587,21 +684,24 @@ void DeleteMatching(GameInfo& game)
 	int x = game.board.xBoardStart, y = game.board.yBoardStart;
 	int boxLength = game.board.boxLength, boxWidth = game.board.boxWidth;
 
-	int xP1 = x + (boxLength + 1) * game.p1.c;
-	int yP1 = y + boxWidth * game.p1.r;
-	int xP2 = x + (boxLength + 1) * game.p2.c;
-	int yP2 = y + boxWidth * game.p2.r;
+	//int xP1 = x + (boxLength + 1) * game.p1.c;
+	//int yP1 = y + boxWidth * game.p1.r;
+	//int xP2 = x + (boxLength + 1) * game.p2.c;
+	//int yP2 = y + boxWidth * game.p2.r;
 
-	for (int j = yP1; j < yP1 + boxWidth; j++)
-	{
-		GoTo(xP1, j);
-		cout << "           "; //boxLength
-	}
-	for (int j = yP2; j < yP2 + boxWidth; j++)
-	{
-		GoTo(xP2, j);
-		cout << "           "; //boxLength
-	}
+	//for (int j = yP1; j < yP1 + boxWidth; j++)
+	//{
+	//	GoTo(xP1, j);
+	//	cout << "           "; //boxLength
+	//}
+	//for (int j = yP2; j < yP2 + boxWidth; j++)
+	//{
+	//	GoTo(xP2, j);
+	//	cout << "           "; //boxLength
+	//}
+
+	drawBackground(game, game.p1);
+	drawBackground(game, game.p2);
 	game.board.pokeList[game.p1.r][game.p1.c] = 32;
 	game.board.pokeList[game.p2.r][game.p2.c] = 32;
 

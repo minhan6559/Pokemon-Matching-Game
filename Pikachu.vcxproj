@@ -31,6 +31,9 @@
     <ClCompile Include="SourceCode\CPP\main.cpp" />
     <ClCompile Include="SourceCode\CPP\Menu.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Background\Hard.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

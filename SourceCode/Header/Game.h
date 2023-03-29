@@ -1,6 +1,8 @@
 #pragma once
 #include "Board.h"
 #include <iostream>
+#include <fstream>
+#include <string>
 using namespace std;
 
 struct Board;
@@ -34,12 +36,13 @@ struct GameInfo
     int remainBlocks;
     Point p1;
     Point p2;
-
+    string* background;
     GameInfo(int _size);
 };
 
+Queue findPath(Board board, Point p1, Point p2);
 int checkMatching(GameInfo& game, Queue& path);
 bool moveSuggestion(GameInfo game, Point& p1, Point& p2);
+void createBackground(string fileName, string*& background, const Board& board);
 
 void releaseQueue(Queue& list);
-Queue findPath(Board board, Point p1, Point p2);
