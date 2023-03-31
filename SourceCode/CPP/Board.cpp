@@ -711,10 +711,10 @@ void DeleteMatching(GameInfo& game)
 	game.board.pokeList[game.p1.r][game.p1.c] = 32;
 	game.board.pokeList[game.p2.r][game.p2.c] = 32;
 
-	game.p1.r = -1;
-	game.p1.c = -1;
-	game.p2.r = -1;
-	game.p2.c = -1;
+	//game.p1.r = -1;
+	//game.p1.c = -1;
+	//game.p2.r = -1;
+	//game.p2.c = -1;
 
 	game.remainBlocks -= 2;
 }
