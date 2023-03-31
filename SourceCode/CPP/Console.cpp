@@ -5,18 +5,19 @@
 //Ref: Luis
 void setAndCenterWindow()
 {
-    /*system("mode 650");
-    HWND hwnd = GetConsoleWindow();
-    SetWindowPos(hwnd, 0, 0, 0, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_NOACTIVATE);
-    */
-    HWND consoleWindow = GetConsoleWindow();
+    // system("mode 650");
+  //   HWND hwnd = GetConsoleWindow();
+    // SetWindowPos(hwnd, 0, 0, 0, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_NOACTIVATE);
+
+    ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
+    /*HWND consoleWindow = GetConsoleWindow();
     RECT rectClient, rectWindow;
     GetClientRect(consoleWindow, &rectClient), GetWindowRect(consoleWindow, &rectWindow);
     int width = 1500;
     int height = 768;
     int posX = (GetSystemMetrics(SM_CXSCREEN) - width) / 2,
         posY = (GetSystemMetrics(SM_CYSCREEN) - height) / 2;
-    MoveWindow(consoleWindow, posX, posY, width, height, TRUE);
+    MoveWindow(consoleWindow, posX, posY, width, height, TRUE);*/
     
 }
 
@@ -127,7 +128,7 @@ void setFontInfo()
 void SetUpConsole()
 {
     SetConsoleTitle(L"Pukachi");
-    setFontInfo();
+    //setFontInfo();
     setAndCenterWindow();
     DisableResizeWindow();
     DisableCtrButton(1, 1, 1);

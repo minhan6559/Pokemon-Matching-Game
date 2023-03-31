@@ -397,7 +397,7 @@ void drawBackground(GameInfo& game, Point pokeIndex)
 	for (int i = 0; i < boxWidth; i++)
 	{
 		GoTo(startDraw.x, startDraw.y + i);
-		for (int j = 0; j < boxLength; j++)
+		for (int j = 0; j < boxLength + 1; j++)
 		{
 			cout << game.background[startBackground.r + i][startBackground.c + j];
 		}
@@ -473,7 +473,6 @@ void highlightBoxForBoard(GameInfo& game, Point pokeIndex, int mode)
 //Hieu----------------------------------------
 void DrawBorder(Board board)
 {
-	int boxLength = board.boxLength, boxWidth = board.boxWidth;
 	int x = board.xBoardStart, y = board.yBoardStart;
 	int size = board.size;
 	int borderLength = (board.boxLength + 1) * board.size + 3;

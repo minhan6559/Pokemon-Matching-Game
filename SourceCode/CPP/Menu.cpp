@@ -1,6 +1,7 @@
 #include "Menu.h"
 #include "Game.h"
-
+#include <ctime>
+#include <cstdlib>
 
 void DrawBox(int xStart, int yStart, int length, int width)
 {
