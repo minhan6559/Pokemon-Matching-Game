@@ -19,12 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SourceCode\Header\Account.h" />
     <ClInclude Include="SourceCode\Header\Board.h" />
     <ClInclude Include="SourceCode\Header\Console.h" />
     <ClInclude Include="SourceCode\Header\Game.h" />
     <ClInclude Include="SourceCode\Header\Menu.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SourceCode\CPP\Account.cpp" />
     <ClCompile Include="SourceCode\CPP\Board.cpp" />
     <ClCompile Include="SourceCode\CPP\Console.cpp" />
     <ClCompile Include="SourceCode\CPP\Game.cpp" />
@@ -34,6 +36,9 @@
   <ItemGroup>
     <Text Include="Background\Easy.txt" />
     <Text Include="Background\Hard.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SaveGame\saveGame.bin" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

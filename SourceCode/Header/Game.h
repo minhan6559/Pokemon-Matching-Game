@@ -45,4 +45,5 @@ int checkMatching(GameInfo& game, Queue& path);
 bool moveSuggestion(GameInfo game, Point& p1, Point& p2);
 void createBackground(string fileName, string*& background, const Board& board);
 
+void releaseGame (GameInfo& game);
 void releaseQueue(Queue& list);

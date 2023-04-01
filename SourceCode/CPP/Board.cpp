@@ -1,6 +1,7 @@
 #include "Menu.h"
 #include "Board.h"
 #include "Game.h"
+#include "Account.h"
 #include <iostream>
 #include <Windows.h>
 #include <ctime>
@@ -319,7 +320,7 @@ void showSuggestMove(GameInfo& game)
 		cout << outMove3;
 		Sleep(700);
 		system("cls");
-		DrawBoardGame(game.board, 0);
+		DrawBoardGame(game, 0);
 
 		for (int i = 1; i <= 4; i++)
 		{
@@ -470,6 +471,26 @@ void highlightBoxForBoard(GameInfo& game, Point pokeIndex, int mode)
 	SetColor(BLACK, WHITE);
 }
 
+GameInfo createGameFromAccount(Account account)
+{
+	GameInfo game(account.size);
+
+	releaseBoard(game.board);
+	game.board.pokeList = account.curPokeList;
+	game.score = account.curScore;
+
+	for (int i = 0; i < account.size; i++)
+	{
+		for (int j = 0; j < account.size; j++)
+		{
+			if (game.board.pokeList[i][j] == ' ')
+				game.remainBlocks--;
+		}
+	}
+
+	return game;
+}
+
 //Hieu----------------------------------------
 void DrawBorder(Board board)
 {
@@ -480,12 +501,12 @@ void DrawBorder(Board board)
 	DrawBox(x - 2, y - 1, borderLength, borderWidth);
 }
 
-void DrawBoardGame(Board board, bool isSlow)
+void DrawBoardGame(GameInfo& game, bool isSlow)
 {
-	DrawBorder(board);
-	int boxLength = board.boxLength, boxWidth = board.boxWidth;
-	int x = board.xBoardStart, y = board.yBoardStart;
-	int size = board.size;
+	DrawBorder(game.board);
+	int boxLength = game.board.boxLength, boxWidth = game.board.boxWidth;
+	int x = game.board.xBoardStart, y = game.board.yBoardStart;
+	int size = game.board.size;
 	for (int i = 0; i < size; i++)
 	{
 
@@ -493,11 +514,15 @@ void DrawBoardGame(Board board, bool isSlow)
 		{
 			for (int j = 0; j < size; j++)
 			{
-				if (board.pokeList[i][j] == 32)
+				if (game.board.pokeList[i][j] == 32)
+				{
+					Point pokeIndex = { i, j };
+					drawBackground(game, pokeIndex);
 					continue;
+				}
 				string pokemon;
-				pokemon = char(board.pokeList[i][j]);
-				int pokeColor = char(board.pokeList[i][j]) % 15 + 1;
+				pokemon = char(game.board.pokeList[i][j]);
+				int pokeColor = char(game.board.pokeList[i][j]) % 15 + 1;
 				SetColor(BLACK, pokeColor);
 				CreateTextBox(x + (boxLength + 1) * j, y + boxWidth * i, 11, 5, pokemon);
 				if (isSlow)
@@ -506,14 +531,17 @@ void DrawBoardGame(Board board, bool isSlow)
 		}
 		else
 		{
-
 			for (int j = size - 1; j >= 0; j--)
 			{
-				if (board.pokeList[i][j] == 32)
+				if (game.board.pokeList[i][j] == 32)
+				{
+					Point pokeIndex = { i, j };
+					drawBackground(game, pokeIndex);
 					continue;
+				}
 				string pokemon;
-				pokemon = char(board.pokeList[i][j]);
-				int pokeColor = char(board.pokeList[i][j]) % 15 + 1;
+				pokemon = char(game.board.pokeList[i][j]);
+				int pokeColor = char(game.board.pokeList[i][j]) % 15 + 1;
 				SetColor(BLACK, pokeColor);
 				CreateTextBox(x + (boxLength + 1) * j, y + boxWidth * i, 11, 5, pokemon);
 				if (isSlow)
@@ -524,15 +552,29 @@ void DrawBoardGame(Board board, bool isSlow)
 	SetColor(BLACK, WHITE);
 }
 
-void ShowMoves(GameInfo& game)
+//1: is playing, 0: done game
+bool ShowMoves(GameInfo& game)
 {
 	char key;
 	Point pokeCur = { 0, 0 };
 
-	int countEnter = 0;
-
 	while (true)
 	{
+		//check if there is no move then shuffle
+		Point checkMove1;
+		Point checkMove2;
+
+		if (moveSuggestion(game, checkMove1, checkMove2) == 0)
+		{
+			do
+			{
+				shufflePokeList(game);
+			} while (moveSuggestion(game, checkMove1, checkMove2) == 0);
+
+			system("cls");
+			DrawBoardGame(game, 0);
+		}
+
 		highlightBoxForBoard(game, pokeCur, 1);
 
 		Point pokePrev = pokeCur;
@@ -596,12 +638,16 @@ void ShowMoves(GameInfo& game)
 		{
 			SelectingSound();
 			shufflePokeList(game);
-			DrawBoardGame(game.board, 0);
+			DrawBoardGame(game, 0);
 			game.score -= 2;
+		}
+		else if (key == ESC_key)
+		{
+			return 1;
 		}
 		if (game.remainBlocks == 0)
 		{
-			break;
+			return 0;
 		}
 		GoTo(0, 0);
 		cout << "                                          ";
@@ -690,31 +736,10 @@ void DeleteMatching(GameInfo& game)
 	int x = game.board.xBoardStart, y = game.board.yBoardStart;
 	int boxLength = game.board.boxLength, boxWidth = game.board.boxWidth;
 
-	//int xP1 = x + (boxLength + 1) * game.p1.c;
-	//int yP1 = y + boxWidth * game.p1.r;
-	//int xP2 = x + (boxLength + 1) * game.p2.c;
-	//int yP2 = y + boxWidth * game.p2.r;
-
-	//for (int j = yP1; j < yP1 + boxWidth; j++)
-	//{
-	//	GoTo(xP1, j);
-	//	cout << "           "; //boxLength
-	//}
-	//for (int j = yP2; j < yP2 + boxWidth; j++)
-	//{
-	//	GoTo(xP2, j);
-	//	cout << "           "; //boxLength
-	//}
-
 	drawBackground(game, game.p1);
 	drawBackground(game, game.p2);
 	game.board.pokeList[game.p1.r][game.p1.c] = 32;
 	game.board.pokeList[game.p2.r][game.p2.c] = 32;
-
-	//game.p1.r = -1;
-	//game.p1.c = -1;
-	//game.p2.r = -1;
-	//game.p2.c = -1;
 
 	game.remainBlocks -= 2;
 }

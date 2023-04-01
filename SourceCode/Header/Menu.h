@@ -1,17 +1,14 @@
 #pragma once
-#include <iostream>
-#include "console.h"
-#include <string>
-#include <conio.h>
 #include "Board.h"
+#include "console.h"
+#include "Account.h"
+#include <conio.h>
+#include <iostream>
+#include <string>
+using namespace std;
 
 struct board;
-
-
-
-
-
-using namespace std;
+struct Account;
 
 #define BLACK 0
 #define BLUE 1
@@ -37,7 +34,7 @@ using namespace std;
 #define ENTER 13
 #define H_Key 104
 #define P_key 112
-
+#define ESC_key 27
 const char gameName[] = R"(
                                                           ,'\
                             _.----.        ____         ,'  _\   ___    ___     ____
@@ -56,7 +53,9 @@ const char gameName[] = R"(
 void DrawBox(int xStart, int yStart, int width, int length);
 void CreateTextBox(int xStart, int yStart, int length, int width, string text);
 void HighlightBox(int xStart, int yStart, int length, int width, string text, int mode);
-int ShowMainMenu(int x, int y);
-void MainMenu();
-void ChooseLevel(int x, int y);
+int ShowMainMenu(int x, int y, bool isPlaying);
+void MainMenu(Account*& account, int totalAccounts, int pos);
+void ChooseLevel(int x, int y, Account& account);
 void ShowRules();
+
+void logInMenu();

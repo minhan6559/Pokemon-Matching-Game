@@ -6,6 +6,7 @@ using namespace std;
 
 int main()
 {
-    MainMenu();
+	SetUpConsole();
+	logInMenu();
 	return 0;
 }

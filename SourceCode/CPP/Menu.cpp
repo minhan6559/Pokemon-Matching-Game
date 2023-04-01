@@ -104,53 +104,98 @@ void HighlightBox(int xStart, int yStart, int length, int width, string text, in
 
 
 //References: https://www.youtube.com/watch?v=oDh046cT_Q0&t=1474s
-int ShowMainMenu(int x, int y)
+int ShowMainMenu(int x, int y, bool isPlaying)
 {
-	string option[4] = { "Start", "Leaderboard", "Rules", "Exit" };
-	CreateTextBox(x, y, 30, 3, option[0]);
-	CreateTextBox(x, y + 3, 30, 3, option[1]);
-	CreateTextBox(x, y + 6, 30, 3, option[2]);
-	CreateTextBox(x, y + 9, 30, 3, option[3]);
-	//boundary
-	const int TOPB = y, BOTTOMB = y + 9;
-
-	char key;
-	int i = 0;
-	int choose = 3;
-	HighlightBox(x, y, 30, 3, option[0], 1);
-	while (true)
+	if(isPlaying)
 	{
-		int xPrev = x, yPrev = y;
-		key = _getch();
-		if ((key == UP || key == 'w') && y > TOPB && i > 0) //UP
+		string option[5] = { "Continue", "New Game", "Leaderboard", "Rules", "Exit" };
+
+		CreateTextBox(x, y, 30, 3, option[0]);
+		CreateTextBox(x, y + 3, 30, 3, option[1]);
+		CreateTextBox(x, y + 6, 30, 3, option[2]);
+		CreateTextBox(x, y + 9, 30, 3, option[3]);
+		CreateTextBox(x, y + 12, 30, 3, option[4]);
+		//boundary
+		const int TOPB = y, BOTTOMB = y + 12;
+
+		char key;
+		int i = 0;
+		int choose = 4;
+		HighlightBox(x, y, 30, 3, option[0], 1);
+		while (true)
 		{
-			SelectingSound();
-			y -= 3;
-			HighlightBox(x, yPrev, 30, 3, option[i], 0);
-			HighlightBox(x, y, 30, 3, option[--i], 1);
-			choose++;
+			int xPrev = x, yPrev = y;
+			key = _getch();
+			if ((key == UP || key == 'w') && y > TOPB && i > 0) //UP
+			{
+				SelectingSound();
+				y -= 3;
+				HighlightBox(x, yPrev, 30, 3, option[i], 0);
+				HighlightBox(x, y, 30, 3, option[--i], 1);
+				choose++;
+			}
+			else if ((key == DOWN || key == 's') && y < BOTTOMB && i <= 3) //DOWN
+			{
+				SelectingSound();
+				y += 3;
+				HighlightBox(x, yPrev, 30, 3, option[i], 0);
+				HighlightBox(x, y, 30, 3, option[++i], 1);
+				choose--;
+			}
+			else if (key == ENTER)
+			{
+				ChoosedSound();
+				return choose;
+			}
 		}
-		else if ((key == DOWN || key == 's') && y < BOTTOMB && i <= 2) //DOWN
+	}
+	else
+	{
+		string option[4] = {"New Game", "Leaderboard", "Rules", "Exit" };
+		
+		CreateTextBox(x, y + 3, 30, 3, option[0]);
+		CreateTextBox(x, y + 6, 30, 3, option[1]);
+		CreateTextBox(x, y + 9, 30, 3, option[2]);
+		CreateTextBox(x, y + 12, 30, 3, option[3]);
+		//boundary
+		const int TOPB = y + 3, BOTTOMB = y + 12;
+		y = y + 3;
+		char key;
+		int i = 0;
+		int choose = 3;
+		HighlightBox(x, y, 30, 3, option[0], 1);
+		while (true)
 		{
-			SelectingSound();
-			y += 3;
-			HighlightBox(x, yPrev, 30, 3, option[i], 0);
-			HighlightBox(x, y, 30, 3, option[++i], 1);
-			choose--;
-		}
-		else if (key == ENTER)
-		{
-			ChoosedSound();
-			return choose;
+			int xPrev = x, yPrev = y;
+			key = _getch();
+			if ((key == UP || key == 'w') && y > TOPB && i > 0) //UP
+			{
+				SelectingSound();
+				y -= 3;
+				HighlightBox(x, yPrev, 30, 3, option[i], 0);
+				HighlightBox(x, y, 30, 3, option[--i], 1);
+				choose++;
+			}
+			else if ((key == DOWN || key == 's') && y < BOTTOMB && i <= 2) //DOWN
+			{
+				SelectingSound();
+				y += 3;
+				HighlightBox(x, yPrev, 30, 3, option[i], 0);
+				HighlightBox(x, y, 30, 3, option[++i], 1);
+				choose--;
+			}
+			else if (key == ENTER)
+			{
+				ChoosedSound();
+				return choose;
+			}
 		}
 	}
 }
 
-void MainMenu()
+void MainMenu(Account*& account, int totalAccounts, int pos)
 {
-	BackgroundSong();
 	srand((unsigned int)time(NULL));
-	SetUpConsole();
 	bool isBegin = 1;
 	int choose;
 	do
@@ -182,34 +227,45 @@ void MainMenu()
 		SetColor(BLACK, WHITE);
 
 		isBegin = 0;
-		choose = ShowMainMenu(42, 18);
-		if (choose == 3)
+		choose = ShowMainMenu(42, 15, account[pos].isPlaying);
+		if (choose == 4)
+		{
+			GameInfo game = createGameFromAccount(account[pos]);
+			system("cls");
+			DrawBoardGame(game, 1);
+			bool isPlaying = ShowMoves(game);
+			updateAccountAfterGame(account[pos], game, isPlaying);
+			system("pause");
+		}
+		else if (choose == 3)
 		{
 			system("cls");
-			ChooseLevel(42, 18);
+			ChooseLevel(42, 18, account[pos]);
 		}
-		if (choose == 2)
+		else if (choose == 2)
 		{
 			system("cls");
 			cout << "Not Updated\n";
 			system("pause");
 		}
-		if (choose == 1)
+		else if (choose == 1)
 		{
 			system("cls");
 			ShowRules();
 			_getch();
 		}
-		if (choose == 0)
+		else if (choose == 0)
 		{
 			system("cls");
 			cout << "Byee\n";
 			system("pause");
 		}
+
+		outputAccountList(account, totalAccounts);
 	} while (choose);
 }
 
-void ChooseLevel(int x, int y)
+void ChooseLevel(int x, int y, Account& account)
 {
 	SetColor(BLACK, rand() % 14 + 1);
 	cout << gameName;
@@ -263,20 +319,20 @@ void ChooseLevel(int x, int y)
 			{
 				GameInfo game(4);
 				system("cls");
-				DrawBoardGame(game.board, 1);
-				ShowMoves(game);
+				DrawBoardGame(game, 1);
+				int isPlaying = ShowMoves(game);
+				updateAccountAfterGame(account, game, isPlaying);
 				system("pause");
-				game.board.~Board();
 				return;
 			}
 			if (choose == 1)
 			{
 				GameInfo game(6);
 				system("cls");
-				DrawBoardGame(game.board, 1);
-				ShowMoves(game);
+				DrawBoardGame(game, 1);
+				int isPlaying = ShowMoves(game);
+				updateAccountAfterGame(account, game, isPlaying);
 				system("pause");
-				game.board.~Board();
 				return;
 			}
 			if (choose == 0)
@@ -355,4 +411,72 @@ pairs are found.\n";
 	cout << char(175) << " Z or U matching: 3 point.\n";
 	GoTo(100, 28);
 	cout << char(175) << " Suggest move or Shuffle: -2 point.\n";
+}
+
+void logInMenu()
+{
+	BackgroundSong();
+	int totalAccounts = 0;
+	Account* account = new Account [totalAccounts + 1];
+
+	inputAccountList(account, totalAccounts);
+
+	string username;
+	string password;
+
+	while(true)
+	{
+		cout << "Input your username: ";
+		getline(cin, username);
+		if (username.empty())
+		{
+			cout << "This can't be empty!\n";
+			continue;
+		}
+		break;
+	}
+
+	int pos = findAccountPos(account, totalAccounts, username);
+	if (pos == -1)
+	{
+		cout << "Your acc dont exist, start registering!\n";
+		totalAccounts++;
+		while(true)
+		{
+			cout << "Input your password: ";
+			getline(cin, password);
+			if (password.empty())
+			{
+				cout << "This can't be empty!\n";
+				continue;
+			}
+			break;
+		}
+		pos = totalAccounts - 1;
+		account[pos].username = username;
+		account[pos].password = password;		
+	}
+	else
+	{
+		cout << "Your acc exist, start logging in!\n";
+		while(true)
+		{
+			cout << "Input your password: ";
+			getline(cin, password);
+
+			if (password.empty())
+			{
+				cout << "This can't be empty!\n";
+				continue;
+			}
+			if (password != account[pos].password)
+			{
+				cout << "Wrong pass\n";
+				continue;
+			}
+			break;
+		}
+	}
+
+	MainMenu(account, totalAccounts, pos);
 }
