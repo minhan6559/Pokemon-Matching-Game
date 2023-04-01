@@ -251,6 +251,27 @@ void createBackground(string fileName, string*& background, const Board& board)
 	fin.close();
 }
 
+
+GameInfo createGameFromAccount(Account account)
+{
+	GameInfo game(account.size);
+
+	releaseBoard(game.board);
+	game.board.pokeList = account.curPokeList;
+	game.score = account.curScore;
+
+	for (int i = 0; i < account.size; i++)
+	{
+		for (int j = 0; j < account.size; j++)
+		{
+			if (game.board.pokeList[i][j] == ' ')
+				game.remainBlocks--;
+		}
+	}
+
+	return game;
+}
+
 void releaseGame(GameInfo& game)
 {
 	delete [] game.background;
