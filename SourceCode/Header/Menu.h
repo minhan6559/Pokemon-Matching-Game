@@ -59,3 +59,4 @@ void ChooseLevel(int x, int y, Account& account);
 void ShowRules();
 
 void loginMenu(int x, int y);
+void ShowLeaderboard(Account* account, int totalAccounts);
