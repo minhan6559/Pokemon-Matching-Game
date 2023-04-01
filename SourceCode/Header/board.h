@@ -1,5 +1,45 @@
 #pragma once
-using namespace std;
+#include <string>
+const char ZERO[] = R"(  __
+ /  \
+| () |
+ \__/)";
+const char ONE[] = R"( _
+/ |
+| |
+|_|)";
+const char TWO[] = R"( ___
+|_  )
+ / /
+/___|)";
+const char THREE[] = R"( ____
+|__ /
+ |_ \
+|___/)";
+const char FOUR[] = R"( _ _
+| | |
+|_  _|
+  |_|)";
+const char FIVE[] = R"( ___
+| __|
+|__ \
+|___/)";
+const char SIX[] = R"(  __
+ / /
+/ _ \
+\___/)";
+const char SEVEN[] = R"( ____
+|__  |
+  / /
+ /_/)";
+const char EIGHT[] = R"( ___
+( _ )
+/ _ \
+\___/)";
+const char NINE[] = R"( ___
+/ _ \
+\_, /
+ /_/)";
 
 struct Board
 {
@@ -33,3 +73,7 @@ void DrawBoardGame(GameInfo& game, bool isSlow);
 bool ShowMoves(GameInfo& game);
 void ChoosePoke(GameInfo& game, int rowPoke, int colPoke);
 void DeleteMatching(GameInfo& game);
+void DrawDigit(int x, int y, short digit);
+void DrawInfoBoard(int x, int y, short score, std::string level);
+void DrawScore(int x, int y, short score);
+void DrawStatus(int x, int y, std::string status);

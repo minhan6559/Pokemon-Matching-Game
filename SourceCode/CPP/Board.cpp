@@ -2,7 +2,6 @@
 #include "Board.h"
 #include "Game.h"
 #include "Account.h"
-#include <iostream>
 #include <Windows.h>
 #include <ctime>
 #include <cstdlib>
@@ -504,6 +503,14 @@ void DrawBorder(Board board)
 void DrawBoardGame(GameInfo& game, bool isSlow)
 {
 	DrawBorder(game.board);
+	if (game.board.size == 6)
+	{
+		DrawInfoBoard(90, 4, game.score, "Hard");
+	}
+	else
+	{
+		DrawInfoBoard(90, 4, game.score, "Easy");
+	}
 	int boxLength = game.board.boxLength, boxWidth = game.board.boxWidth;
 	int x = game.board.xBoardStart, y = game.board.yBoardStart;
 	int size = game.board.size;
@@ -633,6 +640,12 @@ bool ShowMoves(GameInfo& game)
 			SelectingSound();
 			showSuggestMove(game);
 			game.score -= 2;
+			if (game.score < 0)
+			{
+				game.score = 0;
+			}
+			DrawScore(90, 4, game.score);
+
 		}
 		else if (key == P_key)
 		{
@@ -640,6 +653,11 @@ bool ShowMoves(GameInfo& game)
 			shufflePokeList(game);
 			DrawBoardGame(game, 0);
 			game.score -= 2;
+			if (game.score < 0)
+			{
+				game.score = 0;
+			}
+			DrawScore(90, 4, game.score);
 		}
 		else if (key == ESC_key)
 		{
@@ -649,10 +667,6 @@ bool ShowMoves(GameInfo& game)
 		{
 			return 0;
 		}
-		GoTo(0, 0);
-		cout << "                                          ";
-		GoTo(0, 0);
-		cout << "Score: " << game.score;
 	}
 }
 
@@ -702,11 +716,20 @@ void ChoosePoke(GameInfo& game, int rowPoke, int colPoke)
 			int sizePath = path.size();
 
 			if (sizePath == 2)
+			{
 				game.score++;
+				DrawStatus(90, 4, "I Matching");
+			}
 			else if (sizePath == 3)
+			{
 				game.score += 2;
+				DrawStatus(90, 4, "L Matching");
+			}
 			else if (sizePath == 4)
+			{
 				game.score += 3;
+				DrawStatus(90, 4, "U or Z Matching");
+			}
 		}
 		else
 		{
@@ -720,8 +743,14 @@ void ChoosePoke(GameInfo& game, int rowPoke, int colPoke)
 			if (checkMove == 0)
 			{
 				game.score--;
+				if (game.score < 0)
+				{
+					game.score = 0;
+				}
+				DrawStatus(90, 4, "Not Matching !");
 			}
 		}
+		DrawScore(90, 4, game.score);
 		path.~Queue();
 		game.selectedBlocks = 0;
 		game.p1.r = -1;
@@ -744,3 +773,107 @@ void DeleteMatching(GameInfo& game)
 	game.remainBlocks -= 2;
 }
 
+void DrawDigit(int x, int y, short digit)
+{
+	string str;
+	if (digit == 0)
+	{
+		str = ZERO;
+	}
+	else if (digit == 1)
+	{
+		str = ONE;
+	}
+	else if (digit == 2)
+	{
+		str = TWO;
+	}
+	else if (digit == 3)
+	{
+		str = THREE;
+	}
+	else if (digit == 4)
+	{
+		str = FOUR;
+	}
+	else if (digit == 5)
+	{
+		str = FIVE;
+	}
+	else if (digit == 6)
+	{
+		str = SIX;
+	}
+	else if (digit == 7)
+	{
+		str = SEVEN;
+	}
+	else if (digit == 8)
+	{
+		str = EIGHT;
+	}
+	else if (digit == 9)
+	{
+		str = NINE;
+	}
+	int pos = 0;
+	string line;
+	GoTo(x, y);
+	while ((pos = static_cast<int>(str.find('\n'))) != string::npos) {
+		line = str.substr(0, pos);
+		cout << line << endl;
+		str.erase(0, pos + 1);
+
+		// Set the console cursor position to the next line
+		y++;
+		GoTo(x, y);
+	}
+	cout << str;
+}
+
+void DrawScore(int x, int y, short score)
+{
+	for (int i = y + 1; i <= y + 4; i++)
+	{
+		GoTo(x + 1, i);
+		cout << "              "; //14
+	}
+	int firstDigit = score / 10;
+	int secondDigit = score % 10;
+	SetColor(BLACK, RED);
+	DrawDigit(x + 2, y + 1, firstDigit);
+	DrawDigit(x + 8, y + 1, secondDigit);
+	SetColor(BLACK, WHITE);
+}
+void DrawStatus(int x, int y, string status)
+{
+	GoTo(x + 17, y + 4);
+	cout << "                   "; //19
+	CreateTextBox(x + 16, y + 3, 21, 3, status);
+	GoTo(x + 23, y + 3);
+	SetColor(LAQUA, BLACK);
+	cout << "STATUS";
+	SetColor(BLACK, WHITE);
+}
+
+void DrawInfoBoard(int x, int y, short score, string level)
+{
+	//Level
+	CreateTextBox(x + 16, y, 11, 3, level);
+	GoTo(x + 19, y);
+	SetColor(LAQUA, BLACK);
+	cout << "LEVEL";
+	SetColor(BLACK, WHITE);
+
+	//status
+	DrawStatus(x, y, "");
+	
+	
+	//Draw score board
+	DrawBox(x, y, 16, 6);
+	GoTo(x + 5, y);
+	SetColor(LAQUA, BLACK);
+	cout << "SCORE";
+	SetColor(BLACK, WHITE);
+	DrawScore(x, y, score);
+}

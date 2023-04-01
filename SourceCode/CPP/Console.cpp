@@ -137,7 +137,7 @@ void SetUpConsole(bool isLogin)
     }
     else
     {
-        ShowCur(0);
-        DisableSelection();
+        //ShowCur(0);
+        //DisableSelection();
     }
 }
