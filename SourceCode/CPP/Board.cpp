@@ -2,7 +2,6 @@
 #include "Board.h"
 #include "Game.h"
 #include "Account.h"
-#include <iostream>
 #include <Windows.h>
 #include <ctime>
 #include <cstdlib>
@@ -649,10 +648,10 @@ bool ShowMoves(GameInfo& game)
 		{
 			return 0;
 		}
-		GoTo(0, 0);
-		cout << "                                          ";
-		GoTo(0, 0);
-		cout << "Score: " << game.score;
+		//GoTo(0, 0);
+		//cout << "                                          ";
+		//GoTo(0, 0);
+		//cout << "Score: " << game.score;
 	}
 }
 
@@ -746,5 +745,84 @@ void DeleteMatching(GameInfo& game)
 
 void DrawDigit(int x, int y, short digit)
 {
-	const char ZERO[] = R()
+	string str;
+	if (digit == 0)
+	{
+		str = ZERO;
+	}
+	else if (digit == 1)
+	{
+		str = ONE;
+	}
+	else if (digit == 2)
+	{
+		str = TWO;
+	}
+	else if (digit == 3)
+	{
+		str = THREE;
+	}
+	else if (digit == 4)
+	{
+		str = FOUR;
+	}
+	else if (digit == 5)
+	{
+		str = FIVE;
+	}
+	else if (digit == 6)
+	{
+		str = SIX;
+	}
+	else if (digit == 7)
+	{
+		str = SEVEN;
+	}
+	else if (digit == 8)
+	{
+		str = EIGHT;
+	}
+	else if (digit == 9)
+	{
+		str = NINE;
+	}
+	int pos = 0;
+	string line;
+	GoTo(x, y);
+	while ((pos = static_cast<int>(str.find('\n'))) != string::npos) {
+		line = str.substr(0, pos);
+		cout << line << endl;
+		str.erase(0, pos + 1);
+
+		// Set the console cursor position to the next line
+		y++;
+		GoTo(x, y);
+	}
+	cout << str;
+}
+
+void DrawInfoBoard(int x, int y, int score)
+{
+	//Level
+	CreateTextBox(x + 16, y, 11, 3, "Hard");
+	GoTo(x + 19, y);
+	cout << "LEVEL";
+
+
+	//Background name
+	CreateTextBox(x + 16, y + 3, 21, 3, "HCMUS");
+	GoTo(x + 21, y + 3);
+	cout << "BACKGROUND";
+	
+	
+	//Draw score board
+	DrawBox(x, y, 16, 6);
+	GoTo(x + 5, y);
+	cout << "SCORE";
+	int firstDigit = score / 10;
+	int secondDigit = score % 10;
+	DrawDigit(x + 2, y + 1, firstDigit);
+	DrawDigit(x + 8, y + 1, secondDigit);
+
+
 }

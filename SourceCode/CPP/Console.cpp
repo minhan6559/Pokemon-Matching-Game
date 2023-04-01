@@ -132,6 +132,6 @@ void SetUpConsole()
     setAndCenterWindow();
     DisableResizeWindow();
     DisableCtrButton(1, 1, 1);
-    ShowCur(0);
-    DisableSelection();
+    //ShowCur(0);
+    //DisableSelection();
 }
