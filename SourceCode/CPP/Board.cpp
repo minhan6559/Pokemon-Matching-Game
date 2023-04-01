@@ -850,9 +850,9 @@ void DrawStatus(int x, int y, string status)
 	GoTo(x + 17, y + 4);
 	cout << "                   "; //19
 	CreateTextBox(x + 16, y + 3, 21, 3, status);
-	GoTo(x + 23, y + 3);
-	SetColor(LAQUA, BLACK);
-	cout << "STATUS";
+	GoTo(x + 22, y + 3);
+	SetColor(LYELLOW, BLACK);
+	cout << " STATUS ";
 	SetColor(BLACK, WHITE);
 }
 
@@ -860,9 +860,9 @@ void DrawInfoBoard(int x, int y, short score, string level)
 {
 	//Level
 	CreateTextBox(x + 16, y, 11, 3, level);
-	GoTo(x + 19, y);
-	SetColor(LAQUA, BLACK);
-	cout << "LEVEL";
+	GoTo(x + 18, y);
+	SetColor(LGREEN, BLACK);
+	cout << " LEVEL ";
 	SetColor(BLACK, WHITE);
 
 	//status
@@ -871,9 +871,9 @@ void DrawInfoBoard(int x, int y, short score, string level)
 	
 	//Draw score board
 	DrawBox(x, y, 16, 6);
-	GoTo(x + 5, y);
+	GoTo(x + 4, y);
 	SetColor(LAQUA, BLACK);
-	cout << "SCORE";
+	cout << " SCORE ";
 	SetColor(BLACK, WHITE);
 	DrawScore(x, y, score);
 }
