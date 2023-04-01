@@ -27,7 +27,7 @@ void setAndCenterWindow()
     GetClientRect(consoleWindow, &rectClient), GetWindowRect(consoleWindow, &rectWindow);
     int windowsWidth = GetSystemMetrics(SM_CXSCREEN);
     int windowsHeight = GetSystemMetrics(SM_CYSCREEN);
-    setFontInfo(windowsWidth / 55, windowsHeight / 43);
+    setFontInfo(windowsWidth / 55, windowsHeight / 44);
     /*int width = 1500;
     int height = 1000;
     int posX = (GetSystemMetrics(SM_CXSCREEN) - width) / 2,
