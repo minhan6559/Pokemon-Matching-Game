@@ -8,7 +8,7 @@ void DisableCtrButton(bool Close, bool Min, bool Max);
 void ShowScrollbar(BOOL Show);
 void SetColor(int backgound_color, int text_color);
 void GoTo(SHORT posX, SHORT posY);
-void SetUpConsole();
+void SetUpConsole(bool isLogin);
 void ShowCur(bool CursorVisibility);
 void DisableSelection();
 

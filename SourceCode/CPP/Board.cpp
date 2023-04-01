@@ -11,7 +11,7 @@ void releaseBoard(Board& board)
 	for (int i = 0; i < board.size; i++)
 		delete[] board.pokeList[i];
 	delete[] board.pokeList;
-	board.pokeList = nullptr;
+	board.pokeList = NULL;
 }
 
 //Ref: tu ham BoardView::buildBoardData() cua louis
@@ -67,16 +67,16 @@ void randomPokemons(Board& board) {
 	}
 
 	delete[] pos;
-	pos = nullptr;
+	pos = NULL;
 	delete[] checkDuplicate;
-	checkDuplicate = nullptr;
+	checkDuplicate = NULL;
 
 	for (int i = 0; i < size; i++)
 	{
 		delete[] pokemons[i];
 	}
 	delete[] pokemons;
-	pokemons = nullptr;
+	pokemons = NULL;
 }
 
 void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw)
@@ -571,14 +571,14 @@ bool ShowMoves(GameInfo& game)
 			} while (moveSuggestion(game, checkMove1, checkMove2) == 0);
 
 			system("cls");
-			DrawBoardGame(game, 0);
+			DrawBoardGame(game, 1);
 		}
 
 		highlightBoxForBoard(game, pokeCur, 1);
 
 		Point pokePrev = pokeCur;
 
-		key = _getch();
+		key = _getwch();
 		if ((key == UP || key == 'w') && pokeCur.r > 0)
 		{
 			SelectingSound();

@@ -413,11 +413,11 @@ pairs are found.\n";
 	cout << char(175) << " Suggest move or Shuffle: -2 point.\n";
 }
 
-void logInMenu()
+void loginMenu()
 {
 	BackgroundSong();
-	int totalAccounts = 0;
-	Account* account = new Account [totalAccounts + 1];
+	int		totalAccounts = 0;
+	Account* account = NULL;
 
 	inputAccountList(account, totalAccounts);
 
@@ -478,5 +478,7 @@ void logInMenu()
 		}
 	}
 
+	SetUpConsole(0);
 	MainMenu(account, totalAccounts, pos);
+	releaseAccountList(account, totalAccounts);
 }
