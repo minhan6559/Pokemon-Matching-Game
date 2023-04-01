@@ -195,6 +195,7 @@ int ShowMainMenu(int x, int y, bool isPlaying)
 
 void MainMenu(Account*& account, int totalAccounts, int pos)
 {
+	BackgroundSong();
 	srand((unsigned int)time(NULL));
 	bool isBegin = 1;
 	int choose;
@@ -413,9 +414,8 @@ pairs are found.\n";
 	cout << char(175) << " Suggest move or Shuffle: -2 point.\n";
 }
 
-void loginMenu()
+void loginMenu(int x, int y)
 {
-	BackgroundSong();
 	int		totalAccounts = 0;
 	Account* account = NULL;
 
@@ -424,13 +424,21 @@ void loginMenu()
 	string username;
 	string password;
 
+	DrawBox(x, y, 50, 10);
+	GoTo(x + 18, y + 1);
+	cout << "LOGIN/REGISTER";
+
 	while(true)
 	{
+		GoTo(x + 2, y + 3);
 		cout << "Input your username: ";
 		getline(cin, username);
 		if (username.empty())
 		{
+			GoTo(x + 15, y + 8);
+			SetColor(BLACK, RED);
 			cout << "This can't be empty!\n";
+			SetColor(BLACK, WHITE);
 			continue;
 		}
 		break;
@@ -439,15 +447,26 @@ void loginMenu()
 	int pos = findAccountPos(account, totalAccounts, username);
 	if (pos == -1)
 	{
+		GoTo(x + 1, y + 8);
+		cout << "                                                ";
+		GoTo(x + 5, y + 8);
+		SetColor(BLACK, RED);
 		cout << "Your acc dont exist, start registering!\n";
+		SetColor(BLACK, WHITE);
 		totalAccounts++;
 		while(true)
 		{
+			GoTo(x + 2, y + 4);
 			cout << "Input your password: ";
 			getline(cin, password);
 			if (password.empty())
 			{
+				GoTo(x + 1, y + 8);
+				cout << "                                                ";
+				GoTo(x + 15, y + 8);
+				SetColor(BLACK, RED);
 				cout << "This can't be empty!\n";
+				SetColor(BLACK, WHITE);
 				continue;
 			}
 			break;
@@ -458,20 +477,38 @@ void loginMenu()
 	}
 	else
 	{
-		cout << "Your acc exist, start logging in!\n";
+		GoTo(x + 1, y + 8);
+		cout << "                                                ";
+		GoTo(x + 8, y + 8);
+		SetColor(BLACK, RED);
+		cout << "Your account exist, start logging in!\n";
+		SetColor(BLACK, WHITE);
 		while(true)
 		{
+			GoTo(x + 1, y + 4);
+			cout << "                                                ";
+			GoTo(x + 2, y + 4);
 			cout << "Input your password: ";
 			getline(cin, password);
 
 			if (password.empty())
 			{
+				GoTo(x + 1, y + 8);
+				cout << "                                                ";
+				GoTo(x + 15, y + 8);
+				SetColor(BLACK, RED);
 				cout << "This can't be empty!\n";
+				SetColor(BLACK, WHITE);
 				continue;
 			}
 			if (password != account[pos].password)
 			{
+				GoTo(x + 1, y + 8);
+				cout << "                                                ";
+				GoTo(x + 20, y + 8);
+				SetColor(BLACK, RED);
 				cout << "Wrong pass\n";
+				SetColor(BLACK, WHITE);
 				continue;
 			}
 			break;

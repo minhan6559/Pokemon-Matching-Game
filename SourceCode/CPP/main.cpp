@@ -7,6 +7,6 @@ using namespace std;
 int main()
 {
 	SetUpConsole(1);
-	loginMenu();
+	loginMenu(50, 10);
 	return 0;
 }
