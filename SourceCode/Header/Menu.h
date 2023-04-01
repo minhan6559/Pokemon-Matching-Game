@@ -58,4 +58,4 @@ void MainMenu(Account*& account, int totalAccounts, int& pos);
 void ChooseLevel(int x, int y, Account& account);
 void ShowRules();
 
-void loginMenu();
+void loginMenu(int x, int y);
