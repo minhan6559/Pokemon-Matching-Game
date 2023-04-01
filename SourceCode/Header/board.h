@@ -5,8 +5,8 @@ struct Board
 {
 	int xBoardStart, yBoardStart;
 	int boxLength, boxWidth;
-	int size;		//Kich thuoc bang
-	int** pokeList;		//Mang pokemon. 32 or " ": Deleted
+	int size;		
+	int** pokeList;		//32 or " ": Deleted
 };
 struct Coor
 {
@@ -27,7 +27,7 @@ void highlightBoxForBoard(GameInfo& game, Point pokeIndex, int mode);
 
 //Hieu --------------------------------------
 void DrawBorder(Board board);
-void DrawBoardGame(Board board, bool isSlow);
+void DrawBoardGame(GameInfo& game, bool isSlow);
 void ShowMoves(GameInfo& game);
 void ChoosePoke(GameInfo& game, int rowPoke, int colPoke);
 void DeleteMatching(GameInfo& game);

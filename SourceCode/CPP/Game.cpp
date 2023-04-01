@@ -250,3 +250,9 @@ void createBackground(string fileName, string*& background, const Board& board)
 
 	fin.close();
 }
+
+void releaseGame(GameInfo& game)
+{
+	delete [] game.background;
+	releaseBoard(game.board);
+}

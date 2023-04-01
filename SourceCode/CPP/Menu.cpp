@@ -106,7 +106,7 @@ void HighlightBox(int xStart, int yStart, int length, int width, string text, in
 //References: https://www.youtube.com/watch?v=oDh046cT_Q0&t=1474s
 int ShowMainMenu(int x, int y)
 {
-	string option[4] = { "Start", "Leaderboard", "Rules", "Exit" };
+	string option[] = { "New Game", "Leaderboard", "Rules", "Exit" };
 	CreateTextBox(x, y, 30, 3, option[0]);
 	CreateTextBox(x, y + 3, 30, 3, option[1]);
 	CreateTextBox(x, y + 6, 30, 3, option[2]);
@@ -263,7 +263,7 @@ void ChooseLevel(int x, int y)
 			{
 				GameInfo game(4);
 				system("cls");
-				DrawBoardGame(game.board, 1);
+				DrawBoardGame(game, 1);
 				ShowMoves(game);
 				system("pause");
 				game.board.~Board();
@@ -273,7 +273,7 @@ void ChooseLevel(int x, int y)
 			{
 				GameInfo game(6);
 				system("cls");
-				DrawBoardGame(game.board, 1);
+				DrawBoardGame(game, 1);
 				ShowMoves(game);
 				system("pause");
 				game.board.~Board();
@@ -355,4 +355,71 @@ pairs are found.\n";
 	cout << char(175) << " Z or U matching: 3 point.\n";
 	GoTo(100, 28);
 	cout << char(175) << " Suggest move or Shuffle: -2 point.\n";
+}
+
+void logInMenu()
+{
+	int totalAccounts = 0;
+	Account* account = new Account [totalAccounts + 1];
+
+	inputAccountList(account, totalAccounts);
+
+	string username;
+	string password;
+
+	while(true)
+	{
+		cout << "Input your username: ";
+		getline(cin, username);
+		if (username.empty())
+		{
+			cout << "This can't be empty!\n";
+			continue;
+		}
+		break;
+	}
+
+	int pos = findAccountPos(account, totalAccounts, username);
+	if (pos == -1)
+	{
+		cout << "Your acc dont exist, start registering!\n";
+		totalAccounts++;
+		while(true)
+		{
+			cout << "Input your password: ";
+			getline(cin, password);
+			if (password.empty())
+			{
+				cout << "This can't be empty!\n";
+				continue;
+			}
+			break;
+		}
+		pos = totalAccounts - 1;
+		account[pos].username = username;
+		account[pos].password = password;		
+	}
+	else
+	{
+		cout << "Your acc exist, start logging in!\n";
+		while(true)
+		{
+			cout << "Input your password: ";
+			getline(cin, password);
+
+			if (password.empty())
+			{
+				cout << "This can't be empty!\n";
+				continue;
+			}
+			if (password != account[pos].password)
+			{
+				cout << "Wrong pass\n";
+				continue;
+			}
+			break;
+		}
+	}
+
+
 }

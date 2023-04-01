@@ -1,17 +1,14 @@
 #pragma once
-#include <iostream>
-#include "console.h"
-#include <string>
-#include <conio.h>
 #include "Board.h"
+#include "console.h"
+#include "Account.h"
+#include <conio.h>
+#include <iostream>
+#include <string>
+using namespace std;
 
 struct board;
-
-
-
-
-
-using namespace std;
+struct Account;
 
 #define BLACK 0
 #define BLUE 1
@@ -60,3 +57,5 @@ int ShowMainMenu(int x, int y);
 void MainMenu();
 void ChooseLevel(int x, int y);
 void ShowRules();
+
+void logInMenu();
