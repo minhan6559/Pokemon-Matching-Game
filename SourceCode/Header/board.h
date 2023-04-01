@@ -56,7 +56,6 @@ struct Coor
 struct Point;
 struct Queue;
 struct GameInfo;
-struct Account;
 
 void releaseBoard(Board& board);
 void randomPokemons(Board& board);
@@ -65,7 +64,6 @@ void showSuggestMove(GameInfo& game);
 void shufflePokeList(GameInfo& game);
 void drawBackground(GameInfo& game, Point pokeIndex);
 void highlightBoxForBoard(GameInfo& game, Point pokeIndex, int mode);
-GameInfo createGameFromAccount(Account account);
 
 //Hieu --------------------------------------
 void DrawBorder(Board board);

@@ -453,7 +453,7 @@ void loginMenu(int x, int y)
 	{
 		GoTo(x + 1, y + 8);
 		cout << "                                                ";
-		GoTo(x + 3, y + 8);
+		GoTo(x + 1, y + 8);
 		SetColor(BLACK, RED);
 		cout << "Your account don't exist, start registering!\n";
 		SetColor(BLACK, WHITE);

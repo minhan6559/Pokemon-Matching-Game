@@ -1,7 +1,6 @@
 #include "Menu.h"
 #include "Board.h"
 #include "Game.h"
-#include "Account.h"
 #include <Windows.h>
 #include <ctime>
 #include <cstdlib>
@@ -470,25 +469,6 @@ void highlightBoxForBoard(GameInfo& game, Point pokeIndex, int mode)
 	SetColor(BLACK, WHITE);
 }
 
-GameInfo createGameFromAccount(Account account)
-{
-	GameInfo game(account.size);
-
-	releaseBoard(game.board);
-	game.board.pokeList = account.curPokeList;
-	game.score = account.curScore;
-
-	for (int i = 0; i < account.size; i++)
-	{
-		for (int j = 0; j < account.size; j++)
-		{
-			if (game.board.pokeList[i][j] == ' ')
-				game.remainBlocks--;
-		}
-	}
-
-	return game;
-}
 
 //Hieu----------------------------------------
 void DrawBorder(Board board)

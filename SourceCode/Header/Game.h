@@ -1,5 +1,6 @@
 #pragma once
 #include "Board.h"
+#include "Account.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -39,11 +40,13 @@ struct GameInfo
     string* background;
     GameInfo(int _size);
 };
+struct Account;
 
 Queue findPath(Board board, Point p1, Point p2);
 int checkMatching(GameInfo& game, Queue& path);
 bool moveSuggestion(GameInfo game, Point& p1, Point& p2);
 void createBackground(string fileName, string*& background, const Board& board);
+GameInfo createGameFromAccount(Account account);
 
 void releaseGame (GameInfo& game);
 void releaseQueue(Queue& list);
