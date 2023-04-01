@@ -242,15 +242,13 @@ void MainMenu(Account*& account, int totalAccounts, int &pos)
 		{
 			system("cls");
 			ChooseLevel(42, 18, account[pos]);
+
 		}
 		else if (choose == 2)
 		{
 			system("cls");
-			for (int i = 0; i < totalAccounts; i++)
-			{
-				cout << account[i].username << " " << account[i].bestScore << endl;
-			}
-			system("pause");
+			ShowLeaderboard(account, totalAccounts);
+			_getch();
 		}
 		else if (choose == 1)
 		{
@@ -262,7 +260,7 @@ void MainMenu(Account*& account, int totalAccounts, int &pos)
 		{
 			system("cls");
 			cout << "Byee\n";
-			system("pause");
+			_getch();
 		}
 
 		string username = account[pos].username;
@@ -455,9 +453,9 @@ void loginMenu(int x, int y)
 	{
 		GoTo(x + 1, y + 8);
 		cout << "                                                ";
-		GoTo(x + 5, y + 8);
+		GoTo(x + 3, y + 8);
 		SetColor(BLACK, RED);
-		cout << "Your acc dont exist, start registering!\n";
+		cout << "Your account don't exist, start registering!\n";
 		SetColor(BLACK, WHITE);
 		totalAccounts++;
 		while(true)
@@ -485,7 +483,7 @@ void loginMenu(int x, int y)
 	{
 		GoTo(x + 1, y + 8);
 		cout << "                                                ";
-		GoTo(x + 8, y + 8);
+		GoTo(x + 7, y + 8);
 		SetColor(BLACK, RED);
 		cout << "Your account exist, start logging in!\n";
 		SetColor(BLACK, WHITE);
@@ -524,4 +522,50 @@ void loginMenu(int x, int y)
 	SetUpConsole(0);
 	MainMenu(account, totalAccounts, pos);
 	releaseAccountList(account, totalAccounts);
+}
+
+void ShowLeaderboard(Account* account, int totalAccounts)
+{
+	SetColor(BLACK, GREEN);
+	cout << R"(
+					    __     ______ ___     ____   ______ ____   ____   ____   ___     ____   ____ 
+					   / /    / ____//   |   / __ \ / ____// __ \ / __ ) / __ \ /   |   / __ \ / __ \
+					  / /    / __/  / /| |  / / / // __/  / /_/ // __  |/ / / // /| |  / /_/ // / / /
+					 / /___ / /___ / ___ | / /_/ // /___ / _, _// /_/ // /_/ // ___ | / _, _// /_/ / 
+					/_____//_____//_/  |_|/_____//_____//_/ |_|/_____/ \____//_/  |_|/_/ |_|/_____/)";
+
+	DrawBox(40, 10, 80, 19);
+	GoTo(41, 14);
+	for (int i = 1; i <= 78; i++)
+	{
+		cout << char(196);
+	}
+	for (int i = 1; i <= 17; i++)
+	{
+		GoTo(46, 10 + i);
+		cout << char(179);
+	}
+	for (int i = 1; i <= 17; i++)
+	{
+		GoTo(108, 10 + i);
+		cout << char(179);
+	}
+
+	SetColor(BLACK, LBLUE);
+	GoTo(52, 12);
+	cout << "Username";
+	GoTo(111, 12);
+	cout << "Score";
+	SetColor(BLACK, YELLOW);
+	for (int i = 0, j = 0; i < totalAccounts && i <= 4; i++, j += 3)
+	{
+		GoTo(43, 10 + 5 + j);
+		cout << i + 1;
+		GoTo(50, 10 + 5 + j);
+		cout << account[i].username;
+		GoTo(113, 10 + 5 + j);
+		cout << account[i].bestScore;
+	}
+	SetColor(BLACK, WHITE);
+
 }
