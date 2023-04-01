@@ -455,9 +455,9 @@ void loginMenu(int x, int y)
 	{
 		GoTo(x + 1, y + 8);
 		cout << "                                                ";
-		GoTo(x + 5, y + 8);
+		GoTo(x + 1, y + 8);
 		SetColor(BLACK, RED);
-		cout << "Your acc dont exist, start registering!\n";
+		cout << "Your account don't exist, start registering!\n";
 		SetColor(BLACK, WHITE);
 		totalAccounts++;
 		while(true)
@@ -486,7 +486,7 @@ void loginMenu(int x, int y)
 		GoTo(x + 1, y + 8);
 		cout << "                                                ";
 		GoTo(x + 8, y + 8);
-		SetColor(BLACK, RED);
+		SetColor(BLACK, AQUA);
 		cout << "Your account exist, start logging in!\n";
 		SetColor(BLACK, WHITE);
 		while(true)

@@ -3,22 +3,36 @@
 #pragma comment (lib, "winmm.lib")
 
 //Ref: Luis
+
+void setFontInfo(int x, int y)
+{
+    CONSOLE_FONT_INFOEX info;
+    info.cbSize = sizeof(info);
+    GetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &info);
+    info.dwFontSize.X = x;
+    info.dwFontSize.Y = y;
+    wcscpy_s(info.FaceName, L"Consolas");
+    SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &info);
+}
+
 void setAndCenterWindow()
 {
     // system("mode 650");
   //   HWND hwnd = GetConsoleWindow();
     // SetWindowPos(hwnd, 0, 0, 0, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_NOACTIVATE);
 
-    ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
-    /*HWND consoleWindow = GetConsoleWindow();
+    //ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
+    HWND consoleWindow = GetConsoleWindow();
     RECT rectClient, rectWindow;
     GetClientRect(consoleWindow, &rectClient), GetWindowRect(consoleWindow, &rectWindow);
-    int width = 1500;
-    int height = 768;
+    int windowsWidth = GetSystemMetrics(SM_CXSCREEN);
+    int windowsHeight = GetSystemMetrics(SM_CYSCREEN);
+    setFontInfo(windowsWidth / 55, windowsHeight / 43);
+    /*int width = 1500;
+    int height = 1000;
     int posX = (GetSystemMetrics(SM_CXSCREEN) - width) / 2,
-        posY = (GetSystemMetrics(SM_CYSCREEN) - height) / 2;
-    MoveWindow(consoleWindow, posX, posY, width, height, TRUE);*/
-    
+        posY = (GetSystemMetrics(SM_CYSCREEN) - height) / 2;*/
+    MoveWindow(consoleWindow, 0, 0, windowsWidth - 100, windowsHeight - 50, TRUE);
 }
 
 
@@ -114,16 +128,6 @@ void CorrectSound()
     mciSendString(L"play \"sound\\Correct.mp3\"", NULL, 0, 0);
 }
 
-void setFontInfo()
-{
-    CONSOLE_FONT_INFOEX info;
-    info.cbSize = sizeof(info);
-    GetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &info);
-    info.dwFontSize.X = 6;
-    info.dwFontSize.Y = 18;
-    wcscpy_s(info.FaceName, L"Consolas");
-    SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &info);
-}
 
 void SetUpConsole(bool isLogin)
 {
