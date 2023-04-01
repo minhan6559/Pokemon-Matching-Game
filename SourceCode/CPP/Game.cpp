@@ -2,8 +2,8 @@
 
 Queue::Queue()
 {
-	pHead = nullptr;
-	pTail = nullptr;
+	pHead = NULL;
+	pTail = NULL;
 }
 void releaseQueue(Queue& list)
 {
@@ -14,7 +14,7 @@ Node* createNode(Point data)
 {
 	Node* temp = new Node;
 	temp->p = data;
-	temp->pNext = nullptr;
+	temp->pNext = NULL;
 	return temp;
 }
 void Queue::pushTail(Point data)
@@ -36,7 +36,7 @@ Point Queue::front()
 }
 void Queue::pop_front()
 {
-	if (pHead == nullptr) // If the list is already empty
+	if (pHead == NULL) // If the list is already empty
 	{
 		return;
 	}
@@ -44,9 +44,9 @@ void Queue::pop_front()
 	Node* nodeToDelete = pHead;
 	pHead = pHead->pNext;
 
-	if (pHead == nullptr) // If the list is now empty
+	if (pHead == NULL) // If the list is now empty
 	{
-		pTail = nullptr;
+		pTail = NULL;
 	}
 
 	delete nodeToDelete;
@@ -106,7 +106,7 @@ Queue findPath(Board board, Point p1, Point p2)
 	e[s.r][s.c] = 0;
 	e[t.r][t.c] = 0;
 
-	while (q.pHead != nullptr) {
+	while (q.pHead != NULL) {
 		Point u = q.front();
 		q.pop_front();
 		if (u.r == s.r && u.c == s.c) break;

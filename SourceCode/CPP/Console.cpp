@@ -125,13 +125,19 @@ void setFontInfo()
     SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &info);
 }
 
-void SetUpConsole()
+void SetUpConsole(bool isLogin)
 {
-    SetConsoleTitle(L"Pukachi");
-    //setFontInfo();
-    setAndCenterWindow();
-    DisableResizeWindow();
-    DisableCtrButton(1, 1, 1);
-    ShowCur(0);
-    DisableSelection();
+    if(isLogin)
+    {
+        SetConsoleTitle(L"Pukachi");
+        //setFontInfo();
+        setAndCenterWindow();
+        DisableResizeWindow();
+        DisableCtrButton(1, 1, 1);
+    }
+    else
+    {
+        ShowCur(0);
+        DisableSelection();
+    }
 }

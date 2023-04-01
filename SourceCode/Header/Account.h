@@ -14,12 +14,13 @@ struct Account
     bool    isPlaying;
 
     int     size;
-    int** curPokeList;
+    int**   curPokeList;
 
     Account();
 };
 struct GameInfo;
 
+void releaseAccountList(Account*& account, int totalAccounts);
 void outputAccountList(Account* account, int totalAccounts);
 void inputAccountList(Account*& account, int& totalAccounts);
 

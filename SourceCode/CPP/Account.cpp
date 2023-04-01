@@ -11,6 +11,28 @@ Account::Account()
 	curPokeList = NULL;
 }
 
+void releaseAccountList(Account*& account, int totalAccounts)
+{
+	// first, check if the account list is not NULL
+	if (account != NULL)
+	{
+		// deallocate each curPokeList array inside each Account object
+		for (int i = 0; i < totalAccounts; i++)
+		{
+			if (account[i].curPokeList != NULL)
+			{
+				for (int m = 0; m < account[i].size; m++) {
+					if (account[i].curPokeList[m] != NULL) {
+						delete[] account[i].curPokeList[m];
+					}
+				}
+				delete[] account[i].curPokeList;
+			}
+		}
+		account = NULL;
+	}
+}
+
 void outputAccountList(Account* account, int totalAccounts)
 {
 	ofstream fp("saveGame\\saveGame.bin", ios::binary);
@@ -36,6 +58,8 @@ void inputAccountList(Account*& account, int& totalAccounts)
 	ifstream fp ("saveGame\\saveGame.bin", ios::binary);
 
 	fp.read((char*)&totalAccounts, sizeof(int));
+
+	account = new Account[totalAccounts + 1];
 
 	for (int i = 0; i < totalAccounts; i++)
 	{
@@ -75,7 +99,9 @@ void updateAccountAfterGame(Account& account, GameInfo& game, bool isPlaying)
 		}
 
 		account.curScore = 0;
-		releaseBoard(game.board);
+		
+		releaseGame(game);
+
 		account.curPokeList = NULL;
 	}
 }
