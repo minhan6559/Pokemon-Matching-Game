@@ -1,6 +1,7 @@
 #include "Menu.h"
 #include "Board.h"
 #include "Game.h"
+#include "Account.h"
 #include <iostream>
 #include <Windows.h>
 #include <ctime>
@@ -470,6 +471,26 @@ void highlightBoxForBoard(GameInfo& game, Point pokeIndex, int mode)
 	SetColor(BLACK, WHITE);
 }
 
+GameInfo createGameFromAccount(Account account)
+{
+	GameInfo game(account.size);
+
+	releaseBoard(game.board);
+	game.board.pokeList = account.curPokeList;
+	game.score = account.curScore;
+
+	for (int i = 0; i < account.size; i++)
+	{
+		for (int j = 0; j < account.size; j++)
+		{
+			if (game.board.pokeList[i][j] == ' ')
+				game.remainBlocks--;
+		}
+	}
+
+	return game;
+}
+
 //Hieu----------------------------------------
 void DrawBorder(Board board)
 {
@@ -531,7 +552,8 @@ void DrawBoardGame(GameInfo& game, bool isSlow)
 	SetColor(BLACK, WHITE);
 }
 
-void ShowMoves(GameInfo& game)
+//1: is playing, 0: done game
+bool ShowMoves(GameInfo& game)
 {
 	char key;
 	Point pokeCur = { 0, 0 };
@@ -539,15 +561,15 @@ void ShowMoves(GameInfo& game)
 	while (true)
 	{
 		//check if there is no move then shuffle
-		Point temp1;
-		Point temp2;
+		Point checkMove1;
+		Point checkMove2;
 
-		if (moveSuggestion(game, temp1, temp2) == 0)
+		if (moveSuggestion(game, checkMove1, checkMove2) == 0)
 		{
 			do
 			{
 				shufflePokeList(game);
-			} while (moveSuggestion(game, temp1, temp2) == 0);
+			} while (moveSuggestion(game, checkMove1, checkMove2) == 0);
 
 			system("cls");
 			DrawBoardGame(game, 0);
@@ -619,16 +641,19 @@ void ShowMoves(GameInfo& game)
 			DrawBoardGame(game, 0);
 			game.score -= 2;
 		}
+		else if (key == ESC_key)
+		{
+			return 1;
+		}
 		if (game.remainBlocks == 0)
 		{
-			break;
+			return 0;
 		}
 		GoTo(0, 0);
 		cout << "                                          ";
 		GoTo(0, 0);
 		cout << "Score: " << game.score;
 	}
-	releaseGame (game);
 }
 
 void ChoosePoke(GameInfo& game, int rowPoke, int colPoke)
@@ -716,10 +741,6 @@ void DeleteMatching(GameInfo& game)
 	game.board.pokeList[game.p1.r][game.p1.c] = 32;
 	game.board.pokeList[game.p2.r][game.p2.c] = 32;
 
-	//game.p1.r = -1;
-	//game.p1.c = -1;
-	//game.p2.r = -1;
-	//game.p2.c = -1;
-
 	game.remainBlocks -= 2;
 }
+

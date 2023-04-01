@@ -1,5 +1,6 @@
 #pragma once
 #include "Menu.h"
+#include "Game.h"
 #include <fstream>
 
 struct Account
@@ -10,15 +11,18 @@ struct Account
     int     curScore;
     int     bestScore;
 
-    bool    isContinue;
+    bool    isPlaying;
 
     int     size;
     int** curPokeList;
 
     Account();
 };
+struct GameInfo;
 
 void outputAccountList(Account* account, int totalAccounts);
 void inputAccountList(Account*& account, int& totalAccounts);
+
+void updateAccountAfterGame(Account& account, GameInfo& game, bool isPlaying);
 
 int findAccountPos(Account* account, int totalAccounts, string username);

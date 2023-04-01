@@ -6,7 +6,7 @@ Account::Account()
 	password = "";
 	curScore = 0;
 	bestScore = 0;
-	isContinue = false;
+	isPlaying = false;
 	size = 0;
 	curPokeList = NULL;
 }
@@ -53,6 +53,31 @@ void inputAccountList(Account*& account, int& totalAccounts)
 	}
 
 	fp.close();
+}
+
+
+void updateAccountAfterGame(Account& account, GameInfo& game, bool isPlaying)
+{
+	if (isPlaying == 1)
+	{
+		account.isPlaying = 1;
+		account.curScore = game.score;
+		account.curPokeList = game.board.pokeList;
+		account.size = game.board.size;
+	}
+	else
+	{
+		account.isPlaying = 0;
+
+		if (account.bestScore < game.score)
+		{
+			account.bestScore = game.score;
+		}
+
+		account.curScore = 0;
+		releaseBoard(game.board);
+		account.curPokeList = NULL;
+	}
 }
 
 int findAccountPos(Account* account, int totalAccounts, string username)
