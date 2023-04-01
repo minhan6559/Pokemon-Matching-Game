@@ -1,5 +1,5 @@
 #pragma once
-
+#include <string>
 const char ZERO[] = R"(  __
  /  \
 | () |
@@ -74,4 +74,6 @@ bool ShowMoves(GameInfo& game);
 void ChoosePoke(GameInfo& game, int rowPoke, int colPoke);
 void DeleteMatching(GameInfo& game);
 void DrawDigit(int x, int y, short digit);
-void DrawInfoBoard(int x, int y, int score);
+void DrawInfoBoard(int x, int y, short score, std::string level);
+void DrawScore(int x, int y, short score);
+void DrawStatus(int x, int y, std::string status);
