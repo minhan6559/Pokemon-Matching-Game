@@ -24,6 +24,7 @@ void releaseAccountList(Account*& account, int totalAccounts);
 void outputAccountList(Account* account, int totalAccounts);
 void inputAccountList(Account*& account, int& totalAccounts);
 
+void sortDescendingAccountList(Account*& account, int totalAccount);
 void updateAccountAfterGame(Account& account, GameInfo& game, bool isPlaying);
 
 int findAccountPos(Account* account, int totalAccounts, string username);

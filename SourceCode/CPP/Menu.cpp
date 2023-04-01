@@ -193,7 +193,7 @@ int ShowMainMenu(int x, int y, bool isPlaying)
 	}
 }
 
-void MainMenu(Account*& account, int totalAccounts, int pos)
+void MainMenu(Account*& account, int totalAccounts, int &pos)
 {
 	srand((unsigned int)time(NULL));
 	bool isBegin = 1;
@@ -245,7 +245,10 @@ void MainMenu(Account*& account, int totalAccounts, int pos)
 		else if (choose == 2)
 		{
 			system("cls");
-			cout << "Not Updated\n";
+			for (int i = 0; i < totalAccounts; i++)
+			{
+				cout << account[i].username << " " << account[i].bestScore << endl;
+			}
 			system("pause");
 		}
 		else if (choose == 1)
@@ -261,6 +264,9 @@ void MainMenu(Account*& account, int totalAccounts, int pos)
 			system("pause");
 		}
 
+		string username = account[pos].username;
+		sortDescendingAccountList(account, totalAccounts);
+		pos = findAccountPos(account, totalAccounts, username);
 		outputAccountList(account, totalAccounts);
 	} while (choose);
 }

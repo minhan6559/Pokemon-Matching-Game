@@ -79,6 +79,27 @@ void inputAccountList(Account*& account, int& totalAccounts)
 	fp.close();
 }
 
+void sortDescendingAccountList(Account*& account, int totalAccount)
+{
+	bool haveSwap = false;
+	for (int i = 0; i < totalAccount - 1; i++) 
+	{
+		haveSwap = false;
+		for (int j = 0; j < totalAccount - i - 1; j++) 
+		{
+			if (account[j].bestScore < account[j + 1].bestScore) 
+			{
+				Account temp = account[j];
+				account[j] = account[j + 1];
+				account[j + 1] = temp;
+				haveSwap = true;
+			}
+		}
+		if (haveSwap == false) {
+			break;
+		}
+	}
+}
 
 void updateAccountAfterGame(Account& account, GameInfo& game, bool isPlaying)
 {
