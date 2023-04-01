@@ -718,3 +718,8 @@ void DeleteMatching(GameInfo& game)
 
 	game.remainBlocks -= 2;
 }
+
+void DrawDigit(int x, int y, short digit)
+{
+	const char ZERO[] = R()
+}
