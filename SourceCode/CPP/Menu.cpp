@@ -126,7 +126,7 @@ int ShowMainMenu(int x, int y, bool isPlaying)
 		{
 			int xPrev = x, yPrev = y;
 			key = _getch();
-			if ((key == UP || key == 'w') && y > TOPB && i > 0) //UP
+			if ((key == UP || key == 'w' || key == 'W') && y > TOPB && i > 0) //UP
 			{
 				SelectingSound();
 				y -= 3;
@@ -134,7 +134,7 @@ int ShowMainMenu(int x, int y, bool isPlaying)
 				HighlightBox(x, y, 30, 3, option[--i], 1);
 				choose++;
 			}
-			else if ((key == DOWN || key == 's') && y < BOTTOMB && i <= 3) //DOWN
+			else if ((key == DOWN || key == 's' || key == 'S') && y < BOTTOMB && i <= 3) //DOWN
 			{
 				SelectingSound();
 				y += 3;
@@ -168,7 +168,7 @@ int ShowMainMenu(int x, int y, bool isPlaying)
 		{
 			int xPrev = x, yPrev = y;
 			key = _getch();
-			if ((key == UP || key == 'w') && y > TOPB && i > 0) //UP
+			if ((key == UP || key == 'w' || key == 'W') && y > TOPB && i > 0) //UP
 			{
 				SelectingSound();
 				y -= 3;
@@ -176,7 +176,7 @@ int ShowMainMenu(int x, int y, bool isPlaying)
 				HighlightBox(x, y, 30, 3, option[--i], 1);
 				choose++;
 			}
-			else if ((key == DOWN || key == 's') && y < BOTTOMB && i <= 2) //DOWN
+			else if ((key == DOWN || key == 's' || key == 'S') && y < BOTTOMB && i <= 2) //DOWN
 			{
 				SelectingSound();
 				y += 3;
@@ -301,7 +301,7 @@ void ChooseLevel(int x, int y, Account& account)
 	{
 		int xPrev = x, yPrev = y;
 		key = _getch();
-		if ((key == UP || key == 'w') && y > TOPB && i > 0) //UP
+		if ((key == UP || key == 'w' || key == 'W') && y > TOPB && i > 0) //UP
 		{
 			SelectingSound();
 			y -= 3;
@@ -309,7 +309,7 @@ void ChooseLevel(int x, int y, Account& account)
 			HighlightBox(x, y, 30, 3, option[--i], 1);
 			choose++;
 		}
-		else if ((key == DOWN || key == 's') && y < BOTTOMB && i <= 1) //DOWN
+		else if ((key == DOWN || key == 's' || key == 'S') && y < BOTTOMB && i <= 1) //DOWN
 		{
 			SelectingSound();
 			y += 3;
@@ -398,9 +398,9 @@ pairs are found.\n";
 	GoTo(30, 21);
 	cout << char(175) << " Press Enter to select.\n";
 	GoTo(100, 19);
-	cout << char(175) << " Press H to suggest moving.\n";
+	cout << char(175) << " Press F to suggest moving.\n";
 	GoTo(100, 21);
-	cout << char(175) << " Press P to shuffle.\n";
+	cout << char(175) << " Press R to shuffle.\n";
 
 
 	GoTo(85, 24);
@@ -484,7 +484,7 @@ void loginMenu(int x, int y)
 		GoTo(x + 1, y + 8);
 		cout << "                                                ";
 		GoTo(x + 7, y + 8);
-		SetColor(BLACK, RED);
+		SetColor(BLACK, AQUA);
 		cout << "Your account exist, start logging in!\n";
 		SetColor(BLACK, WHITE);
 		while(true)
@@ -526,7 +526,7 @@ void loginMenu(int x, int y)
 
 void ShowLeaderboard(Account* account, int totalAccounts)
 {
-	SetColor(BLACK, GREEN);
+	SetColor(BLACK, LBLUE);
 	cout << R"(
 					    __     ______ ___     ____   ______ ____   ____   ____   ___     ____   ____ 
 					   / /    / ____//   |   / __ \ / ____// __ \ / __ ) / __ \ /   |   / __ \ / __ \

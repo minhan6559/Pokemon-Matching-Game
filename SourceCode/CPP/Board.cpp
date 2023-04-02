@@ -567,7 +567,7 @@ bool ShowMoves(GameInfo& game)
 		Point pokePrev = pokeCur;
 
 		key = _getwch();
-		if ((key == UP || key == 'w') && pokeCur.r > 0)
+		if ((key == UP || key == 'w' || key == 'W') && pokeCur.r > 0)
 		{
 			SelectingSound();
 			pokeCur.r--;
@@ -578,7 +578,7 @@ bool ShowMoves(GameInfo& game)
 			}
 			highlightBoxForBoard(game, pokeCur, 1);
 		}
-		else if ((key == DOWN || key == 's') && pokeCur.r < game.board.size - 1)
+		else if ((key == DOWN || key == 's' || key == 'S') && pokeCur.r < game.board.size - 1)
 		{
 			SelectingSound();
 			pokeCur.r++;
@@ -589,7 +589,7 @@ bool ShowMoves(GameInfo& game)
 			}
 			highlightBoxForBoard(game, pokeCur, 1);
 		}
-		else if ((key == LEFT || key == 'a') && pokeCur.c > 0)
+		else if ((key == LEFT || key == 'a' || key == 'A') && pokeCur.c > 0)
 		{
 			SelectingSound();
 			pokeCur.c--;
@@ -600,7 +600,7 @@ bool ShowMoves(GameInfo& game)
 			}
 			highlightBoxForBoard(game, pokeCur, 1);
 		}
-		else if ((key == RIGHT || key == 'd') && pokeCur.c < game.board.size - 1)
+		else if ((key == RIGHT || key == 'd' || key == 'D') && pokeCur.c < game.board.size - 1)
 		{
 			SelectingSound();
 			pokeCur.c++;
@@ -615,7 +615,7 @@ bool ShowMoves(GameInfo& game)
 		{
 			ChoosePoke(game, pokeCur.r, pokeCur.c);
 		}
-		else if (key == H_Key)
+		else if (key == 'F' || key == 'f')
 		{
 			SelectingSound();
 			showSuggestMove(game);
@@ -627,7 +627,7 @@ bool ShowMoves(GameInfo& game)
 			DrawScore(90, 4, game.score);
 
 		}
-		else if (key == P_key)
+		else if (key == 'r' || key == 'R')
 		{
 			SelectingSound();
 			shufflePokeList(game);
