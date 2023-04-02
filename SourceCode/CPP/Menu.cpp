@@ -106,7 +106,7 @@ void HighlightBox(int xStart, int yStart, int length, int width, string text, in
 //References: https://www.youtube.com/watch?v=oDh046cT_Q0&t=1474s
 int ShowMainMenu(int x, int y, bool isPlaying)
 {
-	if(isPlaying)
+	if (isPlaying)
 	{
 		string option[5] = { "Continue", "New Game", "Leaderboard", "Rules", "Exit" };
 
@@ -142,7 +142,7 @@ int ShowMainMenu(int x, int y, bool isPlaying)
 				HighlightBox(x, y, 30, 3, option[++i], 1);
 				choose--;
 			}
-			else if (key == ENTER)
+			else if (key == ENTER || key == ' ')
 			{
 				ChoosedSound();
 				return choose;
@@ -151,8 +151,8 @@ int ShowMainMenu(int x, int y, bool isPlaying)
 	}
 	else
 	{
-		string option[4] = {"New Game", "Leaderboard", "Rules", "Exit" };
-		
+		string option[4] = { "New Game", "Leaderboard", "Rules", "Exit" };
+
 		CreateTextBox(x, y + 3, 30, 3, option[0]);
 		CreateTextBox(x, y + 6, 30, 3, option[1]);
 		CreateTextBox(x, y + 9, 30, 3, option[2]);
@@ -184,7 +184,7 @@ int ShowMainMenu(int x, int y, bool isPlaying)
 				HighlightBox(x, y, 30, 3, option[++i], 1);
 				choose--;
 			}
-			else if (key == ENTER)
+			else if (key == ENTER || key == ' ')
 			{
 				ChoosedSound();
 				return choose;
@@ -193,14 +193,14 @@ int ShowMainMenu(int x, int y, bool isPlaying)
 	}
 }
 
-void MainMenu(Account*& account, int totalAccounts, int &pos)
+void MainMenu(Account*& account, int totalAccounts, int& pos)
 {
 	BackgroundSong();
 	srand((unsigned int)time(NULL));
 	bool isBegin = 1;
 	int choose;
 	do
-	{	
+	{
 		system("cls");
 
 		for (int i = 1; i < 10; i++)
@@ -317,7 +317,7 @@ void ChooseLevel(int x, int y, Account& account)
 			HighlightBox(x, y, 30, 3, option[++i], 1);
 			choose--;
 		}
-		else if (key == ENTER)
+		else if (key == ENTER || key == ' ')
 		{
 			ChoosedSound();
 			if (choose == 2)
@@ -355,10 +355,10 @@ void ShowRules()
 	cout << R"(
                                                                             ____  __  ____    ___________
                                                                            / __ \/ / / / /   / ____/ ___/
-                                                                          / /_/ / / / / /   / __/  \__ \ 
-                                                                         / _, _/ /_/ / /___/ /___ ___/ / 
-                                                                        /_/ |_|\____/_____/_____//____/  
-                                 
+                                                                          / /_/ / / / / /   / __/  \__ \
+                                                                         / _, _/ /_/ / /___/ /___ ___/ /
+                                                                        /_/ |_|\____/_____/_____//____/
+
 )";
 
 	DrawBox(24, 10, 130, 8);
@@ -376,10 +376,10 @@ void ShowRules()
 	GoTo(85, 10);
 	SetColor(LGREEN, BLACK);
 	cout << " OVERALL ";
-	SetColor(BLACK ,WHITE);
+	SetColor(BLACK, WHITE);
 
 	GoTo(27, 12);
-	cout << char(175) <<  " The Matching Game(commonly known as Pikachu Puzzle Game) includes a board of \
+	cout << char(175) << " The Matching Game(commonly known as Pikachu Puzzle Game) includes a board of \
 multiple cells, each of whichpresents a figure.\n";
 	GoTo(27, 13);
 	cout << char(175) << " The player finds and matches a pair of cells that contain the same \
@@ -396,7 +396,7 @@ pairs are found.\n";
 	GoTo(30, 19);
 	cout << char(175) << " Press W A S D or UP DOWN LEFT RIGHT arows to move.\n";
 	GoTo(30, 21);
-	cout << char(175) << " Press Enter to select.\n";
+	cout << char(175) << " Press Enter or Space bar to select.\n";
 	GoTo(100, 19);
 	cout << char(175) << " Press F to suggest moving.\n";
 	GoTo(100, 21);
@@ -432,7 +432,7 @@ void loginMenu(int x, int y)
 	GoTo(x + 18, y + 1);
 	cout << "LOGIN/REGISTER";
 
-	while(true)
+	while (true)
 	{
 		GoTo(x + 2, y + 3);
 		cout << "Input your username: ";
@@ -453,12 +453,12 @@ void loginMenu(int x, int y)
 	{
 		GoTo(x + 1, y + 8);
 		cout << "                                                ";
-		GoTo(x + 1, y + 8);
+		GoTo(x + 3, y + 8);
 		SetColor(BLACK, RED);
 		cout << "Your account don't exist, start registering!\n";
 		SetColor(BLACK, WHITE);
 		totalAccounts++;
-		while(true)
+		while (true)
 		{
 			GoTo(x + 2, y + 4);
 			cout << "Input your password: ";
@@ -476,8 +476,8 @@ void loginMenu(int x, int y)
 			break;
 		}
 		pos = totalAccounts - 1;
-		account[pos].username = username;
-		account[pos].password = password;		
+		strcpy(account[pos].username, username.c_str());
+		strcpy(account[pos].password, password.c_str());
 	}
 	else
 	{
@@ -487,7 +487,7 @@ void loginMenu(int x, int y)
 		SetColor(BLACK, AQUA);
 		cout << "Your account exist, start logging in!\n";
 		SetColor(BLACK, WHITE);
-		while(true)
+		while (true)
 		{
 			GoTo(x + 1, y + 4);
 			cout << "                                                ";
@@ -528,10 +528,10 @@ void ShowLeaderboard(Account* account, int totalAccounts)
 {
 	SetColor(BLACK, LBLUE);
 	cout << R"(
-					    __     ______ ___     ____   ______ ____   ____   ____   ___     ____   ____ 
+					    __     ______ ___     ____   ______ ____   ____   ____   ___     ____   ____
 					   / /    / ____//   |   / __ \ / ____// __ \ / __ ) / __ \ /   |   / __ \ / __ \
 					  / /    / __/  / /| |  / / / // __/  / /_/ // __  |/ / / // /| |  / /_/ // / / /
-					 / /___ / /___ / ___ | / /_/ // /___ / _, _// /_/ // /_/ // ___ | / _, _// /_/ / 
+					 / /___ / /___ / ___ | / /_/ // /___ / _, _// /_/ // /_/ // ___ | / _, _// /_/ /
 					/_____//_____//_/  |_|/_____//_____//_/ |_|/_____/ \____//_/  |_|/_/ |_|/_____/)";
 
 	DrawBox(40, 10, 80, 19);

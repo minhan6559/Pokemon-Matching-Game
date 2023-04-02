@@ -611,7 +611,7 @@ bool ShowMoves(GameInfo& game)
 			}
 			highlightBoxForBoard(game, pokeCur, 1);
 		}
-		else if (key == ENTER)
+		else if (key == ENTER || key == ' ')
 		{
 			ChoosePoke(game, pokeCur.r, pokeCur.c);
 		}

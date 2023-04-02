@@ -21,18 +21,18 @@ void setAndCenterWindow()
   //   HWND hwnd = GetConsoleWindow();
     // SetWindowPos(hwnd, 0, 0, 0, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_NOACTIVATE);
 
-    //ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
+    //ShowWindow(GetConsoleWindow(), 3);
     HWND consoleWindow = GetConsoleWindow();
     RECT rectClient, rectWindow;
     GetClientRect(consoleWindow, &rectClient), GetWindowRect(consoleWindow, &rectWindow);
     int windowsWidth = GetSystemMetrics(SM_CXSCREEN);
     int windowsHeight = GetSystemMetrics(SM_CYSCREEN);
-    setFontInfo(windowsWidth / 55, windowsHeight / 44);
+    setFontInfo(windowsWidth / 50, windowsHeight / 44); 
     /*int width = 1500;
     int height = 1000;
     int posX = (GetSystemMetrics(SM_CXSCREEN) - width) / 2,
         posY = (GetSystemMetrics(SM_CYSCREEN) - height) / 2;*/
-    MoveWindow(consoleWindow, 0, 0, windowsWidth - 100, windowsHeight - 50, TRUE);
+    MoveWindow(consoleWindow, 10, 10, windowsWidth - 100, windowsHeight - 50, TRUE);
 }
 
 
@@ -141,7 +141,7 @@ void SetUpConsole(bool isLogin)
     }
     else
     {
-        //ShowCur(0);
-        //DisableSelection();
+        ShowCur(0);
+        DisableSelection();
     }
 }

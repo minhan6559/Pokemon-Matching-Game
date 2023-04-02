@@ -2,8 +2,8 @@
 
 Account::Account()
 {
-	username = "";
-	password = "";
+	strcpy(username, "");
+	strcpy(password, "");
 	curScore = 0;
 	bestScore = 0;
 	isPlaying = false;
@@ -35,15 +35,14 @@ void releaseAccountList(Account*& account, int totalAccounts)
 
 void outputAccountList(Account* account, int totalAccounts)
 {
-	ofstream fp("saveGame\\saveGame.bin", ios::binary);
+	ofstream fp("SaveGame\\saveGame.bin", ios::binary | ios::trunc);
 
 	fp.write((char*)&totalAccounts, sizeof(int));
 
 	for (int i = 0; i < totalAccounts; i++)
 	{
-		fp.write((char*) &account[i], sizeof(Account));
-		
-		if(account[i].curPokeList != NULL)
+		fp.write((char*)&account[i], sizeof(Account));
+		if (account[i].isPlaying == 1)
 			for (int m = 0; m < account[i].size; m++)
 			{
 				for (int n = 0; n < account[i].size; n++)
@@ -55,7 +54,7 @@ void outputAccountList(Account* account, int totalAccounts)
 }
 void inputAccountList(Account*& account, int& totalAccounts)
 {
-	ifstream fp ("saveGame\\saveGame.bin", ios::binary);
+	ifstream fp("SaveGame\\saveGame.bin", ios::binary);
 
 	fp.read((char*)&totalAccounts, sizeof(int));
 
@@ -63,17 +62,19 @@ void inputAccountList(Account*& account, int& totalAccounts)
 
 	for (int i = 0; i < totalAccounts; i++)
 	{
-		fp.read((char*) &account[i], sizeof(Account));
-		if (account[i].curPokeList != NULL)
+		fp.read((char*)&account[i], sizeof(Account));
+		if (account[i].isPlaying == 1)
 		{
 			account[i].curPokeList = new int* [account[i].size];
 			for (int m = 0; m < account[i].size; m++)
 			{
-				account[i].curPokeList[m] = new int [account[i].size];
+				account[i].curPokeList[m] = new int[account[i].size];
 				for (int n = 0; n < account[i].size; n++)
 					fp.read((char*)&account[i].curPokeList[m][n], sizeof(int));
 			}
 		}
+		else
+			account[i].curPokeList = NULL;
 	}
 
 	fp.close();
@@ -82,12 +83,12 @@ void inputAccountList(Account*& account, int& totalAccounts)
 void sortDescendingAccountList(Account*& account, int totalAccount)
 {
 	bool haveSwap = false;
-	for (int i = 0; i < totalAccount - 1; i++) 
+	for (int i = 0; i < totalAccount - 1; i++)
 	{
 		haveSwap = false;
-		for (int j = 0; j < totalAccount - i - 1; j++) 
+		for (int j = 0; j < totalAccount - i - 1; j++)
 		{
-			if (account[j].bestScore < account[j + 1].bestScore) 
+			if (account[j].bestScore < account[j + 1].bestScore)
 			{
 				Account temp = account[j];
 				account[j] = account[j + 1];
@@ -120,7 +121,7 @@ void updateAccountAfterGame(Account& account, GameInfo& game, bool isPlaying)
 		}
 
 		account.curScore = 0;
-		
+
 		releaseGame(game);
 
 		account.curPokeList = NULL;
@@ -131,7 +132,7 @@ int findAccountPos(Account* account, int totalAccounts, string username)
 {
 	for (int i = 0; i < totalAccounts; i++)
 	{
-		if (account[i].username == username)
+		if (strcmp(account[i].username, username.c_str()) == 0)
 			return i;
 	}
 	return -1;

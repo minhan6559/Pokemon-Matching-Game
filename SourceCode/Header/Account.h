@@ -5,8 +5,8 @@
 
 struct Account
 {
-    string  username;
-    string  password;
+    char  username[20];
+    char  password[20];
 
     int     curScore;
     int     bestScore;
@@ -14,7 +14,7 @@ struct Account
     bool    isPlaying;
 
     int     size;
-    int**   curPokeList;
+    int** curPokeList;
 
     Account();
 };
