@@ -126,7 +126,7 @@ int ShowMainMenu(int x, int y, bool isPlaying)
 		{
 			int xPrev = x, yPrev = y;
 			key = _getch();
-			if ((key == UP || key == 'w' || key == 'W') && y > TOPB && i > 0) //UP
+			if ((key == 'w' || key == 'W') && y > TOPB && i > 0) //UP
 			{
 				SelectingSound();
 				y -= 3;
@@ -134,7 +134,7 @@ int ShowMainMenu(int x, int y, bool isPlaying)
 				HighlightBox(x, y, 30, 3, option[--i], 1);
 				choose++;
 			}
-			else if ((key == DOWN || key == 's' || key == 'S') && y < BOTTOMB && i <= 3) //DOWN
+			else if ((key == 's' || key == 'S') && y < BOTTOMB && i <= 3) //DOWN
 			{
 				SelectingSound();
 				y += 3;
@@ -298,7 +298,7 @@ void ChooseLevel(int x, int y, Account& account)
 	{
 		int xPrev = x, yPrev = y;
 		key = _getch();
-		if ((key == UP || key == 'w' || key == 'W') && y > TOPB && i > 0) //UP
+		if ((key == 'w' || key == 'W') && y > TOPB && i > 0) //UP
 		{
 			SelectingSound();
 			y -= 3;
@@ -306,7 +306,7 @@ void ChooseLevel(int x, int y, Account& account)
 			HighlightBox(x, y, 30, 3, option[--i], 1);
 			choose++;
 		}
-		else if ((key == DOWN || key == 's' || key == 'S') && y < BOTTOMB && i <= 1) //DOWN
+		else if ((key == 's' || key == 'S') && y < BOTTOMB && i <= 1) //DOWN
 		{
 			SelectingSound();
 			y += 3;

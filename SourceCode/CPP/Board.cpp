@@ -470,6 +470,7 @@ bool ShowMoves(GameInfo& game)
 				shufflePokeList(game);
 			} while (moveSuggestion(game, checkMove1, checkMove2) == 0);
 
+			DrawStatus(90, 4, "Out of Moves!");
 			system("cls");
 			DrawBoardGame(game, 1);
 			DrawStatus(90, 4, "Out of Moves");
@@ -491,7 +492,7 @@ bool ShowMoves(GameInfo& game)
 			}
 			highlightBoxForBoard(game, pokeCur, 1);
 		}
-		else if ((key == DOWN || key == 's' || key == 'S') && pokeCur.r < game.board.size - 1)
+		else if ((key == 's' || key == 'S') && pokeCur.r < game.board.size - 1)
 		{
 			SelectingSound();
 			pokeCur.r++;
@@ -502,7 +503,7 @@ bool ShowMoves(GameInfo& game)
 			}
 			highlightBoxForBoard(game, pokeCur, 1);
 		}
-		else if ((key == LEFT || key == 'a' || key == 'A') && pokeCur.c > 0)
+		else if ((key == 'a' || key == 'A') && pokeCur.c > 0)
 		{
 			SelectingSound();
 			pokeCur.c--;
@@ -513,7 +514,7 @@ bool ShowMoves(GameInfo& game)
 			}
 			highlightBoxForBoard(game, pokeCur, 1);
 		}
-		else if ((key == RIGHT || key == 'd' || key == 'D') && pokeCur.c < game.board.size - 1)
+		else if ((key == 'd' || key == 'D') && pokeCur.c < game.board.size - 1)
 		{
 			SelectingSound();
 			pokeCur.c++;
@@ -545,6 +546,7 @@ bool ShowMoves(GameInfo& game)
 			SelectingSound();
 			shufflePokeList(game);
 			DrawBoardGame(game, 0);
+			DrawStatus(90, 4, "Shuffled!");
 			game.score -= 2;
 			if (game.score < 0)
 			{

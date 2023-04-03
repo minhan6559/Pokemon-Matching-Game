@@ -5,13 +5,13 @@
 //Ref: Luis
 void setFontInfo(int x, int y)
 {
-    CONSOLE_FONT_INFOEX info;
+    /*CONSOLE_FONT_INFOEX info;
     info.cbSize = sizeof(info);
     GetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &info);
     info.dwFontSize.X = x;
     info.dwFontSize.Y = y;
     wcscpy_s(info.FaceName, L"Consolas");
-    SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &info);
+    SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &info);*/
 }
 
 void setAndCenterWindow()
