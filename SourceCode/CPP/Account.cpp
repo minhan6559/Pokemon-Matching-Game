@@ -29,6 +29,7 @@ void releaseAccountList(Account*& account, int totalAccounts)
 				delete[] account[i].curPokeList;
 			}
 		}
+		delete[] account;
 		account = NULL;
 	}
 }

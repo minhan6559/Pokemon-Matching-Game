@@ -3,16 +3,15 @@
 #pragma comment (lib, "winmm.lib")
 
 //Ref: Luis
-
 void setFontInfo(int x, int y)
 {
-    CONSOLE_FONT_INFOEX info;
+    /*CONSOLE_FONT_INFOEX info;
     info.cbSize = sizeof(info);
     GetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &info);
     info.dwFontSize.X = x;
     info.dwFontSize.Y = y;
     wcscpy_s(info.FaceName, L"Consolas");
-    SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &info);
+    SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &info);*/
 }
 
 void setAndCenterWindow()
@@ -21,7 +20,7 @@ void setAndCenterWindow()
   //   HWND hwnd = GetConsoleWindow();
     // SetWindowPos(hwnd, 0, 0, 0, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_NOACTIVATE);
 
-    //ShowWindow(GetConsoleWindow(), 3);
+    ShowWindow(GetConsoleWindow(), 3);
     HWND consoleWindow = GetConsoleWindow();
     RECT rectClient, rectWindow;
     GetClientRect(consoleWindow, &rectClient), GetWindowRect(consoleWindow, &rectWindow);
@@ -32,7 +31,7 @@ void setAndCenterWindow()
     int height = 1000;
     int posX = (GetSystemMetrics(SM_CXSCREEN) - width) / 2,
         posY = (GetSystemMetrics(SM_CYSCREEN) - height) / 2;*/
-    MoveWindow(consoleWindow, 10, 10, windowsWidth - 100, windowsHeight - 50, TRUE);
+    //MoveWindow(consoleWindow, 10, 10, windowsWidth - 100, windowsHeight - 50, TRUE);
 }
 
 
@@ -137,7 +136,7 @@ void SetUpConsole(bool isLogin)
         //setFontInfo();
         setAndCenterWindow();
         DisableResizeWindow();
-        DisableCtrButton(1, 1, 1);
+        DisableCtrButton(1, 1, 0);
     }
     else
     {

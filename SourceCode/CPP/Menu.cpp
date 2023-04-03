@@ -126,7 +126,7 @@ int ShowMainMenu(int x, int y, bool isPlaying)
 		{
 			int xPrev = x, yPrev = y;
 			key = _getch();
-			if ((key == UP || key == 'w' || key == 'W') && y > TOPB && i > 0) //UP
+			if ((key == 'w' || key == 'W') && y > TOPB && i > 0) //UP
 			{
 				SelectingSound();
 				y -= 3;
@@ -134,7 +134,7 @@ int ShowMainMenu(int x, int y, bool isPlaying)
 				HighlightBox(x, y, 30, 3, option[--i], 1);
 				choose++;
 			}
-			else if ((key == DOWN || key == 's' || key == 'S') && y < BOTTOMB && i <= 3) //DOWN
+			else if ((key == 's' || key == 'S') && y < BOTTOMB && i <= 3) //DOWN
 			{
 				SelectingSound();
 				y += 3;
@@ -301,7 +301,7 @@ void ChooseLevel(int x, int y, Account& account)
 	{
 		int xPrev = x, yPrev = y;
 		key = _getch();
-		if ((key == UP || key == 'w' || key == 'W') && y > TOPB && i > 0) //UP
+		if ((key == 'w' || key == 'W') && y > TOPB && i > 0) //UP
 		{
 			SelectingSound();
 			y -= 3;
@@ -309,7 +309,7 @@ void ChooseLevel(int x, int y, Account& account)
 			HighlightBox(x, y, 30, 3, option[--i], 1);
 			choose++;
 		}
-		else if ((key == DOWN || key == 's' || key == 'S') && y < BOTTOMB && i <= 1) //DOWN
+		else if ((key == 's' || key == 'S') && y < BOTTOMB && i <= 1) //DOWN
 		{
 			SelectingSound();
 			y += 3;
@@ -394,9 +394,11 @@ pairs are found.\n";
 	SetColor(BLACK, WHITE);
 
 	GoTo(30, 19);
-	cout << char(175) << " Press W A S D or UP DOWN LEFT RIGHT arows to move.\n";
+	cout << char(175) << " Press W A S D to move.\n";
 	GoTo(30, 21);
 	cout << char(175) << " Press Enter or Space bar to select.\n";
+	GoTo(30, 23);
+	cout << char(175) << " Press ESC to left the game";
 	GoTo(100, 19);
 	cout << char(175) << " Press F to suggest moving.\n";
 	GoTo(100, 21);
