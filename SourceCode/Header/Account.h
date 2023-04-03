@@ -14,6 +14,7 @@ struct Account
     bool    isPlaying;
 
     int     size;
+    bool    isInsane;
     int** curPokeList;
 
     Account();

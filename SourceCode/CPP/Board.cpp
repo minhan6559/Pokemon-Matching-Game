@@ -349,8 +349,9 @@ void highlightBoxForBoard(GameInfo& game, Point pokeIndex, int mode)
 
 	if(game.board.pokeList[pokeIndex.r][pokeIndex.c] != 32)
 	{
-		string text;
-		text = char(game.board.pokeList[pokeIndex.r][pokeIndex.c]);
+		string text = "|";
+		if(game.isInsane == 0)
+			text = char(game.board.pokeList[pokeIndex.r][pokeIndex.c]);
 		int xText = start.x + static_cast<int>((length - text.length()) / 2);
 		int yText = start.y + (width / 2);
 		GoTo(xText, yText);
@@ -360,24 +361,6 @@ void highlightBoxForBoard(GameInfo& game, Point pokeIndex, int mode)
 	{
 		drawBackground(game, pokeIndex);
 	}
-
-	/*else if (mode == 2)
-	{
-		for (int iY = start.y + 1; iY < start.y + width - 1; iY++)
-		{
-			for (int iX = start.x + 1; iX < start.x + length - 1; iX++)
-			{
-				GoTo(iX, iY);
-				SetColor(LAQUA, WHITE);
-				cout << " ";
-			}
-		}
-		int xText = start.x + static_cast<int>((length - text.length()) / 2);
-		int yText = start.y + (width / 2);
-		GoTo(xText, yText);
-		cout << text;
-	}*/
-
 	SetColor(BLACK, WHITE);
 }
 
@@ -392,17 +375,28 @@ void DrawBorder(Board board)
 	DrawBox(x - 2, y - 1, borderLength, borderWidth);
 }
 
-void DrawBoardGame(GameInfo& game, bool isSlow)
+void DrawBoardGame(GameInfo& game, bool isSlow, bool isFlip)
 {
 	DrawBorder(game.board);
-	if (game.board.size == 6)
+	if (game.board.size == 4)
 	{
-		DrawInfoBoard(90, 4, game.score, "Hard");
+		SetColor(BLACK, LAQUA);
+		DrawInfoBoard(90, 4, game.score, "Easy");
 	}
 	else
 	{
-		DrawInfoBoard(90, 4, game.score, "Easy");
+		if (game.isInsane == 0)
+		{
+			SetColor(BLACK, LYELLOW);
+			DrawInfoBoard(90, 4, game.score, "Hard");
+		}
+		else
+		{
+			SetColor(BLACK, LRED);
+			DrawInfoBoard(90, 4, game.score, "  Insane!");
+		}
 	}
+	SetColor(BLACK, WHITE);
 	int boxLength = game.board.boxLength, boxWidth = game.board.boxWidth;
 	int x = game.board.xBoardStart, y = game.board.yBoardStart;
 	int size = game.board.size;
@@ -419,9 +413,13 @@ void DrawBoardGame(GameInfo& game, bool isSlow)
 					drawBackground(game, pokeIndex);
 					continue;
 				}
-				string pokemon;
-				pokemon = char(game.board.pokeList[i][j]);
-				int pokeColor = char(game.board.pokeList[i][j]) % 15 + 1;
+				string pokemon = "|";
+				int pokeColor = LRED;
+				if(!(game.isInsane == 1 && isFlip == 0))
+				{
+					pokemon = char(game.board.pokeList[i][j]);
+					pokeColor = game.board.pokeList[i][j] % 15 + 1;
+				}
 				SetColor(BLACK, pokeColor);
 				CreateTextBox(x + (boxLength + 1) * j, y + boxWidth * i, 11, 5, pokemon);
 				if (isSlow)
@@ -438,9 +436,13 @@ void DrawBoardGame(GameInfo& game, bool isSlow)
 					drawBackground(game, pokeIndex);
 					continue;
 				}
-				string pokemon;
-				pokemon = char(game.board.pokeList[i][j]);
-				int pokeColor = char(game.board.pokeList[i][j]) % 15 + 1;
+				string pokemon = "|";
+				int pokeColor = LRED;
+				if (!(game.isInsane == 1 && isFlip == 0))
+				{
+					pokemon = char(game.board.pokeList[i][j]);
+					pokeColor = game.board.pokeList[i][j] % 15 + 1;
+				}
 				SetColor(BLACK, pokeColor);
 				CreateTextBox(x + (boxLength + 1) * j, y + boxWidth * i, 11, 5, pokemon);
 				if (isSlow)
@@ -472,7 +474,12 @@ bool ShowMoves(GameInfo& game)
 
 			DrawStatus(90, 4, "Out of Moves!");
 			system("cls");
-			DrawBoardGame(game, 1);
+			DrawBoardGame(game, 1, 1);
+			if(game.isInsane == 1)
+			{
+				Sleep(1000);
+				DrawBoardGame(game, 0, 0);
+			}
 			DrawStatus(90, 4, "Out of Moves");
 		}
 
@@ -545,7 +552,12 @@ bool ShowMoves(GameInfo& game)
 		{
 			SelectingSound();
 			shufflePokeList(game);
-			DrawBoardGame(game, 0);
+			DrawBoardGame(game, 0, 1);
+			if (game.isInsane == 1)
+			{
+				Sleep(1000);
+				DrawBoardGame(game, 0, 0);
+			}
 			DrawStatus(90, 4, "Shuffled!");
 			game.score -= 2;
 			if (game.score < 0)
@@ -593,21 +605,21 @@ void ChoosePoke(GameInfo& game, int rowPoke, int colPoke)
 		int checkMove = checkMatching(game, path);
 		if (checkMove == 1)
 		{
-			int xP1 = game.board.xBoardStart + (game.board.boxLength + 1) * game.p1.c;
-			int yP1 = game.board.yBoardStart + game.board.boxWidth * game.p1.r;
-			string pokemon;
-			pokemon = char(game.board.pokeList[game.p1.r][game.p1.c]);
-			HighlightBox(xP1, yP1, game.board.boxLength, game.board.boxWidth, pokemon, 0);
+			highlightBoxForBoard(game, game.p1, 0);
 
-			int xP2 = game.board.xBoardStart + (game.board.boxLength + 1) * game.p2.c;
-			int yP2 = game.board.yBoardStart + game.board.boxWidth * game.p2.r;
-			pokemon = char(game.board.pokeList[game.p2.r][game.p2.c]);
-			HighlightBox(xP2, yP2, game.board.boxLength, game.board.boxWidth, pokemon, 0);
+			highlightBoxForBoard(game, game.p2, 0);
 			drawMatchingLine(game, path, 1);
 			CorrectSound();
 			Sleep(500);
 			drawMatchingLine(game, path, 0);
 			DeleteMatching(game);
+
+			if (game.isInsane == 1)
+			{
+				DrawBoardGame(game, 0, 1);
+				Sleep(1000);
+				DrawBoardGame(game, 0, 0);
+			}
 
 			int sizePath = path.size();
 
@@ -630,11 +642,7 @@ void ChoosePoke(GameInfo& game, int rowPoke, int colPoke)
 		else
 		{
 			ErrorSound();
-			int xP1 = game.board.xBoardStart + (game.board.boxLength + 1) * game.p1.c;
-			int yP1 = game.board.yBoardStart + game.board.boxWidth * game.p1.r;
-			string pokemon;
-			pokemon = char(game.board.pokeList[game.p1.r][game.p1.c]);
-			HighlightBox(xP1, yP1, game.board.boxLength, game.board.boxWidth, pokemon, 0);
+			highlightBoxForBoard(game, game.p1, 0);
 			
 			if (checkMove == 0)
 			{
@@ -643,8 +651,15 @@ void ChoosePoke(GameInfo& game, int rowPoke, int colPoke)
 				{
 					game.score = 0;
 				}
+				if (game.isInsane == 1)
+				{
+					DrawBoardGame(game, 0, 1);
+					Sleep(1000);
+					DrawBoardGame(game, 0, 0);
+				}
 				DrawStatus(90, 4, "Not Matching !");
 			}
+
 		}
 		DrawScore(90, 4, game.score);
 		path.~Queue();
@@ -755,8 +770,13 @@ void DrawStatus(int x, int y, string status)
 void DrawInfoBoard(int x, int y, short score, string level)
 {
 	//Level
-	CreateTextBox(x + 16, y, 11, 3, level);
-	GoTo(x + 18, y);
+	int xStart = x + 16;
+	DrawBox(xStart, y, 13, 3);
+	int xText = xStart + static_cast<int>((12 - level.length()) / 2);
+	int yText = y + (3 / 2);
+	GoTo(xText, yText);
+	cout << level;
+	GoTo(x + 19, y);
 	SetColor(LGREEN, BLACK);
 	cout << " LEVEL ";
 	SetColor(BLACK, WHITE);
@@ -767,7 +787,7 @@ void DrawInfoBoard(int x, int y, short score, string level)
 	
 	//Draw score board
 	DrawBox(x, y, 16, 6);
-	GoTo(x + 4, y);
+	GoTo(x + 5, y);
 	SetColor(LAQUA, BLACK);
 	cout << " SCORE ";
 	SetColor(BLACK, WHITE);

@@ -233,7 +233,12 @@ void MainMenu(Account*& account, int totalAccounts, int& pos)
 		{
 			GameInfo game = createGameFromAccount(account[pos]);
 			system("cls");
-			DrawBoardGame(game, 1);
+			DrawBoardGame(game, 1, 1);
+			if (game.isInsane == 1)
+			{
+				Sleep(1000);
+				DrawBoardGame(game, 0, 0);
+			}
 			bool isPlaying = ShowMoves(game);
 			updateAccountAfterGame(account[pos], game, isPlaying);
 			system("pause");
@@ -283,16 +288,17 @@ void ChooseLevel(int x, int y, Account& account)
 	cout << "HO HIEU";
 	SetColor(BLACK, WHITE);
 
-	string option[] = { "Easy", "Hard", "Exit" };
+	string option[] = { "Easy", "Hard", "Insane", "Exit"};
 	CreateTextBox(x, y, 30, 3, option[0]);
 	CreateTextBox(x, y + 3, 30, 3, option[1]);
 	CreateTextBox(x, y + 6, 30, 3, option[2]);
+	CreateTextBox(x, y + 9, 30, 3, option[3]);
 	//boundary
-	const int TOPB = y, BOTTOMB = y + 6;
+	const int TOPB = y, BOTTOMB = y + 9;
 
 	char key;
 	int i = 0;
-	int choose = 2;
+	int choose = 3;
 	HighlightBox(x, y, 30, 3, option[0], 1);
 	while (true)
 	{
@@ -306,7 +312,7 @@ void ChooseLevel(int x, int y, Account& account)
 			HighlightBox(x, y, 30, 3, option[--i], 1);
 			choose++;
 		}
-		else if ((key == 's' || key == 'S') && y < BOTTOMB && i <= 1) //DOWN
+		else if ((key == 's' || key == 'S') && y < BOTTOMB && i <= 2) //DOWN
 		{
 			SelectingSound();
 			y += 3;
@@ -317,11 +323,21 @@ void ChooseLevel(int x, int y, Account& account)
 		else if (key == ENTER || key == ' ')
 		{
 			ChoosedSound();
-			if (choose == 2)
+			if (choose == 3)
 			{
 				GameInfo game(4);
 				system("cls");
-				DrawBoardGame(game, 1);
+				DrawBoardGame(game, 1, 1);
+				int isPlaying = ShowMoves(game);
+				updateAccountAfterGame(account, game, isPlaying);
+				system("pause");
+				return;
+			}
+			if (choose == 2)
+			{
+				GameInfo game(6);
+				system("cls");
+				DrawBoardGame(game, 1, 1);
 				int isPlaying = ShowMoves(game);
 				updateAccountAfterGame(account, game, isPlaying);
 				system("pause");
@@ -330,8 +346,11 @@ void ChooseLevel(int x, int y, Account& account)
 			if (choose == 1)
 			{
 				GameInfo game(6);
+				game.isInsane = 1;
 				system("cls");
-				DrawBoardGame(game, 1);
+				DrawBoardGame(game, 1, 1);
+				Sleep(1000);
+				DrawBoardGame(game, 0, 0);
 				int isPlaying = ShowMoves(game);
 				updateAccountAfterGame(account, game, isPlaying);
 				system("pause");

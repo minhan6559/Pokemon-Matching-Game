@@ -153,6 +153,7 @@ GameInfo::GameInfo(int _size)
 	board.boxLength = 11;
 	board.boxWidth = 5;
 	board.size = _size;
+	isInsane = 0;
 	randomPokemons(board);
 	score = 0;               
 	selectedBlocks = 0;	       
@@ -259,6 +260,8 @@ GameInfo createGameFromAccount(Account account)
 	releaseBoard(game.board);
 	game.board.pokeList = account.curPokeList;
 	game.score = account.curScore;
+
+	game.isInsane = account.isInsane;
 
 	for (int i = 0; i < account.size; i++)
 	{

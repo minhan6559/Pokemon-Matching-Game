@@ -67,7 +67,7 @@ void highlightBoxForBoard(GameInfo& game, Point pokeIndex, int mode);
 
 //Hieu --------------------------------------
 void DrawBorder(Board board);
-void DrawBoardGame(GameInfo& game, bool isSlow);
+void DrawBoardGame(GameInfo& game, bool isSlow, bool isFlip);
 bool ShowMoves(GameInfo& game);
 void ChoosePoke(GameInfo& game, int rowPoke, int colPoke);
 void DeleteMatching(GameInfo& game);

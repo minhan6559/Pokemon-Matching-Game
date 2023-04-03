@@ -38,6 +38,7 @@ struct GameInfo
     Point p1;
     Point p2;
     string* background;
+    bool isInsane;
     GameInfo(int _size);
 };
 struct Account;
