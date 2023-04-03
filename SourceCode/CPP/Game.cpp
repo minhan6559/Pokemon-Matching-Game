@@ -275,5 +275,6 @@ GameInfo createGameFromAccount(Account account)
 void releaseGame(GameInfo& game)
 {
 	delete [] game.background;
+	game.background = NULL;
 	releaseBoard(game.board);
 }

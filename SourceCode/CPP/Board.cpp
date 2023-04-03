@@ -4,6 +4,7 @@
 #include <Windows.h>
 #include <ctime>
 #include <cstdlib>
+#include <conio.h>
 
 void releaseBoard(Board& board)
 {
@@ -246,95 +247,6 @@ void showSuggestMove(GameInfo& game)
 			Sleep(200);
 		}
 	}
-	else
-	{
-		do
-		{
-			shufflePokeList(game);
-		}while(moveSuggestion(game, suggestPoint1, suggestPoint2) == 0);
-		system("cls");
-		const char outMove1[] = R"(
-
-      ____        _              __     __  __                        
-     / __ \      | |            / _|   |  \/  |                       
-    | |  | |_   _| |_      ___ | |_    | \  / | _____   _____  ___    
-    | |  | | | | | __|    / _ \|  _|   | |\/| |/ _ \ \ / / _ \/ __|   
-    | |__| | |_| | |_    | (_) | |     | |  | | (_) \ V /  __/\__ \   
-     \____/ \__,_|\__|    \___/|_|     |_|  |_|\___/ \_/ \___||___/   
-        _____ _            __  __ _      _                         
-       / ____| |          / _|/ _| |    (_)                        
-      | (___ | |__  _   _| |_| |_| | ___ _ _ __   __ _             
-       \___ \| '_ \| | | |  _|  _| |/ _ \ | '_ \ / _` |            
-       ____) | | | | |_| | | | | | |  __/ | | | | (_| |  _  
-      |_____/|_| |_|\__,_|_| |_| |_|\___|_|_| |_|\__, | (_) 
-                                                  __/ |            
-                                                 |___/             
-
-)";
-		cout << outMove1;
-		Sleep(700);
-
-		const char outMove2[] = R"(
-
-      ____        _              __     __  __                        
-     / __ \      | |            / _|   |  \/  |                       
-    | |  | |_   _| |_      ___ | |_    | \  / | _____   _____  ___    
-    | |  | | | | | __|    / _ \|  _|   | |\/| |/ _ \ \ / / _ \/ __|   
-    | |__| | |_| | |_    | (_) | |     | |  | | (_) \ V /  __/\__ \   
-     \____/ \__,_|\__|    \___/|_|     |_|  |_|\___/ \_/ \___||___/   
-        _____ _            __  __ _      _                         
-       / ____| |          / _|/ _| |    (_)                        
-      | (___ | |__  _   _| |_| |_| | ___ _ _ __   __ _             
-       \___ \| '_ \| | | |  _|  _| |/ _ \ | '_ \ / _` |            
-       ____) | | | | |_| | | | | | |  __/ | | | | (_| |  _   _ 
-      |_____/|_| |_|\__,_|_| |_| |_|\___|_|_| |_|\__, | (_) (_)
-                                                  __/ |            
-                                                 |___/             
-
-)";
-		system("cls");
-		cout << outMove2;
-		Sleep(700);
-
-		const char outMove3[] = R"(
-
-      ____        _              __     __  __                        
-     / __ \      | |            / _|   |  \/  |                       
-    | |  | |_   _| |_      ___ | |_    | \  / | _____   _____  ___    
-    | |  | | | | | __|    / _ \|  _|   | |\/| |/ _ \ \ / / _ \/ __|   
-    | |__| | |_| | |_    | (_) | |     | |  | | (_) \ V /  __/\__ \   
-     \____/ \__,_|\__|    \___/|_|     |_|  |_|\___/ \_/ \___||___/   
-        _____ _            __  __ _      _                         
-       / ____| |          / _|/ _| |    (_)                        
-      | (___ | |__  _   _| |_| |_| | ___ _ _ __   __ _             
-       \___ \| '_ \| | | |  _|  _| |/ _ \ | '_ \ / _` |            
-       ____) | | | | |_| | | | | | |  __/ | | | | (_| |  _   _ 	 _ 
-      |_____/|_| |_|\__,_|_| |_| |_|\___|_|_| |_|\__, | (_) (_) (_)
-                                                  __/ |            
-                                                 |___/             
-
-)";
-		system("cls");
-		cout << outMove3;
-		Sleep(700);
-		system("cls");
-		DrawBoardGame(game, 0);
-
-		for (int i = 1; i <= 4; i++)
-		{
-			string pokemon;
-			pokemon = char(game.board.pokeList[suggestPoint1.r][suggestPoint1.c]);
-			int x = (game.board.boxLength + 1) * (suggestPoint1.c + 1);
-			int y = game.board.boxWidth * (suggestPoint1.r + 1);
-			HighlightBox(x, y, boxLength, boxWidth, pokemon, i % 2);
-
-			pokemon = char(game.board.pokeList[suggestPoint2.r][suggestPoint2.c]);
-			x = (game.board.boxLength + 1) * (suggestPoint2.c + 1);
-			y = game.board.boxWidth * (suggestPoint2.r + 1);
-			HighlightBox(x, y, boxLength, boxWidth, pokemon, i % 2);
-			Sleep(200);
-		}
-	}
 }
 
 void shufflePokeList(GameInfo& game)
@@ -560,13 +472,14 @@ bool ShowMoves(GameInfo& game)
 
 			system("cls");
 			DrawBoardGame(game, 1);
+			DrawStatus(90, 4, "Out of Moves");
 		}
 
 		highlightBoxForBoard(game, pokeCur, 1);
 
 		Point pokePrev = pokeCur;
 
-		key = _getwch();
+		key = _getch();
 		if ((key == UP || key == 'w' || key == 'W') && pokeCur.r > 0)
 		{
 			SelectingSound();
@@ -624,8 +537,8 @@ bool ShowMoves(GameInfo& game)
 			{
 				game.score = 0;
 			}
+			DrawStatus(90, 4, "Suggest Move!");
 			DrawScore(90, 4, game.score);
-
 		}
 		else if (key == 'r' || key == 'R')
 		{
@@ -637,15 +550,16 @@ bool ShowMoves(GameInfo& game)
 			{
 				game.score = 0;
 			}
+			DrawStatus(90, 4, "Shuffle!");
 			DrawScore(90, 4, game.score);
 		}
-		else if (key == ESC_key)
+		else if (key == 'x' || key == 'X')
 		{
-			return 1;
+			return true;
 		}
 		if (game.remainBlocks == 0)
 		{
-			return 0;
+			return false;
 		}
 	}
 }

@@ -247,7 +247,7 @@ void MainMenu(Account*& account, int totalAccounts, int& pos)
 		else if (choose == 2)
 		{
 			system("cls");
-			ShowLeaderboard(account, totalAccounts);
+			ShowLeaderboard(account, totalAccounts, pos);
 			_getch();
 		}
 		else if (choose == 1)
@@ -263,9 +263,6 @@ void MainMenu(Account*& account, int totalAccounts, int& pos)
 			_getch();
 		}
 
-		string username = account[pos].username;
-		sortDescendingAccountList(account, totalAccounts);
-		pos = findAccountPos(account, totalAccounts, username);
 		outputAccountList(account, totalAccounts);
 	} while (choose);
 }
@@ -393,13 +390,15 @@ pairs are found.\n";
 	cout << " MOVING ";
 	SetColor(BLACK, WHITE);
 
-	GoTo(30, 19);
+	GoTo(30, 18);
 	cout << char(175) << " Press W A S D or UP DOWN LEFT RIGHT arows to move.\n";
-	GoTo(30, 21);
+	GoTo(30, 20);
 	cout << char(175) << " Press Enter or Space bar to select.\n";
-	GoTo(100, 19);
+	GoTo(30, 22);
+	cout << char(175) << " Press X to leave the game.\n";
+	GoTo(100, 18);
 	cout << char(175) << " Press F to suggest moving.\n";
-	GoTo(100, 21);
+	GoTo(100, 20);
 	cout << char(175) << " Press R to shuffle.\n";
 
 
@@ -455,7 +454,7 @@ void loginMenu(int x, int y)
 		cout << "                                                ";
 		GoTo(x + 3, y + 8);
 		SetColor(BLACK, RED);
-		cout << "Your account don't exist, start registering!\n";
+		cout << "Your account didn't exist, start registering!\n";
 		SetColor(BLACK, WHITE);
 		totalAccounts++;
 		while (true)
@@ -483,9 +482,9 @@ void loginMenu(int x, int y)
 	{
 		GoTo(x + 1, y + 8);
 		cout << "                                                ";
-		GoTo(x + 7, y + 8);
+		GoTo(x + 5, y + 8);
 		SetColor(BLACK, AQUA);
-		cout << "Your account exist, start logging in!\n";
+		cout << "Your account existed, start logging in!\n";
 		SetColor(BLACK, WHITE);
 		while (true)
 		{
@@ -524,8 +523,11 @@ void loginMenu(int x, int y)
 	releaseAccountList(account, totalAccounts);
 }
 
-void ShowLeaderboard(Account* account, int totalAccounts)
+void ShowLeaderboard(Account*& account, int totalAccounts, int& pos)
 {
+	string username = account[pos].username;
+	sortDescendingAccountList(account, totalAccounts);
+	pos = findAccountPos(account, totalAccounts, username);
 	SetColor(BLACK, LBLUE);
 	cout << R"(
 					    __     ______ ___     ____   ______ ____   ____   ____   ___     ____   ____

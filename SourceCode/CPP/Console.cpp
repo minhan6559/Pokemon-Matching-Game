@@ -3,7 +3,6 @@
 #pragma comment (lib, "winmm.lib")
 
 //Ref: Luis
-
 void setFontInfo(int x, int y)
 {
     CONSOLE_FONT_INFOEX info;
@@ -21,7 +20,6 @@ void setAndCenterWindow()
   //   HWND hwnd = GetConsoleWindow();
     // SetWindowPos(hwnd, 0, 0, 0, 0, 0, SWP_NOZORDER | SWP_NOSIZE | SWP_NOACTIVATE);
 
-    //ShowWindow(GetConsoleWindow(), 3);
     HWND consoleWindow = GetConsoleWindow();
     RECT rectClient, rectWindow;
     GetClientRect(consoleWindow, &rectClient), GetWindowRect(consoleWindow, &rectWindow);
@@ -33,6 +31,7 @@ void setAndCenterWindow()
     int posX = (GetSystemMetrics(SM_CXSCREEN) - width) / 2,
         posY = (GetSystemMetrics(SM_CYSCREEN) - height) / 2;*/
     MoveWindow(consoleWindow, 10, 10, windowsWidth - 100, windowsHeight - 50, TRUE);
+    ShowWindow(GetConsoleWindow(), 3);
 }
 
 
@@ -137,7 +136,7 @@ void SetUpConsole(bool isLogin)
         //setFontInfo();
         setAndCenterWindow();
         DisableResizeWindow();
-        DisableCtrButton(1, 1, 1);
+        DisableCtrButton(1, 1, 0);
     }
     else
     {

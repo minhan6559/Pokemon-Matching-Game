@@ -35,6 +35,7 @@ struct Account;
 #define H_Key 104
 #define P_key 112
 #define ESC_key 27
+
 const char gameName[] = R"(
                                                           ,'\
                             _.----.        ____         ,'  _\   ___    ___     ____
@@ -59,4 +60,4 @@ void ChooseLevel(int x, int y, Account& account);
 void ShowRules();
 
 void loginMenu(int x, int y);
-void ShowLeaderboard(Account* account, int totalAccounts);
+void ShowLeaderboard(Account*& account, int totalAccounts, int& pos);
