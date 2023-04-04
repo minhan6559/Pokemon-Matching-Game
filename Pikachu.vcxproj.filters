@@ -58,9 +58,6 @@
     <Text Include="Background\Easy.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="Hard.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="SaveGame\saveGame.bin">
