@@ -36,6 +36,7 @@
   <ItemGroup>
     <Text Include="Background\Easy.txt" />
     <Text Include="Background\Hard.txt" />
+    <Text Include="Hard.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SaveGame\saveGame.bin" />

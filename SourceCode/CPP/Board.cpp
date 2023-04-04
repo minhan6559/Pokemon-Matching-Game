@@ -15,19 +15,25 @@ void releaseBoard(Board& board)
 }
 
 //Ref: tu ham BoardView::buildBoardData() cua louis
+// Rewritten code with comments
+
 void randomPokemons(Board& board) {
+	// Seed the random number generator
 	srand((unsigned int)time(NULL));
 
+	// Get the size of the board
 	int size = board.size;
 
+	// Allocate memory for the pokeList
 	board.pokeList = new int* [size];
 	for (int i = 0; i < size; i++)
 		board.pokeList[i] = new int[size];
 
+	// Allocate memory for the checkDuplicate and pos arrays
 	bool* checkDuplicate = new bool[size * size];
 	int* pos = new int[size * size];
 
-	// Random pokemons
+	// Allocate memory for the pokemons array
 	int** pokemons = new int* [size];
 	for (int i = 0; i < size; i++)
 	{
@@ -38,6 +44,7 @@ void randomPokemons(Board& board) {
 		}
 	}
 
+	// Generate random pokemons
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size - 1; j = j + 2) {
 			pokemons[i][j] = rand() % 26 + 65;
@@ -45,7 +52,7 @@ void randomPokemons(Board& board) {
 		}
 	}
 
-	// Random pokemons position 
+	// Generate random positions for the pokemons
 	for (int i = 0; i < size * size; i++)
 		checkDuplicate[i] = 0;
 	for (int i = 0; i < size * size; i++) {
@@ -57,7 +64,7 @@ void randomPokemons(Board& board) {
 		pos[i] = tmp;
 	}
 
-	// Construct pokemons matrix
+	// Construct the pokemons matrix
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
 			int r = pos[size * i + j] / size;
@@ -66,6 +73,7 @@ void randomPokemons(Board& board) {
 		}
 	}
 
+	// Deallocate memory
 	delete[] pos;
 	pos = NULL;
 	delete[] checkDuplicate;
@@ -152,7 +160,7 @@ void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw)
 						if (start.x == leftBoudary || start.x == rightBoudary)
 						{
 							SetColor(BLACK, WHITE);
-							cout << char (179);
+							cout << char(179);
 							SetColor(0, 11);
 						}
 						else
@@ -347,10 +355,10 @@ void highlightBoxForBoard(GameInfo& game, Point pokeIndex, int mode)
 		}
 	}
 
-	if(game.board.pokeList[pokeIndex.r][pokeIndex.c] != 32)
+	if (game.board.pokeList[pokeIndex.r][pokeIndex.c] != 32)
 	{
 		string text = "|";
-		if(game.isInsane == 0)
+		if (game.isInsane == 0)
 			text = char(game.board.pokeList[pokeIndex.r][pokeIndex.c]);
 		int xText = start.x + static_cast<int>((length - text.length()) / 2);
 		int yText = start.y + (width / 2);
@@ -415,7 +423,7 @@ void DrawBoardGame(GameInfo& game, bool isSlow, bool isFlip)
 				}
 				string pokemon = "|";
 				int pokeColor = LRED;
-				if(!(game.isInsane == 1 && isFlip == 0))
+				if (!(game.isInsane == 1 && isFlip == 0))
 				{
 					pokemon = char(game.board.pokeList[i][j]);
 					pokeColor = game.board.pokeList[i][j] % 15 + 1;
@@ -461,7 +469,7 @@ bool ShowMoves(GameInfo& game)
 
 	while (true)
 	{
-		//check if there is no move then shuffle
+		//check if there are no moves left, then shuffle
 		Point checkMove1;
 		Point checkMove2;
 
@@ -475,7 +483,7 @@ bool ShowMoves(GameInfo& game)
 			DrawStatus(90, 4, "Out of Moves!");
 			system("cls");
 			DrawBoardGame(game, 1, 1);
-			if(game.isInsane == 1)
+			if (game.isInsane == 1)
 			{
 				Sleep(1000);
 				DrawBoardGame(game, 0, 0);
@@ -488,10 +496,12 @@ bool ShowMoves(GameInfo& game)
 		Point pokePrev = pokeCur;
 
 		key = _getch();
+		//check if the user presses up, down, left, or right
 		if ((key == UP || key == 'w' || key == 'W') && pokeCur.r > 0)
 		{
 			SelectingSound();
 			pokeCur.r--;
+			//check if the previous position is not the same as the current position of the two pokemons
 			if (!(pokePrev.r == game.p1.r && pokePrev.c == game.p1.c) &&
 				!(pokePrev.r == game.p2.r && pokePrev.c == game.p2.c))
 			{
@@ -532,10 +542,12 @@ bool ShowMoves(GameInfo& game)
 			}
 			highlightBoxForBoard(game, pokeCur, 1);
 		}
+		//check if the user presses enter or space
 		else if (key == ENTER || key == ' ')
 		{
 			ChoosePoke(game, pokeCur.r, pokeCur.c);
 		}
+		//check if the user presses F or f
 		else if (key == 'F' || key == 'f')
 		{
 			SelectingSound();
@@ -548,6 +560,7 @@ bool ShowMoves(GameInfo& game)
 			DrawStatus(90, 4, "Suggest Move!");
 			DrawScore(90, 4, game.score);
 		}
+		//check if the user presses r or R
 		else if (key == 'r' || key == 'R')
 		{
 			SelectingSound();
@@ -567,10 +580,12 @@ bool ShowMoves(GameInfo& game)
 			DrawStatus(90, 4, "Shuffle!");
 			DrawScore(90, 4, game.score);
 		}
+		//check if the user presses x or X
 		else if (key == 'x' || key == 'X')
 		{
 			return true;
 		}
+		//check if there are no remaining blocks
 		if (game.remainBlocks == 0)
 		{
 			return false;
@@ -578,13 +593,16 @@ bool ShowMoves(GameInfo& game)
 	}
 }
 
+//This function is used to choose a pokemon from the board.
 void ChoosePoke(GameInfo& game, int rowPoke, int colPoke)
 {
+	//Check if the pokemon is empty
 	if (game.board.pokeList[rowPoke][colPoke] == ' ')
 	{
 		ErrorSound();
 		return;
 	}
+	//If no pokemon has been selected yet
 	if (game.selectedBlocks == 0)
 	{
 		ChoosedSound();
@@ -592,28 +610,32 @@ void ChoosePoke(GameInfo& game, int rowPoke, int colPoke)
 		game.p1.c = colPoke;
 		game.selectedBlocks++;
 	}
+	//If one pokemon has been selected
 	else if (game.selectedBlocks == 1)
 	{
 		game.p2.r = rowPoke;
 		game.p2.c = colPoke;
 		game.selectedBlocks++;
 	}
+	//If two pokemon have been selected
 	if (game.selectedBlocks == 2)
 	{
-		Queue path;
+		Queue path; //Create a queue
 
-		int checkMove = checkMatching(game, path);
+		int checkMove = checkMatching(game, path); //Check if the pokemon match
+		//If the pokemon match
 		if (checkMove == 1)
 		{
-			highlightBoxForBoard(game, game.p1, 0);
+			highlightBoxForBoard(game, game.p1, 0); //Highlight pokemon 1
 
-			highlightBoxForBoard(game, game.p2, 0);
-			drawMatchingLine(game, path, 1);
+			highlightBoxForBoard(game, game.p2, 0); //Highlight pokemon 2
+			drawMatchingLine(game, path, 1); //Draw matching line
 			CorrectSound();
 			Sleep(500);
-			drawMatchingLine(game, path, 0);
-			DeleteMatching(game);
+			drawMatchingLine(game, path, 0); //Erase matching line
+			DeleteMatching(game); //Delete matching pokemon
 
+			//If the game is in insane mode
 			if (game.isInsane == 1)
 			{
 				DrawBoardGame(game, 0, 1);
@@ -621,43 +643,50 @@ void ChoosePoke(GameInfo& game, int rowPoke, int colPoke)
 				DrawBoardGame(game, 0, 0);
 			}
 
-			int sizePath = path.size();
+			int sizePath = path.size(); //Get size of queue
 
+			//If the size of queue is 2
 			if (sizePath == 2)
 			{
-				game.score++;
-				DrawStatus(90, 4, "I Matching");
+				game.score++; //Increase score
+				DrawStatus(90, 4, "I Matching"); //Draw status
 			}
+			//If the size of queue is 3
 			else if (sizePath == 3)
 			{
-				game.score += 2;
-				DrawStatus(90, 4, "L Matching");
+				game.score += 2; //Increase score
+				DrawStatus(90, 4, "L Matching"); //Draw status
 			}
+			//If the size of queue is 4
 			else if (sizePath == 4)
 			{
-				game.score += 3;
-				DrawStatus(90, 4, "U or Z Matching");
+				game.score += 3; //Increase score
+				DrawStatus(90, 4, "U or Z Matching"); //Draw status
 			}
 		}
+		//If the pokemon don't match
 		else
 		{
-			ErrorSound();
-			highlightBoxForBoard(game, game.p1, 0);
-			
+			ErrorSound(); //Play error sound
+			highlightBoxForBoard(game, game.p1, 0); //Highlight pokemon 1
+
+			//If the pokemon don't match
 			if (checkMove == 0)
 			{
 				game.score--;
+				//If the score is less than 0
 				if (game.score < 0)
 				{
-					game.score = 0;
+					game.score = 0; //Set score to 0
 				}
+				//If the game is in insane mode
 				if (game.isInsane == 1)
 				{
 					DrawBoardGame(game, 0, 1);
 					Sleep(1000);
 					DrawBoardGame(game, 0, 0);
 				}
-				DrawStatus(90, 4, "Not Matching !");
+				DrawStatus(90, 4, "Not Matching !"); //Draw status
 			}
 
 		}
@@ -783,8 +812,8 @@ void DrawInfoBoard(int x, int y, short score, string level)
 
 	//status
 	DrawStatus(x, y, "");
-	
-	
+
+
 	//Draw score board
 	DrawBox(x, y, 16, 6);
 	GoTo(x + 5, y);

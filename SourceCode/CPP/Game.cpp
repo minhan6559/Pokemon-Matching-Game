@@ -162,7 +162,9 @@ GameInfo::GameInfo(int _size)
 	p2 = { -1, -1 };
 
 	if(_size == 6)
+	{
 		createBackground("Background\\Hard.txt", background, board);
+	}
 	else if (_size == 4)
 		createBackground("Background\\Easy.txt", background, board);
 }
