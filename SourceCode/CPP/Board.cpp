@@ -477,10 +477,10 @@ bool ShowMoves(GameInfo& game)
 		{
 			do
 			{
-				shufflePokeList(game);
+				shufflePokeList(game);	
 			} while (moveSuggestion(game, checkMove1, checkMove2) == 0);
 
-			DrawStatus(90, 4, "Out of Moves!");
+			
 			system("cls");
 			DrawBoardGame(game, 1, 1);
 			if (game.isInsane == 1)
@@ -488,7 +488,7 @@ bool ShowMoves(GameInfo& game)
 				Sleep(1000);
 				DrawBoardGame(game, 0, 0);
 			}
-			DrawStatus(90, 4, "Out of Moves");
+			DrawStatus(90, 4, "Out of Moves. Shuffled!");
 		}
 
 		highlightBoxForBoard(game, pokeCur, 1);
@@ -571,23 +571,24 @@ bool ShowMoves(GameInfo& game)
 				Sleep(1000);
 				DrawBoardGame(game, 0, 0);
 			}
-			DrawStatus(90, 4, "Shuffled!");
 			game.score -= 2;
 			if (game.score < 0)
 			{
 				game.score = 0;
 			}
-			DrawStatus(90, 4, "Shuffle!");
+			DrawStatus(90, 4, "Shuffled!");
 			DrawScore(90, 4, game.score);
 		}
 		//check if the user presses x or X
 		else if (key == 'x' || key == 'X')
 		{
+			DrawStatus(90, 4, "Saved! Press any key.");
 			return true;
 		}
 		//check if there are no remaining blocks
 		if (game.remainBlocks == 0)
 		{
+			DrawWinScreen();
 			return false;
 		}
 	}
@@ -788,9 +789,9 @@ void DrawScore(int x, int y, short score)
 void DrawStatus(int x, int y, string status)
 {
 	GoTo(x + 17, y + 4);
-	cout << "                   "; //19
-	CreateTextBox(x + 16, y + 3, 21, 3, status);
-	GoTo(x + 22, y + 3);
+	cout << "                           "; //27
+	CreateTextBox(x + 16, y + 3, 29, 3, status);
+	GoTo(x + 26, y + 3);
 	SetColor(LYELLOW, BLACK);
 	cout << " STATUS ";
 	SetColor(BLACK, WHITE);
@@ -821,4 +822,47 @@ void DrawInfoBoard(int x, int y, short score, string level)
 	cout << " SCORE ";
 	SetColor(BLACK, WHITE);
 	DrawScore(x, y, score);
+
+	//Draw Shortcut
+	DrawBox(x, y + 6, 26, 5);
+	GoTo(x + 8, y + 6);
+	SetColor(LBLUE, BLACK);
+	cout << " SHORTCUT ";
+	SetColor(BLACK, WHITE);
+	GoTo(x + 2, y + 7);
+	cout << "R";
+	cout << ": Shuffle";
+	GoTo(x + 2, y + 8);
+	cout << "F";
+	cout << ": Suggest move";
+	GoTo(x + 2, y + 9);
+	cout << "X";
+	cout << ": Exit and save game";
+
+}
+
+void DrawWinScreen()
+{
+	const char banner[] = R"(
+											 __ __   ___   __ __      __    __  ____  ____       __ 
+											|  T  T /   \ |  T  T    |  T__T  Tl    j|    \     |  T
+											|  |  |Y     Y|  |  |    |  |  |  | |  T |  _  Y    |  |
+											|  ~  ||  O  ||  |  |    |  |  |  | |  | |  |  |    |__j
+											l___, ||     ||  :  |    l  `  '  ! |  | |  |  |     __ 
+											|     !l     !l     |     \      /  j  l |  |  |    |  T
+											l____/  \___/  \__,_j      \_/\_/  |____jl__j__j    l__j)";
+	
+	for (int i = 1; i <= 5; i++)
+	{
+		SetColor(BLACK, LRED);
+		GoTo(0, 16);
+		cout << banner;
+		Sleep(200);
+		SetColor(BLACK, LYELLOW);
+		GoTo(0, 16);
+		cout << banner;
+		Sleep(200);
+	}
+	SetColor(BLACK, WHITE);
+
 }

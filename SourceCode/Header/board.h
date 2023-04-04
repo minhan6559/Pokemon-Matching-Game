@@ -75,3 +75,4 @@ void DrawDigit(int x, int y, short digit);
 void DrawInfoBoard(int x, int y, short score, std::string level);
 void DrawScore(int x, int y, short score);
 void DrawStatus(int x, int y, std::string status);
+void DrawWinScreen();

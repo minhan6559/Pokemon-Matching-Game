@@ -126,7 +126,7 @@ int ShowMainMenu(int x, int y, bool isPlaying)
 		{
 			int xPrev = x, yPrev = y;
 			key = _getch();
-			if ((key == 'w' || key == 'W') && y > TOPB && i > 0) //UP
+			if ((key == UP || key == 'w' || key == 'W') && y > TOPB && i > 0) //UP
 			{
 				SelectingSound();
 				y -= 3;
@@ -134,7 +134,7 @@ int ShowMainMenu(int x, int y, bool isPlaying)
 				HighlightBox(x, y, 30, 3, option[--i], 1);
 				choose++;
 			}
-			else if ((key == 's' || key == 'S') && y < BOTTOMB && i <= 3) //DOWN
+			else if ((key == DOWN || key == 's' || key == 'S') && y < BOTTOMB && i <= 3) //DOWN
 			{
 				SelectingSound();
 				y += 3;
@@ -241,13 +241,12 @@ void MainMenu(Account*& account, int totalAccounts, int& pos)
 			}
 			bool isPlaying = ShowMoves(game);
 			updateAccountAfterGame(account[pos], game, isPlaying);
-			system("pause");
+			_getch();
 		}
 		else if (choose == 3)
 		{
 			system("cls");
 			ChooseLevel(42, 18, account[pos]);
-
 		}
 		else if (choose == 2)
 		{
@@ -330,7 +329,7 @@ void ChooseLevel(int x, int y, Account& account)
 				DrawBoardGame(game, 1, 1);
 				int isPlaying = ShowMoves(game);
 				updateAccountAfterGame(account, game, isPlaying);
-				system("pause");
+				_getch();
 				return;
 			}
 			if (choose == 2)
@@ -340,7 +339,7 @@ void ChooseLevel(int x, int y, Account& account)
 				DrawBoardGame(game, 1, 1);
 				int isPlaying = ShowMoves(game);
 				updateAccountAfterGame(account, game, isPlaying);
-				system("pause");
+				_getch();
 				return;
 			}
 			if (choose == 1)
@@ -353,7 +352,7 @@ void ChooseLevel(int x, int y, Account& account)
 				DrawBoardGame(game, 0, 0);
 				int isPlaying = ShowMoves(game);
 				updateAccountAfterGame(account, game, isPlaying);
-				system("pause");
+				_getch();
 				return;
 			}
 			if (choose == 0)
@@ -567,7 +566,7 @@ void ShowLeaderboard(Account*& account, int totalAccounts, int& pos)
 	}
 	for (int i = 1; i <= 17; i++)
 	{
-		GoTo(46, 10 + i);
+		GoTo(50, 10 + i);
 		cout << char(179);
 	}
 	for (int i = 1; i <= 17; i++)
@@ -577,16 +576,18 @@ void ShowLeaderboard(Account*& account, int totalAccounts, int& pos)
 	}
 
 	SetColor(BLACK, LBLUE);
-	GoTo(52, 12);
+	GoTo(43, 12);
+	cout << "Rank";
+	GoTo(56, 12);
 	cout << "Username";
 	GoTo(111, 12);
 	cout << "Score";
 	SetColor(BLACK, YELLOW);
 	for (int i = 0, j = 0; i < totalAccounts && i <= 4; i++, j += 3)
 	{
-		GoTo(43, 10 + 5 + j);
+		GoTo(45, 10 + 5 + j);
 		cout << i + 1;
-		GoTo(50, 10 + 5 + j);
+		GoTo(54, 10 + 5 + j);
 		cout << account[i].username;
 		GoTo(113, 10 + 5 + j);
 		cout << account[i].bestScore;

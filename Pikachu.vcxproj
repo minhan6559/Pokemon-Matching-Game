@@ -37,9 +37,6 @@
     <Text Include="Background\Easy.txt" />
     <Text Include="Background\Hard.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="SaveGame\saveGame.bin" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
