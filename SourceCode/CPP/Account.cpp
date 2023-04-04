@@ -39,48 +39,85 @@ void outputAccountList(Account* account, int totalAccounts)
 {
 	ofstream fp("SaveGame\\saveGame.bin", ios::binary | ios::trunc);
 
+	char mask1 = 't';
+	char mask2 = 'l';
+
 	fp.write((char*)&totalAccounts, sizeof(int));
 
 	for (int i = 0; i < totalAccounts; i++)
 	{
-		fp.write((char*)&account[i], sizeof(Account));
+		Account _account = account[i];
+		// XOR encode account data
+		for (int j = 0; j < sizeof(Account); j++) 
+		{
+			((char*)& _account)[j] ^= mask1;
+			((char*)& _account)[j] ^= mask2;
+		}
+		fp.write((char*)& _account, sizeof(Account));
+
+		// XOR encode current pokemon list data
 		if (account[i].isPlaying == 1)
 			for (int m = 0; m < account[i].size; m++)
 			{
-				for (int n = 0; n < account[i].size; n++)
-					fp.write((char*)&account[i].curPokeList[m][n], sizeof(int));
+				for (int n = 0; n < account[i].size; n++) 
+				{
+					int _poke = account[i].curPokeList[m][n];
+					for(int k = 0; k < 4; k++)
+					{
+						((char*)&_poke)[k] ^= mask1;
+						((char*)&_poke)[k] ^= mask2;	
+					}
+					fp.write((char*)& _poke, sizeof(int));
+				}
 			}
 	}
 
 	fp.close();
 }
+
 void inputAccountList(Account*& account, int& totalAccounts)
 {
-	ifstream fp("SaveGame\\saveGame.bin", ios::binary);
+    ifstream fp("SaveGame\\saveGame.bin", ios::binary);
 
-	fp.read((char*)&totalAccounts, sizeof(int));
+    char mask1 = 'l';
+    char mask2 = 't';
 
-	account = new Account[totalAccounts + 1];
+    fp.read((char*)&totalAccounts, sizeof(int));
 
-	for (int i = 0; i < totalAccounts; i++)
-	{
-		fp.read((char*)&account[i], sizeof(Account));
-		if (account[i].isPlaying == 1)
-		{
-			account[i].curPokeList = new int* [account[i].size];
-			for (int m = 0; m < account[i].size; m++)
-			{
-				account[i].curPokeList[m] = new int[account[i].size];
-				for (int n = 0; n < account[i].size; n++)
-					fp.read((char*)&account[i].curPokeList[m][n], sizeof(int));
-			}
-		}
-		else
-			account[i].curPokeList = NULL;
-	}
+    account = new Account[totalAccounts + 1];
 
-	fp.close();
+    for (int i = 0; i < totalAccounts; i++)
+    {
+        fp.read((char*)&account[i], sizeof(Account));
+        // XOR decode account data
+        for (int j = 0; j < sizeof(Account); j++) {
+            ((char*)&account[i])[j] ^= mask1;
+			((char*)&account[i])[j] ^= mask2;
+        }
+        if (account[i].isPlaying == 1)
+        {
+            account[i].curPokeList = new int*[account[i].size];
+            for (int m = 0; m < account[i].size; m++)
+            {
+                account[i].curPokeList[m] = new int[account[i].size];
+                for (int n = 0; n < account[i].size; n++) {
+                    fp.read((char*)&account[i].curPokeList[m][n], sizeof(int));
+                    // XOR decode current pokemon list data
+					for(int k = 0; k < 4; k++)
+					{
+						((char*)& account[i].curPokeList[m][n])[k] ^= mask1;
+						((char*)& account[i].curPokeList[m][n])[k] ^= mask2;
+					}
+                }
+            }
+        }
+        else
+            account[i].curPokeList = NULL;
+    }
+
+    fp.close();
 }
+
 
 void sortDescendingAccountList(Account*& account, int totalAccount)
 {

@@ -304,7 +304,7 @@ void ChooseLevel(int x, int y, Account& account)
 	{
 		int xPrev = x, yPrev = y;
 		key = _getch();
-		if ((key == 'w' || key == 'W') && y > TOPB && i > 0) //UP
+		if ((key == UP || key == 'w' || key == 'W') && y > TOPB && i > 0) //UP
 		{
 			SelectingSound();
 			y -= 3;
@@ -312,7 +312,7 @@ void ChooseLevel(int x, int y, Account& account)
 			HighlightBox(x, y, 30, 3, option[--i], 1);
 			choose++;
 		}
-		else if ((key == 's' || key == 'S') && y < BOTTOMB && i <= 2) //DOWN
+		else if ((key == DOWN || key == 's' || key == 'S') && y < BOTTOMB && i <= 2) //DOWN
 		{
 			SelectingSound();
 			y += 3;
@@ -369,70 +369,70 @@ void ShowRules()
 {
 	SetColor(BLACK, LAQUA);
 	cout << R"(
-                                                                            ____  __  ____    ___________
-                                                                           / __ \/ / / / /   / ____/ ___/
-                                                                          / /_/ / / / / /   / __/  \__ \
-                                                                         / _, _/ /_/ / /___/ /___ ___/ /
-                                                                        /_/ |_|\____/_____/_____//____/
+                                                                  ____  __  ____    ___________
+                                                                 / __ \/ / / / /   / ____/ ___/
+                                                                / /_/ / / / / /   / __/  \__ \
+                                                               / _, _/ /_/ / /___/ /___ ___/ /
+                                                              /_/ |_|\____/_____/_____//____/
 
 )";
 
-	DrawBox(24, 10, 130, 8);
-	DrawBox(24, 17, 130, 8);
-	DrawBox(24, 24, 130, 8);
-	GoTo(24, 17);
+	DrawBox(14, 10, 130, 8);
+	DrawBox(14, 17, 130, 8);
+	DrawBox(14, 24, 130, 8);
+	GoTo(14, 17);
 	cout << char(195);
-	GoTo(24, 24);
+	GoTo(14, 24);
 	cout << char(195);
-	GoTo(153, 17);
+	GoTo(143, 17);
 	cout << char(180);
-	GoTo(153, 24);
+	GoTo(143, 24);
 	cout << char(180);
 
-	GoTo(85, 10);
+	GoTo(75, 10);
 	SetColor(LGREEN, BLACK);
 	cout << " OVERALL ";
 	SetColor(BLACK, WHITE);
 
-	GoTo(27, 12);
+	GoTo(17, 12);
 	cout << char(175) << " The Matching Game(commonly known as Pikachu Puzzle Game) includes a board of \
 multiple cells, each of whichpresents a figure.\n";
-	GoTo(27, 13);
+	GoTo(17, 13);
 	cout << char(175) << " The player finds and matches a pair of cells that contain the same \
 figure and connect each other in some particular pattern.\n";
-	GoTo(27, 14);
+	GoTo(17, 14);
 	cout << char(175) << " A legal match will make the two cells disappear. The game ends when all matching\
 pairs are found.\n";
 
-	GoTo(85, 17);
+	GoTo(75, 17);
 	SetColor(LYELLOW, BLACK);
 	cout << " MOVING ";
 	SetColor(BLACK, WHITE);
 
-	GoTo(30, 18);
+	GoTo(20, 18);
 	cout << char(175) << " Press W A S D or UP DOWN LEFT RIGHT arows to move.\n";
-	GoTo(30, 20);
+	GoTo(20, 20);
 	cout << char(175) << " Press Enter or Space bar to select.\n";
-	GoTo(30, 22);
+	GoTo(20, 22);
 	cout << char(175) << " Press X to leave the game.\n";
-	GoTo(100, 18);
+	GoTo(90, 18);
 	cout << char(175) << " Press F to suggest moving.\n";
-	GoTo(100, 20);
+	GoTo(90, 20);
 	cout << char(175) << " Press R to shuffle.\n";
 
 
-	GoTo(85, 24);
+	GoTo(75, 24);
 	SetColor(LAQUA, BLACK);
 	cout << " SCORING ";
 	SetColor(BLACK, WHITE);
 
-	GoTo(30, 26);
+	GoTo(20, 26);
 	cout << char(175) << " I matching: 1 point.\n";
-	GoTo(30, 28);
+	GoTo(20, 28);
 	cout << char(175) << " L matching: 2 point.\n";
-	GoTo(100, 26);
+	GoTo(90, 26);
 	cout << char(175) << " Z or U matching: 3 point.\n";
-	GoTo(100, 28);
+	GoTo(90, 28);
 	cout << char(175) << " Suggest move or Shuffle: -2 point.\n";
 }
 
@@ -446,9 +446,12 @@ void loginMenu(int x, int y)
 	string username;
 	string password;
 
+	SetColor(BLACK, LBLUE);
 	DrawBox(x, y, 50, 10);
 	GoTo(x + 18, y + 1);
+	SetColor(BLACK, LYELLOW);
 	cout << "LOGIN/REGISTER";
+	SetColor(BLACK, WHITE);
 
 	while (true)
 	{
@@ -547,6 +550,7 @@ void ShowLeaderboard(Account*& account, int totalAccounts, int& pos)
 	string username = account[pos].username;
 	sortDescendingAccountList(account, totalAccounts);
 	pos = findAccountPos(account, totalAccounts, username);
+	outputAccountList(account, totalAccounts);
 	SetColor(BLACK, LBLUE);
 	cout << R"(
 					    __     ______ ___     ____   ______ ____   ____   ____   ___     ____   ____

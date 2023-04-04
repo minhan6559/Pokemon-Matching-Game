@@ -499,7 +499,7 @@ bool ShowMoves(GameInfo& game)
 			}
 			highlightBoxForBoard(game, pokeCur, 1);
 		}
-		else if ((key == 's' || key == 'S') && pokeCur.r < game.board.size - 1)
+		else if ((key == DOWN || key == 's' || key == 'S') && pokeCur.r < game.board.size - 1)
 		{
 			SelectingSound();
 			pokeCur.r++;
@@ -510,7 +510,7 @@ bool ShowMoves(GameInfo& game)
 			}
 			highlightBoxForBoard(game, pokeCur, 1);
 		}
-		else if ((key == 'a' || key == 'A') && pokeCur.c > 0)
+		else if ((key == LEFT || key == 'a' || key == 'A') && pokeCur.c > 0)
 		{
 			SelectingSound();
 			pokeCur.c--;
@@ -521,7 +521,7 @@ bool ShowMoves(GameInfo& game)
 			}
 			highlightBoxForBoard(game, pokeCur, 1);
 		}
-		else if ((key == 'd' || key == 'D') && pokeCur.c < game.board.size - 1)
+		else if ((key == RIGHT || key == 'd' || key == 'D') && pokeCur.c < game.board.size - 1)
 		{
 			SelectingSound();
 			pokeCur.c++;
