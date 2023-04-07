@@ -43,10 +43,10 @@ const char NINE[] = R"( ___
 
 struct Board
 {
-	int xBoardStart, yBoardStart;
-	int boxLength, boxWidth;
-	int size;		
-	int** pokeList;		//32 or " ": Deleted
+	int xBoardStart, yBoardStart; // The coordination of top-left corner of the board
+	int boxLength, boxWidth;	  // The length and width of each box
+	int size;					  // The size of the board
+	int** pokeList;				  //32 or " ": Deleted
 };
 struct Coor
 {

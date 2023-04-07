@@ -5,19 +5,19 @@
 
 struct Account
 {
-    char  username[20];
-    char  password[20];
+	char  username[20];
+	char  password[20];
 
-    int     curScore;
-    int     bestScore;
+	int     curScore;
+	int     bestScore;
 
-    bool    isPlaying;
+	bool    isPlaying;
 
-    int     size;
-    bool    isInsane;
-    int** curPokeList;
+	int     size;
+	bool    isInsane;	//is in Insane Mode
+	int** curPokeList;
 
-    Account();
+	Account();
 };
 struct GameInfo;
 

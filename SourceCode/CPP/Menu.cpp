@@ -16,6 +16,7 @@ void DrawBox(int xStart, int yStart, int length, int width)
 	for (int iX = 1; iX <= length; iX++)
 	{
 		cout << char(196);
+
 	}
 	for (int iY = 0; iY < width; iY++)
 	{
@@ -287,7 +288,7 @@ void ChooseLevel(int x, int y, Account& account)
 	cout << "HO HIEU";
 	SetColor(BLACK, WHITE);
 
-	string option[] = { "Easy", "Hard", "Insane", "Exit"};
+	string option[] = { "Easy", "Hard", "Insane", "Exit" };
 	CreateTextBox(x, y, 30, 3, option[0]);
 	CreateTextBox(x, y + 3, 30, 3, option[1]);
 	CreateTextBox(x, y + 6, 30, 3, option[2]);

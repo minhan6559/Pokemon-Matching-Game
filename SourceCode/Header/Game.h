@@ -9,37 +9,37 @@ using namespace std;
 struct Board;
 struct Point
 {
-    int r; //Row
-    int c; //Col
+	int r; //Row
+	int c; //Col
 };
 struct Node
 {
-    Point p;
-    Node* pNext;
+	Point p;
+	Node* pNext;
 };
 struct Queue
 {
-    Node* pHead;
-    Node* pTail;
-    Queue();
-    
-    void pushTail(Point data);
-    Point front();
-    void pop_front();
-    int size();
+	Node* pHead;
+	Node* pTail;
+	Queue();
+
+	void addTail(Point data);
+	Point getFront();
+	void pop();
+	int size();
 };
 
 struct GameInfo
 {
-    Board board;
-    int score;
-    int selectedBlocks;
-    int remainBlocks;
-    Point p1;
-    Point p2;
-    string* background;
-    bool isInsane;
-    GameInfo(int _size);
+	Board board; 
+	int score; 
+	int selectedBlocks;
+	int remainBlocks; 
+	Point p1;			//The first point that has been chosen
+	Point p2;			//The second point that has been chosen
+	string* background; 
+	bool isInsane;		//Check if the game is in insane mode
+	GameInfo(int _size);
 };
 struct Account;
 
@@ -49,5 +49,5 @@ bool moveSuggestion(GameInfo game, Point& p1, Point& p2);
 void createBackground(string fileName, string*& background, const Board& board);
 GameInfo createGameFromAccount(Account account);
 
-void releaseGame (GameInfo& game);
+void releaseGame(GameInfo& game);
 void releaseQueue(Queue& list);

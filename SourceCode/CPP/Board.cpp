@@ -14,9 +14,7 @@ void releaseBoard(Board& board)
 	board.pokeList = NULL;
 }
 
-//Ref: tu ham BoardView::buildBoardData() cua louis
-// Rewritten code with comments
-
+//Ref: from function BoardView::buildBoardData() in https://github.com/Louis2602/Pikachu-Game
 void randomPokemons(Board& board) {
 	// Seed the random number generator
 	srand((unsigned int)time(NULL));
@@ -29,11 +27,11 @@ void randomPokemons(Board& board) {
 	for (int i = 0; i < size; i++)
 		board.pokeList[i] = new int[size];
 
-	// Allocate memory for the checkDuplicate and pos arrays
+	// Allocate memory for the checkDuplicate and pos arrays 
 	bool* checkDuplicate = new bool[size * size];
 	int* pos = new int[size * size];
 
-	// Allocate memory for the pokemons array
+	// Allocate memory for the pokemons array and initialize it to 0
 	int** pokemons = new int* [size];
 	for (int i = 0; i < size; i++)
 	{
@@ -44,7 +42,7 @@ void randomPokemons(Board& board) {
 		}
 	}
 
-	// Generate random pokemons
+	// Generate random pokemons and put them next to each other
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size - 1; j = j + 2) {
 			pokemons[i][j] = rand() % 26 + 65;
@@ -64,7 +62,7 @@ void randomPokemons(Board& board) {
 		pos[i] = tmp;
 	}
 
-	// Construct the pokemons matrix
+	// Construct the pokemons matrix from the pos array 
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
 			int r = pos[size * i + j] / size;
@@ -103,7 +101,6 @@ void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw)
 
 	while (pCur)
 	{
-		//Start and end are coordinate. R: x, C: y
 		Coor start = { (boxLength + 1) * (pPrev->p.c + 1) + (boxLength - 1) / 2,
 						boxWidth * (pPrev->p.r + 1) + (boxWidth / 2) };
 		Coor end = { (boxLength + 1) * (pCur->p.c + 1) + (boxLength - 1) / 2,
@@ -477,10 +474,10 @@ bool ShowMoves(GameInfo& game)
 		{
 			do
 			{
-				shufflePokeList(game);	
+				shufflePokeList(game);
 			} while (moveSuggestion(game, checkMove1, checkMove2) == 0);
 
-			
+
 			system("cls");
 			DrawBoardGame(game, 1, 1);
 			if (game.isInsane == 1)
@@ -621,14 +618,13 @@ void ChoosePoke(GameInfo& game, int rowPoke, int colPoke)
 	//If two pokemon have been selected
 	if (game.selectedBlocks == 2)
 	{
-		Queue path; //Create a queue
+		Queue path; //Create a queue containing the connecting path
 
 		int checkMove = checkMatching(game, path); //Check if the pokemon match
 		//If the pokemon match
 		if (checkMove == 1)
 		{
 			highlightBoxForBoard(game, game.p1, 0); //Highlight pokemon 1
-
 			highlightBoxForBoard(game, game.p2, 0); //Highlight pokemon 2
 			drawMatchingLine(game, path, 1); //Draw matching line
 			CorrectSound();
@@ -692,7 +688,7 @@ void ChoosePoke(GameInfo& game, int rowPoke, int colPoke)
 
 		}
 		DrawScore(90, 4, game.score);
-		path.~Queue();
+		releaseQueue(path);
 		game.selectedBlocks = 0;
 		game.p1.r = -1;
 		game.p1.c = -1;
@@ -851,7 +847,7 @@ void DrawWinScreen()
 											l___, ||     ||  :  |    l  `  '  ! |  | |  |  |     __ 
 											|     !l     !l     |     \      /  j  l |  |  |    |  T
 											l____/  \___/  \__,_j      \_/\_/  |____jl__j__j    l__j)";
-	
+
 	for (int i = 1; i <= 5; i++)
 	{
 		SetColor(BLACK, LRED);
