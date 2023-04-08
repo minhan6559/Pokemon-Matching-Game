@@ -121,6 +121,7 @@ void inputAccountList(Account*& account, int& totalAccounts)
 
 void sortDescendingAccountList(Account*& account, int totalAccount)
 {
+	// Bubble sort
 	bool haveSwap = false;
 	for (int i = 0; i < totalAccount - 1; i++)
 	{
@@ -135,7 +136,8 @@ void sortDescendingAccountList(Account*& account, int totalAccount)
 				haveSwap = true;
 			}
 		}
-		if (haveSwap == false) {
+		if (haveSwap == false) 
+		{
 			break;
 		}
 	}

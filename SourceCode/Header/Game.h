@@ -32,13 +32,18 @@ struct Queue
 struct GameInfo
 {
 	Board board; 
+
 	int score; 
 	int selectedBlocks;
 	int remainBlocks; 
+
 	Point p1;			//The first point that has been chosen
 	Point p2;			//The second point that has been chosen
+
 	string* background; 
+
 	bool isInsane;		//Check if the game is in insane mode
+
 	GameInfo(int _size);
 };
 struct Account;

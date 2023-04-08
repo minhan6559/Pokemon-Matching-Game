@@ -215,7 +215,7 @@ bool moveSuggestion(GameInfo game, Point& p1, Point& p2)
 		for (int j = 0; j < size; j++)
 		{
 			game.p1 = { i, j };
-			if (game.board.pokeList[i][j] == -1)
+			if (game.board.pokeList[i][j] == 32)
 				continue;
 
 			for (int k = 0; k < size; k++)
@@ -223,7 +223,7 @@ bool moveSuggestion(GameInfo game, Point& p1, Point& p2)
 				for (int l = 0; l < size; l++)
 				{
 					game.p2 = { k, l };
-					if (game.board.pokeList[k][l] == -1)
+					if (game.board.pokeList[k][l] == 32)
 						continue;
 					Queue path;
 					if (checkMatching(game, path) == 1)
