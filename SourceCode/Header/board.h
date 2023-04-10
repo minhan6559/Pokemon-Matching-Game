@@ -59,7 +59,7 @@ struct GameInfo;
 
 void releaseBoard(Board& board);
 void randomPokemons(Board& board);
-void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw);
+void drawMatchingLine(const GameInfo& game, Queue path, bool isDraw);
 void showSuggestMove(GameInfo& game);
 void shufflePokeList(GameInfo& game);
 void drawBackground(GameInfo& game, Point pokeIndex);
@@ -72,6 +72,7 @@ bool ShowMoves(GameInfo& game);
 void ChoosePoke(GameInfo& game, int rowPoke, int colPoke);
 void DeleteMatching(GameInfo& game);
 void DrawDigit(int x, int y, short digit);
+void DrawMode(int x, int y, std::string mode);
 void DrawInfoBoard(int x, int y, short score, std::string level);
 void DrawScore(int x, int y, short score);
 void DrawStatus(int x, int y, std::string status);

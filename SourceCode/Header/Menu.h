@@ -57,6 +57,7 @@ void HighlightBox(int xStart, int yStart, int length, int width, string text, in
 int ShowMainMenu(int x, int y, bool isPlaying);
 void MainMenu(Account*& account, int totalAccounts, int& pos);
 void ChooseLevel(int x, int y, Account& account);
+int ChooseMode(int x, int y);
 void ShowRules();
 
 void loginMenu(int x, int y);

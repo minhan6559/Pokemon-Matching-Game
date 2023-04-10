@@ -42,7 +42,7 @@ struct GameInfo
 
 	string* background; 
 
-	bool isInsane;		//Check if the game is in insane mode
+	int mode;		//0: Standard, 1: Insane, 2: Sliding
 
 	GameInfo(int _size);
 };
@@ -51,7 +51,7 @@ struct Account;
 Queue findPath(Board board, Point p1, Point p2);
 int checkMatching(GameInfo& game, Queue& path);
 bool moveSuggestion(GameInfo game, Point& p1, Point& p2);
-void createBackground(string fileName, string*& background, const Board& board);
+string* createBackground(string fileName, const Board& board);
 GameInfo createGameFromAccount(Account account);
 
 void releaseGame(GameInfo& game);

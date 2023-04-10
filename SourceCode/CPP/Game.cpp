@@ -153,7 +153,7 @@ GameInfo::GameInfo(int _size)
 	board.boxLength = 11;
 	board.boxWidth = 5;
 	board.size = _size;
-	isInsane = 0;
+	mode = 0;
 	randomPokemons(board);
 	score = 0;
 	selectedBlocks = 0;
@@ -162,11 +162,9 @@ GameInfo::GameInfo(int _size)
 	p2 = { -1, -1 };
 
 	if (_size == 6)
-	{
-		createBackground("Background\\Hard.txt", background, board);
-	}
+		background = createBackground("Background\\Hard.txt", board);
 	else if (_size == 4)
-		createBackground("Background\\Easy.txt", background, board);
+		background = createBackground("Background\\Easy.txt", board);
 }
 
 //Check if the two selected blocks satisfy the conditions and return the path from p1 to p2 if they are matching
@@ -205,7 +203,7 @@ int checkMatching(GameInfo& game, Queue& path)
 	}
 }
 
-// Check if there is any matching block
+// Check if there is any matching block and return a valid pair of blocks
 bool moveSuggestion(GameInfo game, Point& p1, Point& p2)
 {
 	int size = game.board.size;
@@ -240,12 +238,12 @@ bool moveSuggestion(GameInfo game, Point& p1, Point& p2)
 }
 
 //This function creates a background for a game board.
-void createBackground(string fileName, string*& background, const Board& board)
+string* createBackground(string fileName, const Board& board)
 {
 	//Open the file with the given name
 	ifstream fin(fileName);
 	//Create a new string array with the size of the board
-	background = new string[board.size * board.boxWidth];
+	string* background = new string[board.size * board.boxWidth];
 
 	//Loop through the file until the end of the file is reached
 	int i = 0;
@@ -258,6 +256,8 @@ void createBackground(string fileName, string*& background, const Board& board)
 
 	//Close the file
 	fin.close();
+
+	return background;
 }
 
 
@@ -269,7 +269,7 @@ GameInfo createGameFromAccount(Account account)
 	game.board.pokeList = account.curPokeList;
 	game.score = account.curScore;
 
-	game.isInsane = account.isInsane;
+	game.mode = account.mode;
 
 	for (int i = 0; i < account.size; i++)
 	{

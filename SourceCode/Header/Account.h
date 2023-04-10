@@ -14,7 +14,7 @@ struct Account
 	bool    isPlaying;
 
 	int     size;
-	bool    isInsane;	//is in Insane Mode
+	int		mode;	//0: Standard, 1: Insane, 2: Sliding
 	int** curPokeList;
 
 	Account();

@@ -8,7 +8,7 @@ Account::Account()
 	bestScore = 0;
 	isPlaying = false;
 	size = 0;
-	isInsane = 0;
+	mode = 0;
 	curPokeList = NULL;
 }
 
@@ -151,14 +151,14 @@ void updateAccountAfterGame(Account& account, GameInfo& game, bool isPlaying)
 		account.curScore = game.score;
 		account.curPokeList = game.board.pokeList;
 		account.size = game.board.size;
-		account.isInsane = game.isInsane;
+		account.mode = game.mode;
 
 		delete[] game.background;
 	}
 	else
 	{
 		account.isPlaying = 0;
-		account.isInsane = 0;
+		account.mode = 0;
 		if (account.bestScore < game.score)
 		{
 			account.bestScore = game.score;
