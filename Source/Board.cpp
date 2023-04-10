@@ -861,18 +861,18 @@ void DrawInfoBoard(int x, int y, short score, string level)
 	DrawScore(x, y, score);
 
 	//Draw Shortcut
-	DrawBox(x, y + 6, 26, 5);
-	GoTo(x + 8, y + 6);
-	SetColor(BRWHITE, BLACK);
+	DrawBox(x, y + 7, 26, 5);
+	GoTo(x + 8, y + 7);
+	SetColor(YELLOW, BLACK);
 	cout << " SHORTCUT ";
 	SetColor(BLACK, WHITE);
-	GoTo(x + 2, y + 7);
+	GoTo(x + 2, y + 8);
 	cout << "R";
 	cout << ": Shuffle";
-	GoTo(x + 2, y + 8);
+	GoTo(x + 2, y + 9);
 	cout << "F";
 	cout << ": Suggest move";
-	GoTo(x + 2, y + 9);
+	GoTo(x + 2, y + 10);
 	cout << "X";
 	cout << ": Exit and save game";
 

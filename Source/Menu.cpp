@@ -480,7 +480,7 @@ void ShowRules()
 
 	GoTo(17, 12);
 	cout << char(175) << " The Matching Game(commonly known as Pikachu Puzzle Game) includes a board of \
-multiple cells, each of which presents a figure.\n";
+multiple cells, each of them presents a figure.\n";
 	GoTo(17, 13);
 	cout << char(175) << " The player finds and matches a pair of cells that contain the same \
 figure and connect each other in some particular pattern.\n";
