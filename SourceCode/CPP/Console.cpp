@@ -102,26 +102,31 @@ void DisableSelection()
 	SetConsoleMode(hStdin, ~ENABLE_QUICK_EDIT_MODE);
 }
 
+//https://www.youtube.com/watch?v=wDgQdr8ZkTw
 void BackgroundSong()
 {
 	mciSendString(L"play \"sound\\Background.mp3\" repeat", NULL, 0, 0);
 }
 
+//https://www.youtube.com/watch?v=yxafINGGm4Y
 void SelectingSound()
 {
 	PlaySound(TEXT("sound\\Selecting.wav"), NULL, SND_FILENAME | SND_ASYNC);
 }
 
+//https://www.youtube.com/watch?v=sW8TKZtoND8
 void ChoosedSound()
 {
 	mciSendString(L"play \"sound\\Choosed.mp3\"", NULL, 0, 0);
 }
 
+//https://www.youtube.com/watch?v=FwVRkhy5G04
 void ErrorSound()
 {
 	mciSendString(L"play \"sound\\Error.mp3\"", NULL, 0, 0);
 }
 
+//https://www.youtube.com/watch?v=SoeT6x0O-CM
 void CorrectSound()
 {
 	mciSendString(L"play \"sound\\Correct.mp3\"", NULL, 0, 0);
