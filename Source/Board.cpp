@@ -602,7 +602,7 @@ void DrawInfoBoard(int x, int y, short score, string level)
 
 }
 
-//Draw win nofitication to the user
+
 void DrawWinScreen()
 {
 	const char banner[] = R"(
