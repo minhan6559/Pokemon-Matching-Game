@@ -22,10 +22,17 @@ struct Account
 struct GameInfo;
 
 void releaseAccountList(Account*& account, int totalAccounts);
-void outputAccountList(Account* account, int totalAccounts);
-void inputAccountList(Account*& account, int& totalAccounts);
 
+//Write account list to binary file
+void outputAccountList(Account* account, int totalAccounts);
+
+//Read account list from binary file
+void inputAccountList(Account*& account, int& totalAccounts);
+ 
 void sortDescendingAccountList(Account*& account, int totalAccount);
+
+// Update the info of account after a game
 void updateAccountAfterGame(Account& account, GameInfo& game, bool isPlaying);
 
+//Return the position of the account in the list
 int findAccountPos(Account* account, int totalAccounts, string username);

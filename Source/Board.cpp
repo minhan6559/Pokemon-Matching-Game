@@ -14,7 +14,6 @@ void releaseBoard(Board& board)
 	board.pokeList = NULL;
 }
 
-//Ref: from function BoardView::buildBoardData() in https://github.com/Louis2602/Pikachu-Game
 void randomPokemons(Board& board) {
 	// Seed the random number generator
 	srand((unsigned int)time(NULL));
@@ -85,280 +84,6 @@ void randomPokemons(Board& board) {
 	pokemons = NULL;
 }
 
-void drawMatchingLine(const GameInfo& game, Queue path, bool isDraw)
-{
-	int boxLength = game.board.boxLength;
-	int boxWidth = game.board.boxWidth;
-
-	int topBoundary = game.board.yBoardStart - 1;
-	int bottomBoundary = game.board.yBoardStart + game.board.boxWidth * game.board.size;
-	int leftBoundary = game.board.xBoardStart - 2;
-	int rightBoundary = game.board.xBoardStart + (game.board.boxLength + 1) * game.board.size;
-
-
-	Node* pCur = path.pHead->pNext;
-	Node* pPrev = path.pHead;
-
-	while (pCur)
-	{
-		Coor start = { (boxLength + 1) * (pPrev->p.c + 1) + (boxLength - 1) / 2,
-						boxWidth * (pPrev->p.r + 1) + (boxWidth / 2) };
-		Coor end = { (boxLength + 1) * (pCur->p.c + 1) + (boxLength - 1) / 2,
-						boxWidth * (pCur->p.r + 1) + (boxWidth / 2) };
-
-		bool isStart = 1;
-		int fromDirection = 0; //1: up, 2: down, 3: left, 4: right
-		SetColor(0, 11);
-
-		while (!(start.x == end.x && start.y == end.y))
-		{
-			if (start.x == end.x)
-			{
-				if (isStart == 0)
-				{
-					GoTo(start.x, start.y);
-					if (isDraw)
-						cout << char(186);
-					else
-					{
-						if (start.y == topBoundary || start.y == bottomBoundary)
-						{
-							SetColor(BLACK, WHITE);
-							cout << char(196);
-							SetColor(BLACK, 11);
-						}
-						else
-						{
-							cout << " ";
-						}
-					}
-				}
-				if (start.y < end.y)
-				{
-					start.y++;
-					fromDirection = 1;
-				}
-				else if (start.y > end.y)
-				{
-					start.y--;
-					fromDirection = 2;
-				}
-				isStart = 0;
-			}
-			else if (start.y == end.y)
-			{
-				if (isStart == 0)
-				{
-					GoTo(start.x, start.y);
-					if (isDraw)
-						cout << char(205);
-					else
-					{
-						if (start.x == leftBoundary || start.x == rightBoundary)
-						{
-							SetColor(BLACK, WHITE);
-							cout << char(179);
-							SetColor(0, 11);
-						}
-						else
-						{
-							cout << " ";
-						}
-					}
-				}
-				if (start.x < end.x)
-				{
-					start.x++;
-					fromDirection = 3;
-				}
-				else if (start.x > end.x)
-				{
-					start.x--;
-					fromDirection = 4;
-				}
-				isStart = 0;
-			}
-		}
-		if (!(end.x == (boxLength + 1) * (game.p2.c + 1) + (boxLength - 1) / 2
-			&& end.y == boxWidth * (game.p2.r + 1) + (boxWidth / 2)))
-		{
-			GoTo(end.x, end.y);
-			if (isDraw)
-			{
-				Coor nextEnd = { (boxLength + 1) * (pCur->pNext->p.c + 1) + (boxLength - 1) / 2,
-										boxWidth * (pCur->pNext->p.r + 1) + (boxWidth / 2) };
-
-				if (fromDirection == 1)
-				{
-					if (end.x < nextEnd.x)
-						cout << char(200);
-					else
-						cout << char(188);
-				}
-				else if (fromDirection == 2)
-				{
-					if (end.x < nextEnd.x)
-						cout << char(201);
-					else
-						cout << char(187);
-				}
-				else if (fromDirection == 3)
-				{
-					if (end.y > nextEnd.y)
-						cout << char(188);
-					else
-						cout << char(187);
-				}
-				else
-				{
-					if (end.y > nextEnd.y)
-						cout << char(200);
-					else
-						cout << char(201);
-				}
-			}
-			else
-				cout << " ";
-		}
-		pPrev = pCur;
-		pCur = pCur->pNext;
-
-		SetColor(0, 7);
-	}
-}
-
-void showSuggestMove(GameInfo& game)
-{
-	Point suggestPoint1;
-	Point suggestPoint2;
-	if (moveSuggestion(game, suggestPoint1, suggestPoint2))
-	{
-		for (int i = 1; i <= 4; i++)
-		{
-			highlightBoxForBoard(game, suggestPoint1, i % 2);
-			highlightBoxForBoard(game, suggestPoint2, i % 2);
-			Sleep(200);
-		}
-	}
-}
-
-void shufflePokeList(GameInfo& game)
-{
-	srand((unsigned int)time(NULL));
-	// Create a list of indices of non-deleted Pokemon
-	int numNonDeleted = 0;
-	int* nonDeletedIndices = new int[game.board.size * game.board.size];
-	for (int i = 0; i < game.board.size; i++) {
-		for (int j = 0; j < game.board.size; j++) {
-			if (game.board.pokeList[i][j] != 32) {
-				nonDeletedIndices[numNonDeleted] = i * game.board.size + j;
-				numNonDeleted++;
-			}
-		}
-	}
-
-	// Shuffle the list of non-deleted indices
-	for (int i = numNonDeleted - 1; i > 0; i--) {
-		int j = rand() % (i + 1);
-		int temp = nonDeletedIndices[i];
-		nonDeletedIndices[i] = nonDeletedIndices[j];
-		nonDeletedIndices[j] = temp;
-	}
-
-	// Update the pokeList array with the shuffled indices
-	int index = 0;
-	for (int i = 0; i < game.board.size; i++) {
-		for (int j = 0; j < game.board.size; j++) {
-			if (game.board.pokeList[i][j] != 32) {
-				int newIndex = nonDeletedIndices[index];
-				int newI = newIndex / game.board.size;
-				int newJ = newIndex % game.board.size;
-				int temp = game.board.pokeList[i][j];
-				game.board.pokeList[i][j] = game.board.pokeList[newI][newJ];
-				game.board.pokeList[newI][newJ] = temp;
-				index++;
-			}
-		}
-	}
-
-	delete[] nonDeletedIndices;
-}
-
-void drawBackground(GameInfo& game, Point pokeIndex)
-{
-	int boxLength = game.board.boxLength, boxWidth = game.board.boxWidth;
-
-	//Coordinate of the start point to draw on screen
-	Coor startDraw = { (boxLength + 1) * (pokeIndex.c + 1),
-						boxWidth * (pokeIndex.r + 1) };
-
-	//Index of background
-	Point startBackground = { boxWidth * pokeIndex.r,
-								(boxLength + 1) * pokeIndex.c };
-
-	GoTo(startDraw.x, startDraw.y);
-
-	for (int i = 0; i < boxWidth; i++)
-	{
-		GoTo(startDraw.x, startDraw.y + i);
-		for (int j = 0; j < boxLength + 1; j++)
-		{
-			cout << game.background[startBackground.r + i][startBackground.c + j];
-		}
-	}
-}
-
-void highlightBoxForBoard(GameInfo& game, Point pokeIndex, int mode)
-{
-	int width = game.board.boxWidth, length = game.board.boxLength;
-
-	Coor start = { (length + 1) * (pokeIndex.c + 1),
-						width * (pokeIndex.r + 1) };
-
-	if (mode == 1)
-	{
-		for (int iY = start.y + 1; iY < start.y + width - 1; iY++)
-		{
-			for (int iX = start.x + 1; iX < start.x + length - 1; iX++)
-			{
-				GoTo(iX, iY);
-				SetColor(LAQUA, BLACK);
-				cout << " ";
-			}
-		}
-	}
-	else if (mode == 0)
-	{
-		for (int iY = start.y + 1; iY < start.y + width - 1; iY++)
-		{
-			for (int iX = start.x + 1; iX < start.x + length - 1; iX++)
-			{
-				GoTo(iX, iY);
-				SetColor(BLACK, WHITE);
-				cout << " ";
-			}
-		}
-	}
-
-	if (game.board.pokeList[pokeIndex.r][pokeIndex.c] != 32)
-	{
-		string text = "|";
-		if (game.mode == 0 || game.mode == 2)
-			text = char(game.board.pokeList[pokeIndex.r][pokeIndex.c]);
-		int xText = start.x + static_cast<int>((length - text.length()) / 2);
-		int yText = start.y + (width / 2);
-		GoTo(xText, yText);
-		cout << text;
-	}
-	else
-	{
-		drawBackground(game, pokeIndex);
-	}
-	SetColor(BLACK, WHITE);
-}
-
-
-//Hieu----------------------------------------
 void DrawBorder(Board board)
 {
 	int x = board.xBoardStart, y = board.yBoardStart;
@@ -456,7 +181,6 @@ void DrawBoardGame(GameInfo& game, bool isSlow, bool isFlip)
 	SetColor(BLACK, WHITE);
 }
 
-//1: is playing, 0: done game
 bool ShowMoves(GameInfo& game)
 {
 	char key;
@@ -464,10 +188,11 @@ bool ShowMoves(GameInfo& game)
 
 	while (true)
 	{
-		//check if there are no moves left, then shuffle
+		// 2 temp points are used to check if there are any moves left
 		Point checkMove1;
 		Point checkMove2;
 
+		//check if there are no moves left, then shuffle
 		if (moveSuggestion(game, checkMove1, checkMove2) == 0)
 		{
 			do
@@ -590,7 +315,6 @@ bool ShowMoves(GameInfo& game)
 	}
 }
 
-//This function is used to choose a pokemon from the board.
 void ChoosePoke(GameInfo& game, int rowPoke, int colPoke)
 {
 	//Check if the pokemon is empty

@@ -24,7 +24,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Account.h" />
-    <ClInclude Include="Source\board.h" />
+    <ClInclude Include="Source\Board.h" />
     <ClInclude Include="Source\Console.h" />
     <ClInclude Include="Source\Game.h" />
     <ClInclude Include="Source\Menu.h" />

@@ -32,7 +32,7 @@
     <ClInclude Include="Source\Account.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\board.h">
+    <ClInclude Include="Source\Board.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Console.h">

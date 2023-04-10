@@ -6,7 +6,6 @@
 #include <string>
 using namespace std;
 
-struct Board;
 struct Point
 {
 	int r; //Row
@@ -48,11 +47,36 @@ struct GameInfo
 };
 struct Account;
 
+//Visual
+void DrawBoardGame(GameInfo& game, bool isSlow, bool isFlip);
+void drawBackground(GameInfo& game, Point pokeIndex);
+void highlightBoxForBoard(GameInfo& game, Point pokeIndex, int mode);
+
+//Display game and let user play. Return true if game is not done, false if not.
+bool ShowMoves(GameInfo& game);
+
+//Change the poke list
+void shufflePokeList(GameInfo& game);
+
+//Choose a pokemon from the board.
+void ChoosePoke(GameInfo& game, int rowPoke, int colPoke);
+
+//Delete 2 cells that are matching
+void DeleteMatching(GameInfo& game);
+
+//Check matching
 Queue findPath(Board board, Point p1, Point p2);
 int checkMatching(GameInfo& game, Queue& path);
+void drawMatchingLine(const GameInfo& game, Queue path, bool isDraw);
+
+//Move suggestion
 bool moveSuggestion(GameInfo game, Point& p1, Point& p2);
+void showSuggestMove(GameInfo& game);
+
+//Background
 string* createBackground(string fileName, const Board& board);
 GameInfo createGameFromAccount(Account account);
 
+// Release
 void releaseGame(GameInfo& game);
 void releaseQueue(Queue& list);
