@@ -53,25 +53,13 @@ struct Coor
 	int x;
 	int y;
 };
-struct Point;
-struct Queue;
-struct GameInfo;
 
 void releaseBoard(Board& board);
 void randomPokemons(Board& board);
-void drawMatchingLine(GameInfo& game, Queue& path, bool isDraw);
-void showSuggestMove(GameInfo& game);
-void shufflePokeList(GameInfo& game);
-void drawBackground(GameInfo& game, Point pokeIndex);
-void highlightBoxForBoard(GameInfo& game, Point pokeIndex, int mode);
 
-//Hieu --------------------------------------
 void DrawBorder(Board board);
-void DrawBoardGame(GameInfo& game, bool isSlow, bool isFlip);
-bool ShowMoves(GameInfo& game);
-void ChoosePoke(GameInfo& game, int rowPoke, int colPoke);
-void DeleteMatching(GameInfo& game);
 void DrawDigit(int x, int y, short digit);
+void DrawMode(int x, int y, std::string mode);
 void DrawInfoBoard(int x, int y, short score, std::string level);
 void DrawScore(int x, int y, short score);
 void DrawStatus(int x, int y, std::string status);

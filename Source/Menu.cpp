@@ -235,7 +235,7 @@ void MainMenu(Account*& account, int totalAccounts, int& pos)
 			GameInfo game = createGameFromAccount(account[pos]);
 			system("cls");
 			DrawBoardGame(game, 1, 1);
-			if (game.isInsane == 1)
+			if (game.mode == 1)
 			{
 				Sleep(1000);
 				DrawBoardGame(game, 0, 0);
@@ -288,7 +288,112 @@ void ChooseLevel(int x, int y, Account& account)
 	cout << "HO HIEU";
 	SetColor(BLACK, WHITE);
 
-	string option[] = { "Easy", "Hard", "Insane", "Exit" };
+	string option[] = { "Easy", "Hard", "Exit"};
+	CreateTextBox(x, y, 30, 3, option[0]);
+	CreateTextBox(x, y + 3, 30, 3, option[1]);
+	CreateTextBox(x, y + 6, 30, 3, option[2]);
+	//boundary
+	const int TOPB = y, BOTTOMB = y + 6;
+
+	char key;
+	int i = 0;
+	int choose = 2;
+	HighlightBox(x, y, 30, 3, option[0], 1);
+	while (true)
+	{
+		int xPrev = x, yPrev = y;
+		key = _getch();
+		if ((key == UP || key == 'w' || key == 'W') && y > TOPB && i > 0) //UP
+		{
+			SelectingSound();
+			y -= 3;
+			HighlightBox(x, yPrev, 30, 3, option[i], 0);
+			HighlightBox(x, y, 30, 3, option[--i], 1);
+			choose++;
+		}
+		else if ((key == DOWN || key == 's' || key == 'S') && y < BOTTOMB && i <= 1) //DOWN
+		{
+			SelectingSound();
+			y += 3;
+			HighlightBox(x, yPrev, 30, 3, option[i], 0);
+			HighlightBox(x, y, 30, 3, option[++i], 1);
+			choose--;
+		}
+		else if (key == ENTER || key == ' ')
+		{
+			ChoosedSound();
+			if (choose == 2)
+			{
+				GameInfo game(4);
+				system("cls");
+				int mode = ChooseMode(42, 18);
+				if(mode != -1)
+				{
+					game.mode = mode;
+					system("cls");
+					DrawBoardGame(game, 1, 1);
+					if(mode == 1)
+					{
+						Sleep(1000);
+						DrawBoardGame(game, 0, 0);
+					}
+					int isPlaying = ShowMoves(game);
+					updateAccountAfterGame(account, game, isPlaying);
+					_getch();
+				}
+				else
+					releaseGame(game);
+				return;
+			}
+			if (choose == 1)
+			{
+				GameInfo game(6);
+				system("cls");
+				int mode = ChooseMode(42, 18);
+				if (mode != -1)
+				{
+					game.mode = mode;
+					system("cls");
+					DrawBoardGame(game, 1, 1);
+					if (mode == 1)
+					{
+						Sleep(1000);
+						DrawBoardGame(game, 0, 0);
+					}
+					int isPlaying = ShowMoves(game);
+					updateAccountAfterGame(account, game, isPlaying);
+					_getch();
+				}
+				else
+					releaseGame(game);
+				return;
+			}
+			if (choose == 0)
+			{
+				ChoosedSound();
+				return;
+			}
+		}
+	}
+}
+
+int ChooseMode(int x, int y)
+{
+	SetColor(BLACK, rand() % 14 + 1);
+	cout << gameName;
+	SetColor(BLACK, WHITE);
+
+	GoTo(44, 14);
+	cout << "made by ";
+	SetColor(BLACK, LAQUA);
+	cout << "MINH AN ";
+	SetColor(BLACK, WHITE);
+	cout << "& ";
+	SetColor(BLACK, LGREEN);
+	cout << "HO HIEU";
+	SetColor(BLACK, WHITE);
+
+	string option[] = { "Standard", "Sliding", "Insane", "Exit"};
 	CreateTextBox(x, y, 30, 3, option[0]);
 	CreateTextBox(x, y + 3, 30, 3, option[1]);
 	CreateTextBox(x, y + 6, 30, 3, option[2]);
@@ -325,41 +430,20 @@ void ChooseLevel(int x, int y, Account& account)
 			ChoosedSound();
 			if (choose == 3)
 			{
-				GameInfo game(4);
-				system("cls");
-				DrawBoardGame(game, 1, 1);
-				int isPlaying = ShowMoves(game);
-				updateAccountAfterGame(account, game, isPlaying);
-				_getch();
-				return;
+				return 0; //Standard
 			}
 			if (choose == 2)
 			{
-				GameInfo game(6);
-				system("cls");
-				DrawBoardGame(game, 1, 1);
-				int isPlaying = ShowMoves(game);
-				updateAccountAfterGame(account, game, isPlaying);
-				_getch();
-				return;
+				return 2; //Sliding
 			}
 			if (choose == 1)
 			{
-				GameInfo game(6);
-				game.isInsane = 1;
-				system("cls");
-				DrawBoardGame(game, 1, 1);
-				Sleep(1000);
-				DrawBoardGame(game, 0, 0);
-				int isPlaying = ShowMoves(game);
-				updateAccountAfterGame(account, game, isPlaying);
-				_getch();
-				return;
+				return 1; //Insane
 			}
 			if (choose == 0)
 			{
 				ChoosedSound();
-				return;
+				return -1;
 			}
 		}
 	}
@@ -396,12 +480,12 @@ void ShowRules()
 
 	GoTo(17, 12);
 	cout << char(175) << " The Matching Game(commonly known as Pikachu Puzzle Game) includes a board of \
-multiple cells, each of whichpresents a figure.\n";
+multiple cells, each of them presents a figure.\n";
 	GoTo(17, 13);
 	cout << char(175) << " The player finds and matches a pair of cells that contain the same \
 figure and connect each other in some particular pattern.\n";
 	GoTo(17, 14);
-	cout << char(175) << " A legal match will make the two cells disappear. The game ends when all matching\
+	cout << char(175) << " A legal match will make the two cells disappear. The game ends when all matching \
 pairs are found.\n";
 
 	GoTo(75, 17);
@@ -414,7 +498,7 @@ pairs are found.\n";
 	GoTo(20, 20);
 	cout << char(175) << " Press Enter or Space bar to select.\n";
 	GoTo(20, 22);
-	cout << char(175) << " Press X to leave the game.\n";
+	cout << char(175) << " Press X to leave and save the current game.\n";
 	GoTo(90, 18);
 	cout << char(175) << " Press F to suggest moving.\n";
 	GoTo(90, 20);

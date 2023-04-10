@@ -19,23 +19,23 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SourceCode\Header\Account.h" />
-    <ClInclude Include="SourceCode\Header\Board.h" />
-    <ClInclude Include="SourceCode\Header\Console.h" />
-    <ClInclude Include="SourceCode\Header\Game.h" />
-    <ClInclude Include="SourceCode\Header\Menu.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="SourceCode\CPP\Account.cpp" />
-    <ClCompile Include="SourceCode\CPP\Board.cpp" />
-    <ClCompile Include="SourceCode\CPP\Console.cpp" />
-    <ClCompile Include="SourceCode\CPP\Game.cpp" />
-    <ClCompile Include="SourceCode\CPP\main.cpp" />
-    <ClCompile Include="SourceCode\CPP\Menu.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="Background\Easy.txt" />
     <Text Include="Background\Hard.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Account.h" />
+    <ClInclude Include="Source\Board.h" />
+    <ClInclude Include="Source\Console.h" />
+    <ClInclude Include="Source\Game.h" />
+    <ClInclude Include="Source\Menu.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Account.cpp" />
+    <ClCompile Include="Source\Board.cpp" />
+    <ClCompile Include="Source\Console.cpp" />
+    <ClCompile Include="Source\Game.cpp" />
+    <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\Menu.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -123,7 +123,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>SourceCode\Header; SourceCode\CPP</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
