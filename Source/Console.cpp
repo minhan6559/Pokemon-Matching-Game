@@ -10,9 +10,7 @@ void setAndCenterWindow()
 	int windowsWidth = GetSystemMetrics(SM_CXSCREEN);
 	int windowsHeight = GetSystemMetrics(SM_CYSCREEN);
 	MoveWindow(consoleWindow, 10, 10, windowsWidth - 100, windowsHeight - 50, TRUE);
-	ShowWindow(GetConsoleWindow(), 3);
 }
-
 
 void DisableResizeWindow()
 {
@@ -116,6 +114,7 @@ void SetUpConsole(bool isLogin)
 {
 	if (isLogin)
 	{
+		ShowWindow(GetConsoleWindow(), 3);
 		SetConsoleTitle(L"Pukachi");
 		setAndCenterWindow();
 		DisableResizeWindow();
