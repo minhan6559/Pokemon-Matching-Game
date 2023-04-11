@@ -460,7 +460,7 @@ void ShowRules()
                                                               /_/ |_|\____/_____/_____//____/
 
 )";
-
+	//Draw the table
 	DrawBox(14, 10, 130, 8);
 	DrawBox(14, 17, 130, 8);
 	DrawBox(14, 24, 130, 8);

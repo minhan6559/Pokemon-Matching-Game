@@ -15,9 +15,6 @@ void DisableSelection();
 
 void SetUpConsole(bool isLogin);
 
-//ref: https://www.youtube.com/watch?v=zOljIjBJvRI
-//ref: https://learn.microsoft.com/en-us/previous-versions//dd757161(v=vs.85)
-//https://learn.microsoft.com/en-us/windows/win32/multimedia/play
 void BackgroundSong();
 void SelectingSound();
 void ChoosedSound();
