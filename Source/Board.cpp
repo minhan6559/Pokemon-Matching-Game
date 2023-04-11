@@ -422,20 +422,27 @@ void ChoosePoke(GameInfo& game, int rowPoke, int colPoke)
 
 void DeleteMatching(GameInfo& game)
 {
+	// Get board start coordinates and box dimensions
 	int x = game.board.xBoardStart, y = game.board.yBoardStart;
 	int boxLength = game.board.boxLength, boxWidth = game.board.boxWidth;
 
+	// Decrement the number of remaining blocks
 	game.remainBlocks -= 2;
 
-	if(game.mode != 2)
+	//If game is not in sliding mode
+	if (game.mode != 2)
 	{
+		// Draw background for both players
 		drawBackground(game, game.p1);
 		drawBackground(game, game.p2);
+
+		// Set the pokeList values to 32 (space)
 		game.board.pokeList[game.p1.r][game.p1.c] = 32;
 		game.board.pokeList[game.p2.r][game.p2.c] = 32;
 	}
 	else
 	{
+		// Swap the columns of the two players if p1 is to the left of p2
 		if (game.p1.c < game.p2.c && game.p1.r == game.p2.r)
 		{
 			int temp = game.p1.c;
@@ -443,8 +450,10 @@ void DeleteMatching(GameInfo& game)
 			game.p2.c = temp;
 		}
 
+		// Get the size of the board
 		int size = game.board.size;
 
+		// Shift the pokeList values to the left for both blocks
 		for (int j = game.p1.c; j < size - 1; j++)
 		{
 			game.board.pokeList[game.p1.r][j] = game.board.pokeList[game.p1.r][j + 1];
@@ -457,6 +466,7 @@ void DeleteMatching(GameInfo& game)
 		}
 		game.board.pokeList[game.p2.r][size - 1] = 32;
 
+		// Draw the board game
 		DrawBoardGame(game, 0, 1);
 	}
 }
@@ -602,7 +612,6 @@ void DrawInfoBoard(int x, int y, short score, string level)
 
 }
 
-//Draw win nofitication to the user
 void DrawWinScreen()
 {
 	const char banner[] = R"(

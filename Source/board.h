@@ -55,6 +55,8 @@ struct Coor
 };
 
 void releaseBoard(Board& board);
+
+//Randomize a Pokemon board
 void randomPokemons(Board& board);
 
 void DrawBorder(Board board);
@@ -63,4 +65,6 @@ void DrawMode(int x, int y, std::string mode);
 void DrawInfoBoard(int x, int y, short score, std::string level);
 void DrawScore(int x, int y, short score);
 void DrawStatus(int x, int y, std::string status);
+
+//Draw win nofitication to the user
 void DrawWinScreen();
