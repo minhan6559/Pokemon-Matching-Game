@@ -80,7 +80,7 @@ void DisableSelection()
 
 void BackgroundSong()
 {
-	mciSendString("play \"sound\\Background.mp3\" repeat", NULL, 0, 0);
+	mciSendString(L"play \"sound\\Background.mp3\" repeat", NULL, 0, 0);
 }
 
 void SelectingSound()
@@ -90,17 +90,17 @@ void SelectingSound()
 
 void ChoosedSound()
 {
-	mciSendString("play \"sound\\Choosed.mp3\"", NULL, 0, 0);
+	mciSendString(L"play \"sound\\Choosed.mp3\"", NULL, 0, 0);
 }
 
 void ErrorSound()
 {
-	mciSendString("play \"sound\\Error.mp3\"", NULL, 0, 0);
+	mciSendString(L"play \"sound\\Error.mp3\"", NULL, 0, 0);
 }
 
 void CorrectSound()
 {
-	mciSendString("play \"sound\\Correct.mp3\"", NULL, 0, 0);
+	mciSendString(L"play \"sound\\Correct.mp3\"", NULL, 0, 0);
 }
 
 
@@ -109,7 +109,7 @@ void SetUpConsole(bool isLogin)
 	if (isLogin)
 	{
 		SetConsoleOutputCP(437); //Display extended ASCII
-		SetConsoleTitle("Pukachi");
+		SetConsoleTitle(L"Pukachi");
 		setAndCenterWindow();
 		ShowWindow(GetConsoleWindow(), 3);
 		DisableResizeWindow();

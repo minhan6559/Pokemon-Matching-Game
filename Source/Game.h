@@ -4,16 +4,19 @@
 
 using namespace std;
 
+// Index of the pokemon in matrix
 struct Point
 {
 	int r; //Row
 	int c; //Col
 };
+
 struct Node
 {
 	Point p;
 	Node* pNext;
 };
+
 struct Queue
 {
 	Node* pHead;
@@ -39,7 +42,7 @@ struct GameInfo
 
 	string* background; 
 
-	int mode;		//0: Standard, 1: Insane, 2: Sliding
+	int mode;			//0: Standard, 1: Insane, 2: Sliding
 
 	GameInfo(int _size);
 };
@@ -53,7 +56,7 @@ void highlightBoxForBoard(GameInfo& game, Point pokeIndex, int mode);
 //Display game and let user play. Return true if game is not done, false if not.
 bool ShowMoves(GameInfo& game);
 
-//Change the poke list
+//Shuffle the poke list
 void shufflePokeList(GameInfo& game);
 
 //Choose a pokemon from the board.
@@ -62,13 +65,20 @@ void ChoosePoke(GameInfo& game, int rowPoke, int colPoke);
 //Delete 2 cells that are matching
 void DeleteMatching(GameInfo& game);
 
-//Check matching
+// Find the path from p1 to p2
 Queue findPath(Board board, Point p1, Point p2);
+
+//Check if the two selected blocks satisfy the conditions and return the path from p1 to p2 if they are matching
+//-1: The same, 0: not matching, 1: matching
 int checkMatching(GameInfo& game, Queue& path);
+
+// Draw the connecting line between two blocks
 void drawMatchingLine(const GameInfo& game, Queue path, bool isDraw);
 
-//Move suggestion
+// Check if there is any matching block and return a valid pair of blocks
 bool moveSuggestion(GameInfo game, Point& p1, Point& p2);
+
+// Show the suggested move
 void showSuggestMove(GameInfo& game);
 
 //Background

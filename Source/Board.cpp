@@ -143,7 +143,7 @@ void DrawBoardGame(GameInfo& game, bool isSlow, bool isFlip)
 				}
 				string pokemon = "|";
 				int pokeColor = LRED;
-				if (!(game.mode == 1 && isFlip == 0))
+				if (isFlip == 1)
 				{
 					pokemon = char(game.board.pokeList[i][j]);
 					pokeColor = game.board.pokeList[i][j] % 15 + 1;
@@ -166,7 +166,7 @@ void DrawBoardGame(GameInfo& game, bool isSlow, bool isFlip)
 				}
 				string pokemon = "|";
 				int pokeColor = LRED;
-				if (!(game.mode == 1 && isFlip == 0))
+				if (isFlip == 1)
 				{
 					pokemon = char(game.board.pokeList[i][j]);
 					pokeColor = game.board.pokeList[i][j] % 15 + 1;

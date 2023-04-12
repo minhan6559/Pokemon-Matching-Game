@@ -634,6 +634,7 @@ void ShowLeaderboard(Account*& account, int totalAccounts, int& pos)
 	string username = account[pos].username;
 	sortDescendingAccountList(account, totalAccounts);
 	pos = findAccountPos(account, totalAccounts, username);
+
 	outputAccountList(account, totalAccounts);
 	SetColor(BLACK, LBLUE);
 	cout << R"(
