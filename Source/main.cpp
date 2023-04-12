@@ -2,7 +2,7 @@
 #include "Game.h"
 #include "Menu.h"
 using namespace std;
-
+	
 int main()
 {
 	SetUpConsole(1);

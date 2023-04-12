@@ -171,8 +171,6 @@ GameInfo::GameInfo(int _size)
 		background = createBackground("Background\\Easy.txt", board);
 }
 
-//Check if the two selected blocks satisfy the conditions and return the path from p1 to p2 if they are matching
-//-1: The same, 0: not matching, 1: matching
 int checkMatching(GameInfo& game, Queue& path)
 {
 	//2 blocks are the same
@@ -207,7 +205,6 @@ int checkMatching(GameInfo& game, Queue& path)
 	}
 }
 
-// Check if there is any matching block and return a valid pair of blocks
 bool moveSuggestion(GameInfo game, Point& p1, Point& p2)
 {
 	int size = game.board.size;

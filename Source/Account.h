@@ -15,7 +15,7 @@ struct Account
 
 	int     size;
 	int		mode;	//0: Standard, 1: Insane, 2: Sliding
-	int** curPokeList;
+	int**	curPokeList;
 
 	Account();
 };
@@ -28,7 +28,8 @@ void outputAccountList(Account* account, int totalAccounts);
 
 //Read account list from binary file
 void inputAccountList(Account*& account, int& totalAccounts);
- 
+
+//Sort the account list in descending order
 void sortDescendingAccountList(Account*& account, int totalAccount);
 
 // Update the info of account after a game

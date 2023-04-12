@@ -108,9 +108,10 @@ void SetUpConsole(bool isLogin)
 {
 	if (isLogin)
 	{
-		ShowWindow(GetConsoleWindow(), 3);
+		SetConsoleOutputCP(437); //Display extended ASCII
 		SetConsoleTitle(L"Pukachi");
 		setAndCenterWindow();
+		ShowWindow(GetConsoleWindow(), 3);
 		DisableResizeWindow();
 		DisableCtrButton(1, 1, 0);
 	}
