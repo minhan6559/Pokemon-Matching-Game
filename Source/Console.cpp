@@ -103,6 +103,11 @@ void CorrectSound()
 	mciSendString(L"play \"sound\\Correct.mp3\"", NULL, 0, 0);
 }
 
+void WinSound()
+{
+	mciSendString(L"play \"sound\\Win.mp3\"", NULL, 0, 0);
+}
+
 
 void SetUpConsole(bool isLogin)
 {

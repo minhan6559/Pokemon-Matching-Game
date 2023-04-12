@@ -308,6 +308,7 @@ bool ShowMoves(GameInfo& game)
 		//check if there are no remaining blocks
 		if (game.remainBlocks == 0)
 		{
+			WinSound();
 			DrawStatus(90, 4, "You win! Press any key!");
 			DrawWinScreen();
 			return false;

@@ -13,8 +13,10 @@ void DisableSelection();
 
 void SetUpConsole(bool isLogin);
 
+//Sound
 void BackgroundSong();
 void SelectingSound();
 void ChoosedSound();
 void ErrorSound();
 void CorrectSound();
+void WinSound();
