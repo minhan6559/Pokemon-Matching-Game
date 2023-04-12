@@ -1,7 +1,6 @@
 #pragma once
 #include <Windows.h>
 
-//ref: louis and Khoi
 void setAndCenterWindow();
 void DisableResizeWindow();
 void DisableCtrButton(bool Close, bool Min, bool Max);

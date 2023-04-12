@@ -103,8 +103,6 @@ void HighlightBox(int xStart, int yStart, int length, int width, string text, in
 	SetColor(BLACK, WHITE);
 }
 
-
-//References: https://www.youtube.com/watch?v=oDh046cT_Q0&t=1474s
 int ShowMainMenu(int x, int y, bool isPlaying)
 {
 	if (isPlaying)

@@ -51,6 +51,7 @@ const char gameName[] = R"(
                                                         `'                            '-._|
 )";
 
+//Menu UI functions
 void DrawBox(int xStart, int yStart, int width, int length);
 void CreateTextBox(int xStart, int yStart, int length, int width, string text);
 void HighlightBox(int xStart, int yStart, int length, int width, string text, int mode);
@@ -58,7 +59,8 @@ int ShowMainMenu(int x, int y, bool isPlaying);
 void MainMenu(Account*& account, int totalAccounts, int& pos);
 void ChooseLevel(int x, int y, Account& account);
 int ChooseMode(int x, int y);
-void ShowRules();
-
 void loginMenu(int x, int y);
+
+//Rules and Leaderboard
 void ShowLeaderboard(Account*& account, int totalAccounts, int& pos);
+void ShowRules();
