@@ -15,7 +15,7 @@ struct Account
 
 	int     size;
 	int		mode;	//0: Standard, 1: Insane, 2: Sliding
-	int** curPokeList;
+	int**	curPokeList;
 
 	Account();
 };

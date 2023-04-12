@@ -82,7 +82,7 @@ void DisableSelection()
 //https://www.youtube.com/watch?v=wDgQdr8ZkTw
 void BackgroundSong()
 {
-	mciSendString(L"play \"sound\\Background.mp3\" repeat", NULL, 0, 0);
+	mciSendString("play \"sound\\Background.mp3\" repeat", NULL, 0, 0);
 }
 
 //https://www.youtube.com/watch?v=yxafINGGm4Y
@@ -94,19 +94,19 @@ void SelectingSound()
 //https://www.youtube.com/watch?v=sW8TKZtoND8
 void ChoosedSound()
 {
-	mciSendString(L"play \"sound\\Choosed.mp3\"", NULL, 0, 0);
+	mciSendString("play \"sound\\Choosed.mp3\"", NULL, 0, 0);
 }
 
 //https://www.youtube.com/watch?v=FwVRkhy5G04
 void ErrorSound()
 {
-	mciSendString(L"play \"sound\\Error.mp3\"", NULL, 0, 0);
+	mciSendString("play \"sound\\Error.mp3\"", NULL, 0, 0);
 }
 
 //https://www.youtube.com/watch?v=SoeT6x0O-CM
 void CorrectSound()
 {
-	mciSendString(L"play \"sound\\Correct.mp3\"", NULL, 0, 0);
+	mciSendString("play \"sound\\Correct.mp3\"", NULL, 0, 0);
 }
 
 
@@ -114,9 +114,10 @@ void SetUpConsole(bool isLogin)
 {
 	if (isLogin)
 	{
-		ShowWindow(GetConsoleWindow(), 3);
-		SetConsoleTitle(L"Pukachi");
+		SetConsoleOutputCP(437); //Display extended ASCII
+		SetConsoleTitle("Pukachi");
 		setAndCenterWindow();
+		ShowWindow(GetConsoleWindow(), 3);
 		DisableResizeWindow();
 		DisableCtrButton(1, 1, 0);
 	}

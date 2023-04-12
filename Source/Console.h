@@ -1,6 +1,5 @@
 #pragma once
 #include <Windows.h>
-
 //ref: louis and Khoi
 void setAndCenterWindow();
 void DisableResizeWindow();
