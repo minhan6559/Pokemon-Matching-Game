@@ -31,11 +31,8 @@ This mode contains the essential steps to make the game possible.
 3. Game finishing: check the following conditions
 - Are there any cells left?
 - Are there any valid pairs left?
-#### II.2 Difficult Mode
-In this mode, the neighboring cells should slide into the newly emptied spaces in a particular direction (left to right,
-up to down, etc.) Students may decide to use Pointer, LinkedList, or both for implementation. If you choose to use
-both data structures, only one is needed to make the game run, and the other should help with the report (The
-details will be given below)
+#### II.2 Sliding Mode and Insane Mode
+- Read more in the Report File
 #### II.3 Advaned Features
 Players will experience the game better if you can add one (or more) of the following extra features to the game.
 - Color and sound effects
@@ -44,3 +41,6 @@ Players will experience the game better if you can add one (or more) of the foll
 - Leaderboard: The top N players that finished their games with the shortest time will register their information
 to the Leaderboard.
 - Move suggestion: Show player a valid match when they press the "Help" key.
+
+### III. Full report of the project
+- You can check for more details in the [report file](./report.pdf)
