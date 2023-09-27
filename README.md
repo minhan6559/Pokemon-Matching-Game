@@ -1,8 +1,8 @@
-# Pikachu-Game
+# Pokemon Matching Game
 Pikachu Game made with C++ | HCMUS Programming Techniques Project
 
 ### I. Introduction
-The Matching Game (commonly known as Pikachu Puzzle Game) includes a board of multiple cells, each of which
+The Matching Game (commonly known as Onet Connect Animal) includes a board of multiple cells, each of which
 presents a figure. The player finds and matches a pair of cells that contain the same figure and connect each other
 in some particular pattern. A legal match will make the two cells disappear. The game ends when all matching
 pairs are found. Figure 1 shows some snapshots from the Pikachu Puzzle Game.
