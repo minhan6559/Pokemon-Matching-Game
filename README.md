@@ -10,7 +10,7 @@ In this project, we will develop a simplified version of this Matching Game by r
 (instead of figures).
 
 <p align="center">
-    <img src="https://cdn.shortpixel.ai/spai/w_995+q_lossy+ret_img+to_webp/https://1ktut.com/wp-content/uploads/2019/05/tai-Game-Pikachu-Co-Dien-ve-may-tinh.png" alt="pikachu-game">
+    <img src="./Background/Screenshot.png" alt="pikachu-game">
  </p>
 
 ### II. Detailed Description
